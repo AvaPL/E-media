@@ -39,8 +39,9 @@
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="Chunk.cs" />
         <Compile Include="ChunkReader.cs" />
+        <Compile Include="Chunks\Chunk.cs" />
+        <Compile Include="Chunks\IHDR.cs" />
         <Compile Include="PNGReader.cs" />
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
