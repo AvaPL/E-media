@@ -6,8 +6,8 @@ namespace PNGAnalyzer
 {
     public class ChunkReader
     {
-        Encoding ascii = Encoding.ASCII;
-        private byte[] bytes;
+        private readonly Encoding ascii = Encoding.ASCII;
+        private readonly byte[] bytes;
         private int index = 8;
 
         public ChunkReader(byte[] bytes)
@@ -17,18 +17,19 @@ namespace PNGAnalyzer
 
         public Chunk ReadChunk()
         {
-            if (index >= bytes.Length)
-                return null;
+            return index >= bytes.Length ? null : ParseChunk();
+        }
 
+        private Chunk ParseChunk()
+        {
             int length = ToInt32(SkipAndTake(4));
             string type = ascii.GetString(SkipAndTake(4));
             byte[] data = SkipAndTake(length);
             int crc = ToInt32(SkipAndTake(4));
-
             return new Chunk(type, data, crc);
         }
 
-        private int ToInt32(byte[] value)
+        private static int ToInt32(byte[] value)
         {
             Array.Reverse(value, 0, value.Length);
             return BitConverter.ToInt32(value, 0);

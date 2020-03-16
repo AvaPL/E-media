@@ -12,19 +12,22 @@ namespace PNGAnalyzer
             byte[] bytes = File.ReadAllBytes(filePath);
             if (!IsPNG(bytes))
                 throw new FormatException("The file is not a PNG file!");
-            
-            List<Chunk> chunks = new List<Chunk>();
-            ChunkReader chunkReader = new ChunkReader(bytes);
-            Chunk chunk;
-
-            while ((chunk = chunkReader.ReadChunk()) != null) chunks.Add(chunk);
-
-            return chunks;
+            return ReadChunks(bytes);
         }
 
         private static bool IsPNG(byte[] bytes)
         {
-            return bytes.Take(8).SequenceEqual(new byte[]{137, 80, 78, 71, 13, 10, 26, 10});
+            return bytes.Take(8).SequenceEqual(new byte[] {137, 80, 78, 71, 13, 10, 26, 10});
+        }
+
+        private static List<Chunk> ReadChunks(byte[] bytes)
+        {
+            ChunkReader chunkReader = new ChunkReader(bytes);
+            List<Chunk> chunks = new List<Chunk>();
+            Chunk chunk;
+            while ((chunk = chunkReader.ReadChunk()) != null)
+                chunks.Add(chunk);
+            return chunks;
         }
     }
 }
