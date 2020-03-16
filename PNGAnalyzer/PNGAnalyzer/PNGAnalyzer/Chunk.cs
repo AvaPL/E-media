@@ -12,7 +12,5 @@
             Data = data;
             CRC = crc;
         }
-        
-        
     }
 }
