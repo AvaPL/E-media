@@ -40,8 +40,13 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="ChunkReader.cs" />
+        <Compile Include="Chunks\cHRM.cs" />
         <Compile Include="Chunks\Chunk.cs" />
+        <Compile Include="Chunks\hIST.cs" />
         <Compile Include="Chunks\IHDR.cs" />
+        <Compile Include="Chunks\PLTE.cs" />
+        <Compile Include="Chunks\sBIT.cs" />
+        <Compile Include="Chunks\sPLT.cs" />
         <Compile Include="PNGReader.cs" />
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
