@@ -7,15 +7,19 @@ namespace PNGAnalyzer
 {
     public class PNGReader
     {
-        public static Dictionary<string, byte[]> Read(string filePath)
+        public static List<Chunk> Read(string filePath)
         {
             byte[] bytes = File.ReadAllBytes(filePath);
             if (!IsPNG(bytes))
                 throw new FormatException("The file is not a PNG file!");
             
-            Dictionary<string, byte[]> dictionary = new Dictionary<string, byte[]>();
+            List<Chunk> chunks = new List<Chunk>();
+            ChunkReader chunkReader = new ChunkReader(bytes);
+            Chunk chunk;
 
-            return dictionary;
+            while ((chunk = chunkReader.ReadChunk()) != null) chunks.Add(chunk);
+
+            return chunks;
         }
 
         private static bool IsPNG(byte[] bytes)

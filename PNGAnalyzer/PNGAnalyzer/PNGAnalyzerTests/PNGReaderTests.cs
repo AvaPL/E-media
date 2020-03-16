@@ -22,5 +22,12 @@ namespace PNGAnalyzerTests
             string JPEGfilePath = @"../../Data/Kleo.jpg";
             Assert.Throws<FormatException>(() => PNGReader.Read(JPEGfilePath));
         }
+
+        [Test]
+        public void ShouldReadIHDRChunk()
+        {
+            string filePath = @"../../Data/Plan.png";
+            Assert.AreEqual("IHDR", PNGReader.Read(filePath)[0].Type);
+        }
     }
 }

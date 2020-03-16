@@ -38,6 +38,8 @@
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="Chunk.cs" />
+        <Compile Include="ChunkReader.cs" />
         <Compile Include="PNGReader.cs" />
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
