@@ -6,14 +6,20 @@ namespace PNGAnalyzer
 {
     public class iCCP : Chunk
     {
-        public string ProfileName { get; set; }
-        public byte CompressionMethod { get; set; }
-        public byte[] CompressedProfile { get; set; }
-
+        //TODO: Throw exception on wrong type input.
         public iCCP(string type, byte[] data, int crc) : base(type, data, crc)
         {
             ParseData(data);
         }
+
+        public iCCP(Chunk chunk) : base(chunk)
+        {
+            ParseData(chunk.Data);
+        }
+
+        public string ProfileName { get; private set; }
+        public byte CompressionMethod { get; private set; }
+        public byte[] CompressedProfile { get; private set; }
 
         private void ParseData(byte[] data)
         {
@@ -21,11 +27,6 @@ namespace PNGAnalyzer
             ProfileName = Encoding.ASCII.GetString(data, 0, nullSeparatorIndex);
             CompressionMethod = data[nullSeparatorIndex + 1];
             CompressedProfile = data.Skip(nullSeparatorIndex + 2).ToArray();
-        }
-
-        public iCCP(Chunk chunk) : base(chunk)
-        {
-            ParseData(chunk.Data);
         }
 
         public override string GetInfo()

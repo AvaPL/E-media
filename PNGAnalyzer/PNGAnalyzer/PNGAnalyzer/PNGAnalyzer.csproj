@@ -40,6 +40,7 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="ChunkReader.cs" />
+        <Compile Include="Chunks\bKGD.cs" />
         <Compile Include="Chunks\Chunk.cs" />
         <Compile Include="Chunks\iCCP.cs" />
         <Compile Include="Chunks\IDAT.cs" />
