@@ -2,10 +2,7 @@
 {
     public class pHYs : Chunk
     {
-        public uint PixelsPerUnitX { get; private set; }
-        public uint PixelsPerUnitY { get; private set; }
-        public byte UnitSpecifier { get; private set; }
-
+        //TODO: Throw exception on wrong type input.
         public pHYs(string type, byte[] data, int crc) : base(type, data, crc)
         {
             ParseData(data);
@@ -15,6 +12,10 @@
         {
             ParseData(chunk.Data);
         }
+
+        public uint PixelsPerUnitX { get; private set; }
+        public uint PixelsPerUnitY { get; private set; }
+        public byte UnitSpecifier { get; private set; }
 
         private void ParseData(byte[] data)
         {

@@ -45,6 +45,7 @@
         <Compile Include="Chunks\iCCP.cs" />
         <Compile Include="Chunks\IDAT.cs" />
         <Compile Include="Chunks\IHDR.cs" />
+        <Compile Include="Chunks\iTXt.cs" />
         <Compile Include="Chunks\pHYs.cs" />
         <Compile Include="PNGReader.cs" />
         <Compile Include="Program.cs" />

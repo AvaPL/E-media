@@ -4,6 +4,7 @@ namespace PNGAnalyzer
 {
     public class bKGD : Chunk
     {
+        //TODO: Throw exception on wrong type input.
         public bKGD(string type, byte[] data, int crc) : base(type, data, crc)
         {
             ParseData(data);

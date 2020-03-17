@@ -24,7 +24,7 @@ namespace PNGAnalyzer
         private void ParseData(byte[] data)
         {
             int nullSeparatorIndex = Array.IndexOf(data, 0);
-            ProfileName = Encoding.ASCII.GetString(data, 0, nullSeparatorIndex);
+            ProfileName = Encoding.GetEncoding("iso-8859-1").GetString(data, 0, nullSeparatorIndex);
             CompressionMethod = data[nullSeparatorIndex + 1];
             CompressedProfile = data.Skip(nullSeparatorIndex + 2).ToArray();
         }
