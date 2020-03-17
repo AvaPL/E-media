@@ -2,16 +2,33 @@
 {
     public class IHDR : Chunk
     {
-        public int Width { get; }
-        public int Height { get; }
-        public byte BitDepth { get; }
-        public byte ColorType { get; }
-        public byte CompressionMethod { get; }
-        public byte FilterMethod { get; }
-        public byte InterlaceMethod { get; }
-
         public IHDR(string type, byte[] data, int crc) : base(type, data, crc)
         {
+            ParseData(data);
+        }
+
+        public IHDR(Chunk chunk) : base(chunk)
+        {
+            ParseData(chunk.Data);
+        }
+
+        public int Width { get; private set; }
+        public int Height { get; private set; }
+        public byte BitDepth { get; private set; }
+        public byte ColorType { get; private set; }
+        public byte CompressionMethod { get; private set; }
+        public byte FilterMethod { get; private set; }
+        public byte InterlaceMethod { get; private set; }
+
+        private void ParseData(byte[] data)
+        {
+            Width = Converter.ToInt32(data, 0);
+            Height = Converter.ToInt32(data, 4);
+            BitDepth = data[8];
+            ColorType = data[9];
+            CompressionMethod = data[10];
+            FilterMethod = data[11];
+            InterlaceMethod = data[12];
         }
 
         public override string GetInfo()
@@ -21,7 +38,14 @@
 
         public override string ToString()
         {
-            return $"{nameof(Width)}: {Width}\n {nameof(Height)}: {Height}\n {nameof(BitDepth)}: {BitDepth}\n {nameof(ColorType)}: {ColorType}\n {nameof(CompressionMethod)}: {CompressionMethod}\n {nameof(FilterMethod)}: {FilterMethod}\n {nameof(InterlaceMethod)}: {InterlaceMethod}";
+            return
+                $"{nameof(Width)}: {Width}\n" +
+                $"{nameof(Height)}: {Height}\n" +
+                $"{nameof(BitDepth)}: {BitDepth}\n" +
+                $"{nameof(ColorType)}: {ColorType}\n" +
+                $"{nameof(CompressionMethod)}: {CompressionMethod}\n" +
+                $"{nameof(FilterMethod)}: {FilterMethod}\n" +
+                $"{nameof(InterlaceMethod)}: {InterlaceMethod}";
         }
     }
 }

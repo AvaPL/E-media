@@ -9,6 +9,13 @@
             CRC = crc;
         }
 
+        public Chunk(Chunk chunk)
+        {
+            Type = chunk.Type;
+            Data = chunk.Data;
+            CRC = chunk.CRC;
+        }
+
         public string Type { get; }
         public byte[] Data { get; }
         public int CRC { get; }
@@ -20,7 +27,10 @@
 
         public override string ToString()
         {
-            return $"{nameof(Type)}: {Type}\n {nameof(Data)}: {Data}\n {nameof(CRC)}: {CRC}";
+            return
+                $"{nameof(Type)}: {Type}\n" +
+                $"{nameof(Data)}: {Data}\n" +
+                $"{nameof(CRC)}: {CRC}";
         }
     }
 }
