@@ -2,6 +2,7 @@
 {
     public class IHDR : Chunk
     {
+        //TODO: Throw exception on wrong type input.
         public IHDR(string type, byte[] data, int crc) : base(type, data, crc)
         {
             ParseData(data);
