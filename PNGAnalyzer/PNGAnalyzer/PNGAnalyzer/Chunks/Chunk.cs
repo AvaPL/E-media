@@ -7,7 +7,6 @@
             Type = type;
             Data = data;
             CRC = crc;
-            //TODO: Add ParseData() call here instead of in derived classes.
         }
 
         public Chunk(Chunk chunk)
@@ -15,7 +14,6 @@
             Type = chunk.Type;
             Data = chunk.Data;
             CRC = chunk.CRC;
-            //TODO: Add ParseData() call here instead of in derived classes.
         }
 
         public string Type { get; }

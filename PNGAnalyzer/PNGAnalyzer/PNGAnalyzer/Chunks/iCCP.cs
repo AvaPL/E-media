@@ -6,14 +6,17 @@ namespace PNGAnalyzer
 {
     public class iCCP : Chunk
     {
-        //TODO: Throw exception on wrong type input.
         public iCCP(string type, byte[] data, int crc) : base(type, data, crc)
         {
+            if (type != "iCCP")
+                throw new ArgumentException("Invalid chunk type passed to iCCP");
             ParseData(data);
         }
 
         public iCCP(Chunk chunk) : base(chunk)
         {
+            if (chunk.Type != "iCCP")
+                throw new ArgumentException("Invalid chunk type passed to iCCP");
             ParseData(chunk.Data);
         }
 

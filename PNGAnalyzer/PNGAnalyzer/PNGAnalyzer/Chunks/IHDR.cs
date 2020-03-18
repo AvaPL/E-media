@@ -1,15 +1,20 @@
-﻿namespace PNGAnalyzer
+﻿using System;
+
+namespace PNGAnalyzer
 {
     public class IHDR : Chunk
     {
-        //TODO: Throw exception on wrong type input.
         public IHDR(string type, byte[] data, int crc) : base(type, data, crc)
         {
+            if (type != "IHDR")
+                throw new ArgumentException("Invalid chunk type passed to IHDR");
             ParseData(data);
         }
 
         public IHDR(Chunk chunk) : base(chunk)
         {
+            if (chunk.Type != "IHDR")
+                throw new ArgumentException("Invalid chunk type passed to IHDR");
             ParseData(chunk.Data);
         }
 

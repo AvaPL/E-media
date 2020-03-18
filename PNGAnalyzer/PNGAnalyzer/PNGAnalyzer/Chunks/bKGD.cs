@@ -4,14 +4,17 @@ namespace PNGAnalyzer
 {
     public class bKGD : Chunk
     {
-        //TODO: Throw exception on wrong type input.
         public bKGD(string type, byte[] data, int crc) : base(type, data, crc)
         {
+            if (type != "bKGD")
+                throw new ArgumentException("Invalid chunk type passed to bKGD");
             ParseData(data);
         }
 
         public bKGD(Chunk chunk) : base(chunk)
         {
+            if (chunk.Type != "bKGD")
+                throw new ArgumentException("Invalid chunk type passed to bKGD");
             ParseData(chunk.Data);
         }
 

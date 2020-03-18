@@ -1,15 +1,20 @@
-﻿namespace PNGAnalyzer
+﻿using System;
+
+namespace PNGAnalyzer
 {
     public class pHYs : Chunk
     {
-        //TODO: Throw exception on wrong type input.
         public pHYs(string type, byte[] data, int crc) : base(type, data, crc)
         {
+            if (type != "pHYs")
+                throw new ArgumentException("Invalid chunk type passed to pHYs");
             ParseData(data);
         }
 
         public pHYs(Chunk chunk) : base(chunk)
         {
+            if (chunk.Type != "pHYs")
+                throw new ArgumentException("Invalid chunk type passed to pHYs");
             ParseData(chunk.Data);
         }
 
