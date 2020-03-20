@@ -1,14 +1,20 @@
-﻿namespace PNGAnalyzer
+﻿using System;
+
+namespace PNGAnalyzer
 {
     public class cHRM : Chunk
     {
         public cHRM(string type, byte[] data, int crc) : base(type, data, crc)
         {
+            if (type != "cHRM")
+                throw new ArgumentException("Invalid chunk type passed to cHRM");
             ParseData(data);
         }
 
         public cHRM(Chunk chunk) : base(chunk)
         {
+            if (chunk.Type != "cHRM")
+                throw new ArgumentException("Invalid chunk type passed to cHRM");
             ParseData(chunk.Data);
         }
 

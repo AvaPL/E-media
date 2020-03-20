@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace PNGAnalyzer
@@ -7,12 +8,16 @@ namespace PNGAnalyzer
     {
         public PLTE(string type, byte[] data, int crc) : base(type, data, crc)
         {
+            if (type != "PLTE")
+                throw new ArgumentException("Invalid chunk type passed to PLTE");
             Entries = new List<Entry>(data.Length/3);
             ParseData(data);
         }
 
         public PLTE(Chunk chunk) : base(chunk)
         {
+            if (chunk.Type != "PLTE")
+                throw new ArgumentException("Invalid chunk type passed to PLTE");
             Entries = new List<Entry>(chunk.Data.Length/3);
             ParseData(chunk.Data);
         }

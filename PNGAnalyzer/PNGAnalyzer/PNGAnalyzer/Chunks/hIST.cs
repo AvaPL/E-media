@@ -1,15 +1,21 @@
-﻿namespace PNGAnalyzer
+﻿using System;
+
+namespace PNGAnalyzer
 {
     public class hIST : Chunk
     {
         public hIST(string type, byte[] data, int crc) : base(type, data, crc)
         {
+            if (type != "hIST")
+                throw new ArgumentException("Invalid chunk type passed to hIST");
             Histogram = new short[data.Length / 2];
             ParseData(data);
         }
 
         public hIST(Chunk chunk) : base(chunk)
         {
+            if (chunk.Type != "hIST")
+                throw new ArgumentException("Invalid chunk type passed to hIST");
             Histogram = new short[chunk.Data.Length / 2];
             ParseData(chunk.Data);
         }
