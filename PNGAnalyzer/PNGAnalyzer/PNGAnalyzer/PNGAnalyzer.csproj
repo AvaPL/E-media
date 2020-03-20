@@ -52,6 +52,7 @@
         <Compile Include="Chunks\sPLT.cs" />
         <Compile Include="Chunks\iTXt.cs" />
         <Compile Include="Chunks\pHYs.cs" />
+        <Compile Include="Chunks\tEXt.cs" />
         <Compile Include="PNGReader.cs" />
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
