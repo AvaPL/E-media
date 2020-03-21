@@ -43,9 +43,11 @@
         <Compile Include="Chunks\cHRM.cs" />
         <Compile Include="Chunks\bKGD.cs" />
         <Compile Include="Chunks\Chunk.cs" />
+        <Compile Include="Chunks\gAMA.cs" />
         <Compile Include="Chunks\hIST.cs" />
         <Compile Include="Chunks\iCCP.cs" />
         <Compile Include="Chunks\IDAT.cs" />
+        <Compile Include="Chunks\IEND.cs" />
         <Compile Include="Chunks\IHDR.cs" />
         <Compile Include="Chunks\PLTE.cs" />
         <Compile Include="Chunks\sBIT.cs" />
@@ -53,6 +55,9 @@
         <Compile Include="Chunks\iTXt.cs" />
         <Compile Include="Chunks\pHYs.cs" />
         <Compile Include="Chunks\tEXt.cs" />
+        <Compile Include="Chunks\sRGB.cs" />
+        <Compile Include="Chunks\tIME.cs" />
+        <Compile Include="Chunks\zTXt.cs" />
         <Compile Include="PNGReader.cs" />
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
