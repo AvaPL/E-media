@@ -33,7 +33,7 @@ namespace PNGAnalyzer
         
         public override string ToString()
         {
-            return LatestModificationDate.ToString("dd/MM/yyyy HH:mm:ss")+"\n";
+            return LatestModificationDate.ToString("dd/MM/yyyy HH:mm:ss");
         }
     }
 }

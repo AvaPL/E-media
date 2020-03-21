@@ -4,14 +4,14 @@ using PNGAnalyzer;
 namespace PNGAnalyzerTests
 {
     [TestFixture]
-    public class IDATTests
+    public class tRNSTests
     {
         [Test]
-        public void ShouldReadIDAT()
+        public void ShouldReadstRNS()
         {
             string filePath = @"../../../Data/Plan.png";
-            IDAT idat = new IDAT(PNGReader.Read(filePath)[4]);
-            Assert.AreEqual("IDAT", idat.Type);
+            tRNS trns = new tRNS(PNGReader.Read(filePath)[1]);
+            Assert.AreEqual("tRNS", trns.Type);
         }
     }
 }

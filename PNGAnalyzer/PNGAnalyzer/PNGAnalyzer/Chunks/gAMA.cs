@@ -20,6 +20,7 @@ namespace PNGAnalyzer
 
         public int Gamma { get; private set; }
 
+
         private void ParseData(byte[] data)
         {
             Gamma = Converter.ToInt32(data, 0);
@@ -32,7 +33,7 @@ namespace PNGAnalyzer
 
         public override string ToString()
         {
-            return $"{nameof(Gamma)}: {Gamma}\n";
+            return $"{nameof(Gamma)}: {Gamma}";
         }
     }
 }

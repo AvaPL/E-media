@@ -35,7 +35,7 @@ namespace PNGAnalyzer
         
         private string GetKeyword(byte[] data)
         {
-            int nullSeparatorIndex = Array.IndexOf(data, 0, 0);
+            int nullSeparatorIndex =Array.IndexOf(data, (byte)0);
             return Encoding.GetEncoding("ISO-8859-1").GetString(data, 0, nullSeparatorIndex);
         }
         
@@ -46,7 +46,7 @@ namespace PNGAnalyzer
         
         public override string ToString()
         {
-            return $"{nameof(Keyword)}: {Keyword}\n";
+            return $"{nameof(Keyword)}: {Keyword}";
         }
     }
 }

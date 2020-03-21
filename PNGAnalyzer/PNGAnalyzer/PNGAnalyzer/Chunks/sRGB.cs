@@ -32,7 +32,7 @@ namespace PNGAnalyzer
 
         public override string ToString()
         {
-            return $"{nameof(RenderingIntent)}: {RenderingIntent}\n";
+            return $"{nameof(RenderingIntent)}: {RenderingIntent}";
         }
     }
 }
