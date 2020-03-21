@@ -43,6 +43,7 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="cHRMTests.cs" />
         <Compile Include="IDATTests.cs" />
         <Compile Include="IHDRTests.cs" />
         <Compile Include="PNGReaderTests.cs" />
