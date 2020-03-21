@@ -46,6 +46,7 @@
         <Compile Include="cHRMTests.cs" />
         <Compile Include="IDATTests.cs" />
         <Compile Include="IHDRTests.cs" />
+        <Compile Include="PLTETests.cs" />
         <Compile Include="PNGReaderTests.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="sBITTests.cs" />

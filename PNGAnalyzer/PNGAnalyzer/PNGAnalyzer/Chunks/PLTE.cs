@@ -55,6 +55,30 @@ namespace PNGAnalyzer
             public byte Red { get; }
             public byte Green { get; }
             public byte Blue { get; }
+
+            protected bool Equals(Entry other)
+            {
+                return Red == other.Red && Green == other.Green && Blue == other.Blue;
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (ReferenceEquals(null, obj)) return false;
+                if (ReferenceEquals(this, obj)) return true;
+                if (obj.GetType() != this.GetType()) return false;
+                return Equals((Entry) obj);
+            }
+
+            public override int GetHashCode()
+            {
+                unchecked
+                {
+                    int hashCode = Red.GetHashCode();
+                    hashCode = (hashCode * 397) ^ Green.GetHashCode();
+                    hashCode = (hashCode * 397) ^ Blue.GetHashCode();
+                    return hashCode;
+                }
+            }
         }
     }
 }
