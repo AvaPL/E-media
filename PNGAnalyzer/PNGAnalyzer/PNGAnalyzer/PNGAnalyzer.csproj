@@ -40,11 +40,28 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="ChunkReader.cs" />
+        <Compile Include="Chunks\cHRM.cs" />
+        <Compile Include="Chunks\bKGD.cs" />
         <Compile Include="Chunks\Chunk.cs" />
+        <Compile Include="Chunks\gAMA.cs" />
+        <Compile Include="Chunks\hIST.cs" />
+        <Compile Include="Chunks\iCCP.cs" />
+        <Compile Include="Chunks\IDAT.cs" />
+        <Compile Include="Chunks\IEND.cs" />
         <Compile Include="Chunks\IHDR.cs" />
+        <Compile Include="Chunks\PLTE.cs" />
+        <Compile Include="Chunks\sBIT.cs" />
+        <Compile Include="Chunks\sPLT.cs" />
+        <Compile Include="Chunks\iTXt.cs" />
+        <Compile Include="Chunks\pHYs.cs" />
+        <Compile Include="Chunks\tEXt.cs" />
+        <Compile Include="Chunks\sRGB.cs" />
+        <Compile Include="Chunks\tIME.cs" />
+        <Compile Include="Chunks\zTXt.cs" />
         <Compile Include="PNGReader.cs" />
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
+        <Compile Include="Support\Converter.cs" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

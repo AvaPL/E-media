@@ -1,12 +1,10 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Text;
 
 namespace PNGAnalyzer
 {
     public class ChunkReader
     {
-        private readonly Encoding ascii = Encoding.ASCII;
         private readonly byte[] bytes;
         private int index = 8;
 
@@ -22,23 +20,17 @@ namespace PNGAnalyzer
 
         private Chunk ParseChunk()
         {
-            int length = ToInt32(SkipAndTake(4));
-            string type = ascii.GetString(SkipAndTake(4));
+            int length = Converter.ToInt32(SkipAndTake(4));
+            string type = Encoding.ASCII.GetString(SkipAndTake(4));
             byte[] data = SkipAndTake(length);
-            int crc = ToInt32(SkipAndTake(4));
+            int crc = Converter.ToInt32(SkipAndTake(4));
             return new Chunk(type, data, crc);
         }
 
-        private static int ToInt32(byte[] value)
+        private byte[] SkipAndTake(int length)
         {
-            Array.Reverse(value, 0, value.Length);
-            return BitConverter.ToInt32(value, 0);
-        }
-
-        private byte[] SkipAndTake(int toTake)
-        {
-            byte[] takenBytes = bytes.Skip(index).Take(toTake).ToArray();
-            index += toTake;
+            byte[] takenBytes = bytes.Skip(index).Take(length).ToArray();
+            index += length;
             return takenBytes;
         }
     }

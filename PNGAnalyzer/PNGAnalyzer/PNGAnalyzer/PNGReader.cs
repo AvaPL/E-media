@@ -11,7 +11,7 @@ namespace PNGAnalyzer
         {
             byte[] bytes = File.ReadAllBytes(filePath);
             if (!IsPNG(bytes))
-                throw new FormatException("The file is not a PNG file!");
+                throw new FormatException("The file is not a PNG file");
             return ReadChunks(bytes);
         }
 
