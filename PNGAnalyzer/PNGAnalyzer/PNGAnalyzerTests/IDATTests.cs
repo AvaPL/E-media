@@ -9,7 +9,7 @@ namespace PNGAnalyzerTests
         [Test]
         public void ShouldReadIDAT()
         {
-            string filePath = @"../../Data/Plan.png";
+            string filePath = @"../../../Data/Plan.png";
             IDAT idat = new IDAT(PNGReader.Read(filePath)[4]);
             Assert.AreEqual("IDAT", idat.Type);
         }
