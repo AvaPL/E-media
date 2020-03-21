@@ -48,6 +48,7 @@
         <Compile Include="PNGReaderTests.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="sBITTests.cs" />
+        <Compile Include="tEXtTests.cs" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\PNGAnalyzer\PNGAnalyzer.csproj">
