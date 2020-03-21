@@ -42,7 +42,7 @@ namespace PNGAnalyzer
 
         private string GetNullSeparatedString(byte[] data, Encoding encoding, int startIndex)
         {
-            int nullSeparatorIndex = Array.IndexOf(data, 0, startIndex);
+            int nullSeparatorIndex = Array.IndexOf(data, (byte) 0, startIndex);
             return encoding.GetString(data, startIndex, nullSeparatorIndex - startIndex);
         }
 
@@ -68,7 +68,6 @@ namespace PNGAnalyzer
         public override string ToString()
         {
             return
-                $"{base.ToString()}\n" +
                 $"{nameof(Keyword)}: {Keyword}\n" +
                 $"{nameof(CompressionFlag)}: {CompressionFlag}\n" +
                 $"{nameof(CompressionMethod)}: {CompressionMethod}\n" +

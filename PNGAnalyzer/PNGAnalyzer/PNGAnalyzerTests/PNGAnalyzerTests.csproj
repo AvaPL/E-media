@@ -43,8 +43,12 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="bKGDTests.cs" />
+        <Compile Include="iCCPTests.cs" />
         <Compile Include="IDATTests.cs" />
         <Compile Include="IHDRTests.cs" />
+        <Compile Include="iTXtTests.cs" />
+        <Compile Include="pHYsTests.cs" />
         <Compile Include="PNGReaderTests.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
