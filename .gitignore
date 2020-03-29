@@ -351,3 +351,8 @@ MigrationBackup/
 
 # Jetbrains Rider
 .idea
+
+# FourierTransform executables
+FourierTransform/build
+FourierTransform/dist
+FourierTransform/FourierTransform.spec
