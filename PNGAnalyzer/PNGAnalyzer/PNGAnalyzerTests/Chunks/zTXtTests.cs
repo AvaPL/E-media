@@ -10,7 +10,7 @@ namespace PNGAnalyzerTests
         public void ShouldReadszTXT()
         {
             string filePath = @"../../../Data/czerwony.png";
-            zTXt ztxt = new zTXt(PNGReader.Read(filePath)[2]);
+            zTXt ztxt = new zTXt(PNGFile.Read(filePath)[2]);
             Assert.AreEqual("zTXt", ztxt.Type);
         }
         
@@ -18,7 +18,7 @@ namespace PNGAnalyzerTests
         public void ShouldContainCorrectData()
         {
             string filePath = @"../../../Data/czerwony.png";
-            zTXt ztxt = new zTXt(PNGReader.Read(filePath)[2]);
+            zTXt ztxt = new zTXt(PNGFile.Read(filePath)[2]);
             Assert.AreEqual("Raw profile type APP1", ztxt.Keyword);
         }
 

@@ -45,6 +45,8 @@
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="AnonymizerTests.cs" />
+        <Compile Include="ChunkParserTests.cs" />
         <Compile Include="Chunks\bKGDTests.cs" />
         <Compile Include="Chunks\cHRMTests.cs" />
         <Compile Include="Chunks\gAMATests.cs" />
@@ -60,7 +62,7 @@
         <Compile Include="Chunks\tEXtTests.cs" />
         <Compile Include="Chunks\tIMETests.cs" />
         <Compile Include="Chunks\zTXtTests.cs" />
-        <Compile Include="PNGReaderTests.cs" />
+        <Compile Include="PNGFileTests.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
     <ItemGroup>

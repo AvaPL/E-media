@@ -38,5 +38,13 @@ namespace PNGAnalyzer
                 Array.Reverse(value, startIndex, 4);
             return BitConverter.ToUInt32(value, startIndex);
         }
+
+        public static byte[] GetBytes(int value)
+        {
+            byte[] bytes = BitConverter.GetBytes(value);
+            if (BitConverter.IsLittleEndian)
+                Array.Reverse(bytes);
+            return bytes;
+        }
     }
 }

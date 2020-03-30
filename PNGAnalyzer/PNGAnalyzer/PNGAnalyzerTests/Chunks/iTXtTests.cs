@@ -10,7 +10,7 @@ namespace PNGAnalyzerTests
         public void ShoulReadiTXt()
         {
             string filePath = @"../../../Data/itxt.png";
-            iTXt itxt = new iTXt(PNGReader.Read(filePath)[8]);
+            iTXt itxt = new iTXt(PNGFile.Read(filePath)[8]);
             Assert.AreEqual("Author", itxt.Keyword);
             Assert.AreEqual(0, itxt.CompressionFlag);
             Assert.AreEqual(0, itxt.CompressionMethod);

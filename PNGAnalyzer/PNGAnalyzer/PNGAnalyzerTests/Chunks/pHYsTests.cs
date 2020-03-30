@@ -10,7 +10,7 @@ namespace PNGAnalyzerTests
         public void ShouldReadpHYs()
         {
             string filePath = @"../../../Data/IccP.png";
-            pHYs phys = new pHYs(PNGReader.Read(filePath)[2]);
+            pHYs phys = new pHYs(PNGFile.Read(filePath)[2]);
             Assert.AreEqual(phys.PixelsPerUnitX, 3543);
             Assert.AreEqual(phys.PixelsPerUnitY, 3543);
             Assert.AreEqual(phys.UnitSpecifier, 1);

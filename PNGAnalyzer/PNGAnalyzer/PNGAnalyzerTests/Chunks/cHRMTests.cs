@@ -10,7 +10,7 @@ namespace PNGAnalyzerTests
         public void ShouldReadcHRM()
         {
             string filePath = @"../../../Data/kostki.png";
-            cHRM chrm = new cHRM(PNGReader.Read(filePath)[2]);
+            cHRM chrm = new cHRM(PNGFile.Read(filePath)[2]);
             Assert.AreEqual("cHRM", chrm.Type);
             Assert.AreEqual(31270, chrm.WhitePointX);
             Assert.AreEqual(32900, chrm.WhitePointY);

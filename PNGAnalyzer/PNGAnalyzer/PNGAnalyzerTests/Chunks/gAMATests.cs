@@ -10,7 +10,7 @@ namespace PNGAnalyzerTests
         public void ShouldReadgAMA()
         {
             string filePath = @"../../../Data/kostki.png";
-            gAMA gama = new gAMA(PNGReader.Read(filePath)[1]);
+            gAMA gama = new gAMA(PNGFile.Read(filePath)[1]);
             Assert.AreEqual("gAMA", gama.Type);
         }
 
@@ -18,7 +18,7 @@ namespace PNGAnalyzerTests
         public void ShouldContainCorrectData()
         {
             string filePath = @"../../../Data/kostki.png";
-            gAMA gama = new gAMA(PNGReader.Read(filePath)[1]);
+            gAMA gama = new gAMA(PNGFile.Read(filePath)[1]);
             Assert.AreEqual(45455 , gama.Gamma);
         }
     }

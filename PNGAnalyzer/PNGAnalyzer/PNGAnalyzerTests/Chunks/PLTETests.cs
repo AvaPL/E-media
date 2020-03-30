@@ -12,7 +12,7 @@ namespace PNGAnalyzerTests
         public void ShouldReadcHRM()
         {
             string filePath = @"../../../Data/papugaxd.png";
-            PLTE plte = new PLTE(PNGReader.Read(filePath)[4]);
+            PLTE plte = new PLTE(PNGFile.Read(filePath)[4]);
             Assert.AreEqual("PLTE", plte.Type);
             Assert.AreEqual(new PLTE.Entry(0,0,0), plte.Entries.First());
             Assert.AreEqual(new PLTE.Entry(8, 255, 255), plte.Entries.Last());
