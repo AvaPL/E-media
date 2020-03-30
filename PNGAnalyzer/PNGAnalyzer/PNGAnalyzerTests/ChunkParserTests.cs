@@ -8,7 +8,7 @@ namespace PNGAnalyzerTests
     public class ChunkParserTests
     {
         [Test]
-        public void shouldParseChunks()
+        public void ShouldParseChunks()
         {
             string filePath = @"../../../Data/kostki.png";
             List<Chunk> chunks = PNGReader.Read(filePath);

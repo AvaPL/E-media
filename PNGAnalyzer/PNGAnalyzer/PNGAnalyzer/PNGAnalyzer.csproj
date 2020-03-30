@@ -39,6 +39,7 @@
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="Anonymizer.cs" />
         <Compile Include="ChunkParser.cs" />
         <Compile Include="ChunkReader.cs" />
         <Compile Include="Chunks\cHRM.cs" />
