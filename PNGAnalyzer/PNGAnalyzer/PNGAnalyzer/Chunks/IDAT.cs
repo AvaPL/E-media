@@ -28,7 +28,6 @@ namespace PNGAnalyzer
             byte[] crcData = new byte[idat1.Type.Length + data.Length];
             TypeBytes.CopyTo(crcData, 0);
             TypeBytes.CopyTo(crcData, TypeBytes.Length);
-            //TODO: Fix, decompress data before concatenation.
             return new IDAT(idat1.Type, data, Crc32Algorithm.Compute(crcData));
         }
     }
