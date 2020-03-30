@@ -8,7 +8,7 @@ namespace PNGAnalyzer
     {
         public static List<Chunk> Anonymize(string filePathToRead)
         {
-            List<Chunk> chunks = PNGReader.Read(filePathToRead);
+            List<Chunk> chunks = PNGFile.Read(filePathToRead);
             List<Chunk> anonymized = chunks.Where(c => Char.IsUpper(c.Type.ToCharArray()[0])).ToList();
             
             return anonymized;

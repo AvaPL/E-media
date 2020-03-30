@@ -62,7 +62,7 @@
         <Compile Include="Chunks\tEXtTests.cs" />
         <Compile Include="Chunks\tIMETests.cs" />
         <Compile Include="Chunks\zTXtTests.cs" />
-        <Compile Include="PNGReaderTests.cs" />
+        <Compile Include="PNGFileTests.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
     <ItemGroup>

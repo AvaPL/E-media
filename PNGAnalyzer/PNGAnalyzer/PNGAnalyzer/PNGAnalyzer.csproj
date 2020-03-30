@@ -60,7 +60,8 @@
         <Compile Include="Chunks\sRGB.cs" />
         <Compile Include="Chunks\tIME.cs" />
         <Compile Include="Chunks\zTXt.cs" />
-        <Compile Include="PNGReader.cs" />
+        <Compile Include="ChunkWriter.cs" />
+        <Compile Include="PNGFile.cs" />
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="Support\Converter.cs" />

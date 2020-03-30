@@ -10,7 +10,7 @@ namespace PNGAnalyzerTests
         public void ShouldReadIHDR()
         {
             string filePath = @"../../../Data/Plan.png";
-            IHDR ihdr = new IHDR(PNGReader.Read(filePath)[0]);
+            IHDR ihdr = new IHDR(PNGFile.Read(filePath)[0]);
             Assert.AreEqual("IHDR", ihdr.Type);
             Assert.AreEqual(1438, ihdr.Width);
             Assert.AreEqual(640, ihdr.Height);

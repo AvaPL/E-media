@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace PNGAnalyzer
 {
-    public class PNGReader
+    public class PNGFile
     {
         public static List<Chunk> Read(string filePath)
         {
@@ -28,6 +28,19 @@ namespace PNGAnalyzer
             while ((chunk = chunkReader.ReadChunk()) != null)
                 chunks.Add(chunk);
             return chunks;
+        }
+
+        public static void Write(string filePath, List<Chunk> chunks)
+        {
+            byte[] sequence = new byte[] {137, 80, 78, 71, 13, 10, 26, 10};
+            ChunkWriter chunkWriter = new ChunkWriter();
+            foreach (var chunk in chunks) 
+                chunkWriter.Write(chunk);
+            byte[] chunkBytes = chunkWriter.GetBytes();
+            byte[] result = new byte[sequence.Length + chunkBytes.Length];
+            sequence.CopyTo(result, 0);
+            chunkBytes.CopyTo(result, sequence.Length);
+            File.WriteAllBytes(filePath, result);
         }
     }
 }
