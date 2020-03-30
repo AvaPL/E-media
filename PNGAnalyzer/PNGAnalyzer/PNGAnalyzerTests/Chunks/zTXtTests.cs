@@ -21,5 +21,12 @@ namespace PNGAnalyzerTests
             zTXt ztxt = new zTXt(PNGFile.Read(filePath)[2]);
             Assert.AreEqual("Raw profile type APP1", ztxt.Keyword);
         }
+
+        [Test]
+        public void ShouldContainDecompressedText()
+        {
+            string filePath = @"../../../Data/exif.png";
+            zTXt ztxt = new zTXt(PNGReader.Read(filePath)[PNGReader.Read(filePath).Count-2]);
+        }
     }
 }

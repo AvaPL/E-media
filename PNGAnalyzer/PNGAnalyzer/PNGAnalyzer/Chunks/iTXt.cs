@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Text;
 
@@ -25,7 +27,7 @@ namespace PNGAnalyzer
         public byte CompressionMethod { get; private set; }
         public string LanguageTag { get; private set; }
         public string TranslatedKeyword { get; private set; }
-        public Text InternationalText { get; private set; }
+        public string Text { get; private set; }
 
         private void ParseData(byte[] data)
         {
@@ -37,7 +39,7 @@ namespace PNGAnalyzer
             startIndex += LanguageTag.Length + 1;
             TranslatedKeyword = GetNullSeparatedString(data, Encoding.UTF8, startIndex);
             startIndex += TranslatedKeyword.Length + 1;
-            InternationalText = ParseInternationalText(data, startIndex);
+            Text = ParseInternationalText(data, startIndex);
         }
 
         private string GetNullSeparatedString(byte[] data, Encoding encoding, int startIndex)
@@ -46,18 +48,20 @@ namespace PNGAnalyzer
             return encoding.GetString(data, startIndex, nullSeparatorIndex - startIndex);
         }
 
-        private Text ParseInternationalText(byte[] data, int startIndex)
+        private string ParseInternationalText(byte[] data, int startIndex)
         {
-            if (CompressionFlag == 0)
-            {
-                string text = Encoding.UTF8.GetString(data, startIndex, data.Length - startIndex);
-                return new Uncompressed(text);
-            }
-            else
-            {
-                byte[] text = data.Skip(startIndex).ToArray();
-                return new Compressed(text);
-            }
+            return CompressionFlag == 0
+                ? Encoding.UTF8.GetString(data, startIndex, data.Length - startIndex)
+                : DecompressData(data.Skip(startIndex).ToArray());
+        }
+
+        private string DecompressData(byte[] data)
+        {
+            using var compressedStream = new MemoryStream(data);
+            using var decompressionStream = new GZipStream(compressedStream, CompressionMode.Decompress);
+            using var resultStream = new MemoryStream();
+            decompressionStream.CopyTo(resultStream);
+            return Encoding.UTF8.GetString(resultStream.ToArray());
         }
 
         public override string GetInfo()
@@ -73,41 +77,7 @@ namespace PNGAnalyzer
                 $"{nameof(CompressionMethod)}: {CompressionMethod}\n" +
                 $"{nameof(LanguageTag)}: {LanguageTag}\n" +
                 $"{nameof(TranslatedKeyword)}: {TranslatedKeyword}\n" +
-                $"{nameof(InternationalText)}: {InternationalText}";
-        }
-
-        public class Text
-        {
-        }
-
-        private class Uncompressed : Text
-        {
-            public Uncompressed(string uncompressedText)
-            {
-                UncompressedText = uncompressedText;
-            }
-
-            public string UncompressedText { get; }
-
-            public override string ToString()
-            {
-                return $"{nameof(UncompressedText)}: {UncompressedText}";
-            }
-        }
-
-        private class Compressed : Text
-        {
-            public Compressed(byte[] compressedText)
-            {
-                CompressedText = compressedText;
-            }
-
-            public byte[] CompressedText { get; }
-
-            public override string ToString()
-            {
-                return $"{nameof(CompressedText)}: {CompressedText}";
-            }
+                $"{nameof(Text)}: {Text}";
         }
     }
 }
