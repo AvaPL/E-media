@@ -6,12 +6,11 @@ namespace PNGAnalyzer
 {
     public class Anonymizer
     {
-        public static List<Chunk> Anonymize(string filePathToRead)
+        public static void Anonymize(string filePathToRead, string filePathToWrite)
         {
             List<Chunk> chunks = PNGFile.Read(filePathToRead);
-            List<Chunk> anonymized = chunks.Where(c => Char.IsUpper(c.Type.ToCharArray()[0])).ToList();
-            
-            return anonymized;
+            List<Chunk> anonymized = chunks.Where(c => char.IsUpper(c.Type[0])).ToList();
+            PNGFile.Write(filePathToWrite, anonymized);
         }
     }
 }
