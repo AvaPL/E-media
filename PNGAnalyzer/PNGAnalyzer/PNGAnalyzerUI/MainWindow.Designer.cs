@@ -37,6 +37,7 @@ namespace PNGAnalyzerUI
             this.AnonymizeButton = new System.Windows.Forms.Button();
             this.FourierTransformButton = new System.Windows.Forms.Button();
             this.OpenFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.SaveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.SuspendLayout();
             // 
             // FilepathTextBox
@@ -60,7 +61,7 @@ namespace PNGAnalyzerUI
             // ChunksButton
             // 
             this.ChunksButton.Enabled = false;
-            this.ChunksButton.Location = new System.Drawing.Point(12, 41);
+            this.ChunksButton.Location = new System.Drawing.Point(12, 42);
             this.ChunksButton.Name = "ChunksButton";
             this.ChunksButton.Size = new System.Drawing.Size(149, 23);
             this.ChunksButton.TabIndex = 2;
@@ -71,7 +72,7 @@ namespace PNGAnalyzerUI
             // AnonymizeButton
             // 
             this.AnonymizeButton.Enabled = false;
-            this.AnonymizeButton.Location = new System.Drawing.Point(167, 41);
+            this.AnonymizeButton.Location = new System.Drawing.Point(167, 42);
             this.AnonymizeButton.Name = "AnonymizeButton";
             this.AnonymizeButton.Size = new System.Drawing.Size(150, 23);
             this.AnonymizeButton.TabIndex = 3;
@@ -82,7 +83,7 @@ namespace PNGAnalyzerUI
             // FourierTransformButton
             // 
             this.FourierTransformButton.Enabled = false;
-            this.FourierTransformButton.Location = new System.Drawing.Point(323, 41);
+            this.FourierTransformButton.Location = new System.Drawing.Point(323, 42);
             this.FourierTransformButton.Name = "FourierTransformButton";
             this.FourierTransformButton.Size = new System.Drawing.Size(149, 23);
             this.FourierTransformButton.TabIndex = 4;
@@ -94,6 +95,11 @@ namespace PNGAnalyzerUI
             // 
             this.OpenFileDialog.DefaultExt = "png";
             this.OpenFileDialog.Filter = "PNG files (*.png)|*.png|All files (*.*)|*.*";
+            // 
+            // SaveFileDialog
+            // 
+            this.SaveFileDialog.DefaultExt = "png";
+            this.SaveFileDialog.Filter = "PNG files (*.png)|*.png|All files (*.*)|*.*";
             // 
             // MainWindow
             // 
@@ -119,5 +125,6 @@ namespace PNGAnalyzerUI
         private System.Windows.Forms.TextBox FilepathTextBox;
         private System.Windows.Forms.Button BrowseButton;
         private System.Windows.Forms.OpenFileDialog OpenFileDialog;
+        private System.Windows.Forms.SaveFileDialog SaveFileDialog;
     }
 }

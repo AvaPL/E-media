@@ -6,7 +6,8 @@ namespace PNGAnalyzerUI
 {
     public partial class MainWindow : Form
     {
-        private const string FourierTransformPath = @"..\..\..\..\FourierTransform\dist\FourierTransform\FourierTransform.exe";
+        private const string FourierTransformPath =
+            @"..\..\..\..\FourierTransform\dist\FourierTransform\FourierTransform.exe";
 
         public MainWindow()
         {
@@ -30,13 +31,16 @@ namespace PNGAnalyzerUI
         private void AnonymizeButton_Click(object sender, EventArgs e)
         {
             throw new System.NotImplementedException();
+            //TODO: Implement using code below.
+            // if (SaveFileDialog.ShowDialog() == DialogResult.OK)
+            //     Anonymizer.Anonymize(FilepathTextBox.Text, SaveFileDialog.FileName);
         }
 
         private void FourierTransformButton_Click(object sender, EventArgs e)
         {
             ExecuteFourierTransformCommand();
         }
-        
+
         private void ExecuteFourierTransformCommand()
         {
             Process process = new Process
@@ -50,6 +54,5 @@ namespace PNGAnalyzerUI
             };
             process.Start();
         }
-
     }
 }

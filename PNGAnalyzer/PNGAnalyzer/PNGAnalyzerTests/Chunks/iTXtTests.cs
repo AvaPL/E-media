@@ -7,7 +7,7 @@ namespace PNGAnalyzerTests
     public class iTXtTests
     {
         [Test]
-        public void ShoulReadiTXt()
+        public void ShouldReadiTXt()
         {
             string filePath = @"../../../Data/itxt.png";
             iTXt itxt = new iTXt(PNGReader.Read(filePath)[8]);
