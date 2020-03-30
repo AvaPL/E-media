@@ -349,5 +349,10 @@ MigrationBackup/
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 
-# Jetbrains Rider
+# JetBrains Rider
 .idea
+
+# FourierTransform executables
+PNGAnalyzer/FourierTransform/build
+PNGAnalyzer/FourierTransform/dist
+PNGAnalyzer/FourierTransform/FourierTransform.spec

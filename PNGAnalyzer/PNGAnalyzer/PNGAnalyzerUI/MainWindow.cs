@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace PNGAnalyzerUI
 {
     public partial class MainWindow : Form
     {
+        private const string FourierTransformPath = @"..\..\..\..\FourierTransform\dist\FourierTransform\FourierTransform.exe";
+
         public MainWindow()
         {
             InitializeComponent();
@@ -31,7 +34,22 @@ namespace PNGAnalyzerUI
 
         private void FourierTransformButton_Click(object sender, EventArgs e)
         {
-            throw new System.NotImplementedException();
+            ExecuteFourierTransformCommand();
         }
+        
+        private void ExecuteFourierTransformCommand()
+        {
+            Process process = new Process
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    WindowStyle = ProcessWindowStyle.Hidden,
+                    FileName = "cmd.exe",
+                    Arguments = "/C " + FourierTransformPath + " " + FilepathTextBox.Text
+                }
+            };
+            process.Start();
+        }
+
     }
 }
