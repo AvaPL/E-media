@@ -4,7 +4,7 @@ namespace PNGAnalyzer
 {
     public class tIME : Chunk
     {
-        public tIME(string type, byte[] data, int crc) : base(type, data, crc)
+        public tIME(string type, byte[] data, uint crc) : base(type, data, crc)
         {
             if(type != "tIME")
                 throw new ArgumentException("Invalid chunk type passed to tIME");

@@ -4,7 +4,7 @@ namespace PNGAnalyzer
 {
     public class sBIT : Chunk
     {
-        public sBIT(string type, byte[] data, int crc) : base(type, data, crc)
+        public sBIT(string type, byte[] data, uint crc) : base(type, data, crc)
         {
             if (type != "sBIT")
                 throw new ArgumentException("Invalid chunk type passed to sBIT");

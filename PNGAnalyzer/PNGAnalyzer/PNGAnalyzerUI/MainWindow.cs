@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Windows.Forms;
+using PNGAnalyzer;
 
 namespace PNGAnalyzerUI
 {
@@ -30,10 +31,8 @@ namespace PNGAnalyzerUI
 
         private void AnonymizeButton_Click(object sender, EventArgs e)
         {
-            throw new System.NotImplementedException();
-            //TODO: Implement using code below.
-            // if (SaveFileDialog.ShowDialog() == DialogResult.OK)
-            //     Anonymizer.Anonymize(FilepathTextBox.Text, SaveFileDialog.FileName);
+            if (SaveFileDialog.ShowDialog() == DialogResult.OK)
+                Anonymizer.Anonymize(FilepathTextBox.Text, SaveFileDialog.FileName);
         }
 
         private void FourierTransformButton_Click(object sender, EventArgs e)

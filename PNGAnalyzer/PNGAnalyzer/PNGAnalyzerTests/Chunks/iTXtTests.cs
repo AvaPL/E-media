@@ -10,13 +10,22 @@ namespace PNGAnalyzerTests
         public void ShouldReadiTXt()
         {
             string filePath = @"../../../Data/itxt.png";
-            iTXt itxt = new iTXt(PNGReader.Read(filePath)[8]);
+            iTXt itxt = new iTXt(PNGFile.Read(filePath)[8]);
             Assert.AreEqual("Author", itxt.Keyword);
             Assert.AreEqual(0, itxt.CompressionFlag);
             Assert.AreEqual(0, itxt.CompressionMethod);
             Assert.AreEqual("fr", itxt.LanguageTag);
             Assert.AreEqual("Auteur", itxt.TranslatedKeyword);
-            Assert.AreEqual("UncompressedText: La plume de ma tante", itxt.InternationalText.ToString());
+            Assert.AreEqual("La plume de ma tante", itxt.Text);
+        }
+
+        [Test]
+        public void ShouldDecompressText()
+        {
+            string filePath = @"../../../Data/itxt.png";
+            iTXt itxt = new iTXt(PNGFile.Read(filePath)[PNGFile.Read(filePath).Count-2]);
+            Assert.AreEqual("Warning", itxt.Keyword);
+            Assert.AreEqual(1, itxt.CompressionFlag);
         }
     }
 }

@@ -8,7 +8,7 @@ namespace PNGAnalyzer
 {
     public class tEXt : Chunk
     {
-        public tEXt(string type, byte[] data, int crc) : base(type, data, crc)
+        public tEXt(string type, byte[] data, uint crc) : base(type, data, crc)
         {
             if (type != "tEXt")
                 throw new ArgumentException("Invalid chunk type passed to tEXt");

@@ -23,7 +23,7 @@ namespace PNGAnalyzer
             int length = Converter.ToInt32(SkipAndTake(4));
             string type = Encoding.ASCII.GetString(SkipAndTake(4));
             byte[] data = SkipAndTake(length);
-            int crc = Converter.ToInt32(SkipAndTake(4));
+            uint crc = Converter.ToUInt32(SkipAndTake(4));
             return new Chunk(type, data, crc);
         }
 

@@ -2,7 +2,7 @@
 {
     public class Chunk
     {
-        public Chunk(string type, byte[] data, int crc)
+        public Chunk(string type, byte[] data, uint crc)
         {
             Type = type;
             Data = data;
@@ -18,7 +18,7 @@
 
         public string Type { get; }
         public byte[] Data { get; }
-        public int CRC { get; }
+        public uint CRC { get; }
 
         public virtual string GetInfo()
         {

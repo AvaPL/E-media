@@ -11,7 +11,7 @@ namespace PNGAnalyzerTests
         public void ShouldReadIEND()
         {
             string filePath = @"../../../Data/przekladnia.png";
-            IEND iend = new IEND(PNGReader.Read(filePath).Last());
+            IEND iend = new IEND(PNGFile.Read(filePath).Last());
             Assert.AreEqual("IEND", iend.Type);
         }
     }

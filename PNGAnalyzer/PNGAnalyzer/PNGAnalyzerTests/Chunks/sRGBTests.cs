@@ -10,7 +10,7 @@ namespace PNGAnalyzerTests
         public void ShouldReadsRGB()
         {
             string filePath = @"../../../Data/Plan.png";
-            sRGB srgb = new sRGB(PNGReader.Read(filePath)[1]);
+            sRGB srgb = new sRGB(PNGFile.Read(filePath)[1]);
             Assert.AreEqual("sRGB", srgb.Type);
         }
         
@@ -18,7 +18,7 @@ namespace PNGAnalyzerTests
         public void ShouldContainCorrectData()
         {
             string filePath = @"../../../Data/Plan.png";
-            sRGB srgb = new sRGB(PNGReader.Read(filePath)[1]);
+            sRGB srgb = new sRGB(PNGFile.Read(filePath)[1]);
             Assert.AreEqual(0, srgb.RenderingIntent);
         }
     }
