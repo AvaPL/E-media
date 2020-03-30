@@ -15,7 +15,7 @@ namespace PNGAnalyzer
 
         private static List<Chunk> Anonymize(List<Chunk> chunks)
         {
-            return new List<Chunk>(chunks.Where(c => char.IsUpper(c.Type[0])))
+            return chunks.Where(c => char.IsUpper(c.Type[0]))
                 .GroupBy(chunk => chunk.Type, chunk => chunk)
                 .Select(grouping => grouping.Key == "IDAT" ? AggregateIDAT(grouping) : grouping)
                 .SelectMany(chunk => chunk).ToList();
