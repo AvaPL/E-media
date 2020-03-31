@@ -37,21 +37,16 @@ namespace PNGAnalyzer
             InterlaceMethod = data[12];
         }
 
-        public override string GetInfo()
-        {
-            return base.GetInfo() + "\n" + ToString();
-        }
-
         public override string ToString()
         {
-            return
-                $"{nameof(Width)}: {Width}\n" +
-                $"{nameof(Height)}: {Height}\n" +
-                $"{nameof(BitDepth)}: {BitDepth}\n" +
-                $"{nameof(ColorType)}: {ColorType}\n" +
-                $"{nameof(CompressionMethod)}: {CompressionMethod}\n" +
-                $"{nameof(FilterMethod)}: {FilterMethod}\n" +
-                $"{nameof(InterlaceMethod)}: {InterlaceMethod}";
+            return $"{base.ToString()}, " +
+                   $"{nameof(Width)}: {Width}, " +
+                   $"{nameof(Height)}: {Height}, " +
+                   $"{nameof(BitDepth)}: {BitDepth}, " +
+                   $"{nameof(ColorType)}: {ColorType}, " +
+                   $"{nameof(CompressionMethod)}: {CompressionMethod}, " +
+                   $"{nameof(FilterMethod)}: {FilterMethod}, " +
+                   $"{nameof(InterlaceMethod)}: {InterlaceMethod}";
         }
     }
 }

@@ -6,7 +6,7 @@ namespace PNGAnalyzer
     {
         public sRGB(string type, byte[] data, uint crc) : base(type, data, crc)
         {
-            if(type != "sRGB")
+            if (type != "sRGB")
                 throw new ArgumentException("Invalid chunk type passed to sRGB");
             ParseData(data);
         }
@@ -24,15 +24,11 @@ namespace PNGAnalyzer
         {
             RenderingIntent = data[0];
         }
-        
-        public override string GetInfo()
-        {
-            return base.GetInfo() + "\n" + ToString();
-        }
 
         public override string ToString()
         {
-            return $"{nameof(RenderingIntent)}: {RenderingIntent}";
+            return $"{base.ToString()}, " +
+                   $"{nameof(RenderingIntent)}: {RenderingIntent}";
         }
     }
 }

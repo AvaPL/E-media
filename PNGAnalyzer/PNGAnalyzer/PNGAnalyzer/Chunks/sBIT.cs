@@ -27,14 +27,10 @@ namespace PNGAnalyzer
             SignificantBytes = data;
         }
 
-        public override string GetInfo()
-        {
-            return base.GetInfo() + "\n" + ToString();
-        }
-
         public override string ToString()
         {
-            return $"{nameof(SignificantBytes)}: {SignificantBytes}";
+            return $"{base.ToString()}, " +
+                   $"{nameof(SignificantBytes)}: {SignificantBytes}";
         }
     }
 }

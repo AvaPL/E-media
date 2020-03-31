@@ -66,15 +66,11 @@ namespace PNGAnalyzer
                     Converter.ToInt16(data, i + 8)));
         }
 
-        public override string GetInfo()
-        {
-            return base.GetInfo() + "\n" + ToString();
-        }
-
         public override string ToString()
         {
-            return $"{nameof(Name)}: {Name}\n" +
-                   $"{nameof(SampleDepth)}: {SampleDepth}\n" +
+            return $"{base.ToString()}, " +
+                   $"{nameof(Name)}: {Name}, " +
+                   $"{nameof(SampleDepth)}: {SampleDepth}, " +
                    $"{nameof(Entries)}: {Entries}";
         }
 

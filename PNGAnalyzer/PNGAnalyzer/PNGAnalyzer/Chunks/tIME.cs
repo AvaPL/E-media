@@ -26,14 +26,10 @@ namespace PNGAnalyzer
                 new DateTime(Converter.ToInt16(data), data[2], data[3], data[4], data[5], data[6]);
         }
 
-        public override string GetInfo()
-        {
-            return base.GetInfo() + "\n" + ToString();
-        }
-
         public override string ToString()
         {
-            return LatestModificationDate.ToString("dd/MM/yyyy HH:mm:ss");
+            return $"{base.ToString()}, " +
+                   $"{nameof(LatestModificationDate)}: {LatestModificationDate}";
         }
     }
 }

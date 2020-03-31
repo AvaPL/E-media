@@ -29,17 +29,12 @@ namespace PNGAnalyzer
             UnitSpecifier = data[8];
         }
 
-        public override string GetInfo()
-        {
-            return base.GetInfo() + ToString();
-        }
-
         public override string ToString()
         {
-            return
-                $"{nameof(PixelsPerUnitX)}: {PixelsPerUnitX}\n" +
-                $"{nameof(PixelsPerUnitY)}: {PixelsPerUnitY}\n" +
-                $"{nameof(UnitSpecifier)}: {UnitSpecifier}";
+            return $"{base.ToString()}, " +
+                   $"{nameof(PixelsPerUnitX)}: {PixelsPerUnitX}, " +
+                   $"{nameof(PixelsPerUnitY)}: {PixelsPerUnitY}, " +
+                   $"{nameof(UnitSpecifier)}: {UnitSpecifier}";
         }
     }
 }
