@@ -57,11 +57,7 @@ Done, your program will be now able to display Fourier transforms of your images
 
 ## Screenshots
 
-<center>
-
 | <img src="Screenshots/MainWindow.png"> |
 |:-------------------------------------------------:|
-| <img src="Screenshots/ChunkInfo.png" width="800"> |
-| <img src="Screenshots/FourierTransform.png" width="800"> |
-
-</center>
+| <img src="Screenshots/ChunkInfo.png"> |
+| <img src="Screenshots/FourierTransform.png"> |
