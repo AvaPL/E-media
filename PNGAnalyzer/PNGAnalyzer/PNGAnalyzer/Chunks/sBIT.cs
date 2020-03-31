@@ -8,7 +8,7 @@ namespace PNGAnalyzer
         {
             if (type != "sBIT")
                 throw new ArgumentException("Invalid chunk type passed to sBIT");
-            SignificantBytes = new byte[data.Length];
+            SignificantBits = new byte[data.Length];
             ParseData(data);
         }
 
@@ -16,21 +16,21 @@ namespace PNGAnalyzer
         {
             if (chunk.Type != "sBIT")
                 throw new ArgumentException("Invalid chunk type passed to sBIT");
-            SignificantBytes = new byte[chunk.Data.Length];
+            SignificantBits = new byte[chunk.Data.Length];
             ParseData(chunk.Data);
         }
 
-        public byte[] SignificantBytes { get; private set; }
+        public byte[] SignificantBits { get; private set; }
 
         private void ParseData(byte[] data)
         {
-            SignificantBytes = data;
+            SignificantBits = data;
         }
 
         public override string ToString()
         {
             return $"{base.ToString()}, " +
-                   $"{nameof(SignificantBytes)}: {SignificantBytes}";
+                   $"{nameof(SignificantBits)}: {string.Join(", ", SignificantBits)}";
         }
     }
 }

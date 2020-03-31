@@ -33,7 +33,7 @@ namespace PNGAnalyzer
         public override string ToString()
         {
             return $"{base.ToString()}, " +
-                   $"{nameof(Histogram)}: {Histogram}";
+                   $"{nameof(Histogram)}: {Histogram.Length} bars";
         }
     }
 }

@@ -24,12 +24,15 @@ namespace PNGAnalyzerUI
 
         private static string GetChunksInfo(List<Chunk> chunks)
         {
-            return string.Join(Environment.NewLine, chunks.Select(GetChunkInfo));
+            return string.Join(
+                Environment.NewLine + "------------------------------------------------------------------------" +
+                Environment.NewLine,
+                chunks.Select(GetChunkInfo));
         }
 
         private static string GetChunkInfo(Chunk chunk)
         {
-            return chunk.GetInfo().Replace("\n", Environment.NewLine);
+            return chunk.ToString().Replace(", ", Environment.NewLine);
         }
     }
 }

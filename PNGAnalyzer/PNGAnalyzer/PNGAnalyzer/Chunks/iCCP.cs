@@ -37,7 +37,7 @@ namespace PNGAnalyzer
             return $"{base.ToString()}, " +
                    $"{nameof(ProfileName)}: {ProfileName}, " +
                    $"{nameof(CompressionMethod)}: {CompressionMethod}, " +
-                   $"{nameof(CompressedProfile)}: {CompressedProfile}";
+                   $"{nameof(CompressedProfile)}: {CompressedProfile.Length} bytes";
         }
     }
 }

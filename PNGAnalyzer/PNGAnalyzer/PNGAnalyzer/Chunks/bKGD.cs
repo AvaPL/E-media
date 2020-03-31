@@ -86,10 +86,7 @@ namespace PNGAnalyzer
 
             public override string ToString()
             {
-                return
-                    $"{nameof(Red)}: {Red}\n" +
-                    $"{nameof(Green)}: {Green}\n" +
-                    $"{nameof(Blue)}: {Blue}";
+                return $"{nameof(Red)}: {Red}, {nameof(Green)}: {Green}, {nameof(Blue)}: {Blue}";
             }
         }
     }

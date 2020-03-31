@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace PNGAnalyzer
 {
@@ -36,7 +35,7 @@ namespace PNGAnalyzer
         public override string ToString()
         {
             return $"{base.ToString()}, " +
-                   $"{nameof(Entries)}: {Entries}";
+                   $"{nameof(Entries)}: {Entries.Count} entries";
         }
 
         public class Entry

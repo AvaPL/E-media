@@ -19,18 +19,10 @@
         public string Type { get; }
         public byte[] Data { get; }
         public uint CRC { get; }
-
-        public virtual string GetInfo()
-        {
-            return ToString();
-        }
-
+        
         public override string ToString()
         {
-            return
-                $"{nameof(Type)}: {Type}\n" +
-                $"{nameof(Data)}: {Data}\n" +
-                $"{nameof(CRC)}: {CRC}";
+            return $"{nameof(Type)}: {Type}, {nameof(Data)}: {Data.Length} bytes";
         }
     }
 }
