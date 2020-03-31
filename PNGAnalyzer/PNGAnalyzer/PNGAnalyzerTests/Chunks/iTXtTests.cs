@@ -23,9 +23,12 @@ namespace PNGAnalyzerTests
         public void ShouldDecompressText()
         {
             string filePath = @"../../../Data/itxt.png";
-            iTXt itxt = new iTXt(PNGFile.Read(filePath)[PNGFile.Read(filePath).Count-2]);
+            iTXt itxt = new iTXt(PNGFile.Read(filePath)[PNGFile.Read(filePath).Count - 2]);
             Assert.AreEqual("Warning", itxt.Keyword);
             Assert.AreEqual(1, itxt.CompressionFlag);
+            Assert.AreEqual(
+                "Es is verboten, um diese Datei in das GIF-Bildformat\numzuwandeln.  Sie sind gevarnt worden.",
+                itxt.Text);
         }
     }
 }
