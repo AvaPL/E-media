@@ -27,7 +27,7 @@ namespace PNGAnalyzerUI
         private void ChunksButton_Click(object sender, EventArgs e)
         {
             Form imageInfo = new ImageInfo(FilepathTextBox.Text);
-            imageInfo.ShowDialog();
+            imageInfo.Show();
         }
 
         private void AnonymizeButton_Click(object sender, EventArgs e)

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace PNGAnalyzer
 {
@@ -10,7 +9,7 @@ namespace PNGAnalyzer
         {
             if (type != "PLTE")
                 throw new ArgumentException("Invalid chunk type passed to PLTE");
-            Entries = new List<Entry>(data.Length/3);
+            Entries = new List<Entry>(data.Length / 3);
             ParseData(data);
         }
 
@@ -18,7 +17,7 @@ namespace PNGAnalyzer
         {
             if (chunk.Type != "PLTE")
                 throw new ArgumentException("Invalid chunk type passed to PLTE");
-            Entries = new List<Entry>(chunk.Data.Length/3);
+            Entries = new List<Entry>(chunk.Data.Length / 3);
             ParseData(chunk.Data);
         }
 
@@ -33,14 +32,10 @@ namespace PNGAnalyzer
             }
         }
 
-        public override string GetInfo()
-        {
-            return base.GetInfo() + "\n" + ToString();
-        }
-
         public override string ToString()
         {
-            return $"{nameof(Entries)}: {Entries}";
+            return $"{base.ToString()}, " +
+                   $"{nameof(Entries)}: {Entries.Count} entries";
         }
 
         public class Entry

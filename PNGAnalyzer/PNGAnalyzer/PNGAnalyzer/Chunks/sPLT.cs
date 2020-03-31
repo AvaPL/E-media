@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -24,8 +23,8 @@ namespace PNGAnalyzer
             ParseData(chunk.Data);
         }
 
-        public string Name { get; set; }
-        public byte SampleDepth { get; set; }
+        public string Name { get; private set; }
+        public byte SampleDepth { get; private set; }
         public List<Entry> Entries { get; }
 
         private void ParseData(byte[] data)
@@ -38,17 +37,12 @@ namespace PNGAnalyzer
 
         private void GetPaletteEntries(byte[] data)
         {
-            switch (SampleDepth)
-            {
-                case 8:
-                    GetByteEntries(data);
-                    break;
-                case 16:
-                    GetShortEntries(data);
-                    break;
-                default:
-                    throw new ArgumentException("Invalid sPLT sample depth");
-            }
+            if (SampleDepth == 8)
+                GetByteEntries(data);
+            else if (SampleDepth == 16)
+                GetShortEntries(data);
+            else
+                throw new ArgumentException("Invalid sPLT sample depth");
         }
 
         private void GetByteEntries(byte[] data)
@@ -66,16 +60,12 @@ namespace PNGAnalyzer
                     Converter.ToInt16(data, i + 8)));
         }
 
-        public override string GetInfo()
-        {
-            return base.GetInfo() + "\n" + ToString();
-        }
-
         public override string ToString()
         {
-            return $"{nameof(Name)}: {Name}\n" +
-                   $"{nameof(SampleDepth)}: {SampleDepth}\n" +
-                   $"{nameof(Entries)}: {Entries}";
+            return $"{base.ToString()}, " +
+                   $"{nameof(Name)}: {Name}, " +
+                   $"{nameof(SampleDepth)}: {SampleDepth}, " +
+                   $"{nameof(Entries)}: {Entries.Count} entries";
         }
 
         public class Entry
@@ -83,55 +73,55 @@ namespace PNGAnalyzer
 
         private class ByteEntry : Entry
         {
-            private byte Alpha;
-            private byte Blue;
-            private short Frequency;
-            private byte Green;
-            private byte Red;
+            private byte alpha;
+            private byte blue;
+            private short frequency;
+            private byte green;
+            private byte red;
 
             public ByteEntry(byte red, byte green, byte blue, byte alpha, short frequency)
             {
-                Red = red;
-                Green = green;
-                Blue = blue;
-                Alpha = alpha;
-                Frequency = frequency;
+                this.red = red;
+                this.green = green;
+                this.blue = blue;
+                this.alpha = alpha;
+                this.frequency = frequency;
             }
 
             public override string ToString()
             {
-                return $"{nameof(Red)}: {Red}\n" +
-                       $"{nameof(Green)}: {Green}\n" +
-                       $"{nameof(Blue)}: {Blue}\n +" +
-                       $"{nameof(Alpha)}: {Alpha}\n +" +
-                       $" {nameof(Frequency)}: {Frequency}";
+                return $"{nameof(alpha)}: {alpha}, " +
+                       $"{nameof(blue)}: {blue}, " +
+                       $"{nameof(frequency)}: {frequency}, " +
+                       $"{nameof(green)}: {green}, " +
+                       $"{nameof(red)}: {red}";
             }
         }
 
         private class ShortEntry : Entry
         {
-            private short Alpha;
-            private short Blue;
-            private short Frequency;
-            private short Green;
-            private short Red;
+            private short alpha;
+            private short blue;
+            private short frequency;
+            private short green;
+            private short red;
 
             public ShortEntry(short red, short green, short blue, short alpha, short frequency)
             {
-                Red = red;
-                Green = green;
-                Blue = blue;
-                Alpha = alpha;
-                Frequency = frequency;
+                this.red = red;
+                this.green = green;
+                this.blue = blue;
+                this.alpha = alpha;
+                this.frequency = frequency;
             }
 
             public override string ToString()
             {
-                return $"{nameof(Alpha)}: {Alpha}\n" +
-                       $"{nameof(Blue)}: {Blue}\n" +
-                       $"{nameof(Frequency)}: {Frequency}\n" +
-                       $"{nameof(Green)}: {Green}\n" +
-                       $"{nameof(Red)}: {Red}";
+                return $"{nameof(alpha)}: {alpha}, " +
+                       $"{nameof(blue)}: {blue}, " +
+                       $"{nameof(frequency)}: {frequency}, " +
+                       $"{nameof(green)}: {green}, " +
+                       $"{nameof(red)}: {red}";
             }
         }
     }

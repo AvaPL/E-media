@@ -41,14 +41,12 @@ namespace PNGAnalyzer
             return Encoding.GetEncoding("ISO-8859-1").GetString(data, 0, nullSeparatorIndex);
         }
 
-        public override string GetInfo()
-        {
-            return base.GetInfo() + "\n" + ToString();
-        }
-
         public override string ToString()
         {
-            return $"{nameof(Keyword)}: {Keyword}";
+            return $"{base.ToString()}, " +
+                   $"{nameof(Keyword)}: {Keyword}, " +
+                   $"{nameof(CompressionMethod)}: {CompressionMethod}, " +
+                   $"{nameof(Text)}: {Text}";
         }
     }
 }

@@ -55,19 +55,15 @@ namespace PNGAnalyzer
                 : Encoding.UTF8.GetString(GZipCompression.Decompress(data.Skip(startIndex).ToArray()));
         }
 
-        public override string GetInfo()
-        {
-            return base.GetInfo() + "\n" + ToString();
-        }
-
         public override string ToString()
         {
             return
-                $"{nameof(Keyword)}: {Keyword}\n" +
-                $"{nameof(CompressionFlag)}: {CompressionFlag}\n" +
-                $"{nameof(CompressionMethod)}: {CompressionMethod}\n" +
-                $"{nameof(LanguageTag)}: {LanguageTag}\n" +
-                $"{nameof(TranslatedKeyword)}: {TranslatedKeyword}\n" +
+                $"{base.ToString()}, " +
+                $"{nameof(Keyword)}: {Keyword}, " +
+                $"{nameof(CompressionFlag)}: {CompressionFlag}, " +
+                $"{nameof(CompressionMethod)}: {CompressionMethod}, " +
+                $"{nameof(LanguageTag)}: {LanguageTag}, " +
+                $"{nameof(TranslatedKeyword)}: {TranslatedKeyword}, " +
                 $"{nameof(Text)}: {Text}";
         }
     }

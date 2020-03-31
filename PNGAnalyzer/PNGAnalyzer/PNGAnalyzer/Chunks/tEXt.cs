@@ -32,14 +32,10 @@ namespace PNGAnalyzer
             Text = latin1.GetString(data.Skip(Keyword.Length + 1).ToArray());
         }
 
-        public override string GetInfo()
-        {
-            return base.GetInfo() + "\n" + ToString();
-        }
-
         public override string ToString()
         {
-            return $"{nameof(Keyword)}: {Keyword}\n" +
+            return $"{base.ToString()}, " +
+                   $"{nameof(Keyword)}: {Keyword}, " +
                    $"{nameof(Text)}: {Text}";
         }
     }
