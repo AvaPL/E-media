@@ -32,17 +32,12 @@ namespace PNGAnalyzer
             CompressedProfile = data.Skip(nullSeparatorIndex + 2).ToArray();
         }
 
-        public override string GetInfo()
-        {
-            return base.GetInfo() + "\n" + ToString();
-        }
-
         public override string ToString()
         {
-            return
-                $"{nameof(ProfileName)}: {ProfileName}\n" +
-                $"{nameof(CompressionMethod)}: {CompressionMethod}\n" +
-                $"{nameof(CompressedProfile)}: {CompressedProfile}";
+            return $"{base.ToString()}, " +
+                   $"{nameof(ProfileName)}: {ProfileName}, " +
+                   $"{nameof(CompressionMethod)}: {CompressionMethod}, " +
+                   $"{nameof(CompressedProfile)}: {CompressedProfile}";
         }
     }
 }

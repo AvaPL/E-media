@@ -32,19 +32,14 @@ namespace PNGAnalyzer
             };
         }
 
-        public override string GetInfo()
-        {
-            return base.GetInfo() + "\n" + ToString();
-        }
-
         public override string ToString()
         {
-            return $"{base.ToString()}, {nameof(BackgroundColor)}: {BackgroundColor}";
+            return $"{base.ToString()}, " +
+                   $"{nameof(BackgroundColor)}: {BackgroundColor}";
         }
 
         public class Color
-        {
-        }
+        {}
 
         private class Indexed : Color
         {

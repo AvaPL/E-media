@@ -30,14 +30,10 @@ namespace PNGAnalyzer
             }
         }
 
-        public override string GetInfo()
-        {
-            return base.GetInfo() + "\n" + ToString();
-        }
-
         public override string ToString()
         {
-            return $"{nameof(Histogram)}: {Histogram}";
+            return $"{base.ToString()}, " +
+                   $"{nameof(Histogram)}: {Histogram}";
         }
     }
 }
