@@ -6,7 +6,7 @@ namespace PNGAnalyzer
     {
         public gAMA(string type, byte[] data, uint crc) : base(type, data, crc)
         {
-            if(type != "gAMA")
+            if (type != "gAMA")
                 throw new ArgumentException("Invalid chunk type passed to gAMA");
             ParseData(data);
         }
@@ -26,14 +26,10 @@ namespace PNGAnalyzer
             Gamma = Converter.ToInt32(data, 0);
         }
 
-        public override string GetInfo()
-        {
-            return base.GetInfo() + "\n" + ToString();
-        }
-
         public override string ToString()
         {
-            return $"{nameof(Gamma)}: {Gamma}";
+            return $"{base.ToString()}, " +
+                   $"{nameof(Gamma)}: {Gamma}";
         }
     }
 }

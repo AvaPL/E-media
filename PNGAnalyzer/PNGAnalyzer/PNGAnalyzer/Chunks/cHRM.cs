@@ -18,7 +18,7 @@ namespace PNGAnalyzer
             ParseData(chunk.Data);
         }
 
-        public int  WhitePointX { get; private set; }
+        public int WhitePointX { get; private set; }
         public int WhitePointY { get; private set; }
         public int RedX { get; private set; }
         public int RedY { get; private set; }
@@ -39,21 +39,17 @@ namespace PNGAnalyzer
             BlueY = Converter.ToInt32(data, 28);
         }
 
-        public override string GetInfo()
-        {
-            return base.GetInfo() + "\n" + ToString();
-        }
-
         public override string ToString()
         {
-            return $"{nameof(WhitePointX)}: {WhitePointX}\n" + 
-            $"{nameof(WhitePointY)}: {WhitePointY}\n" +
-            $"{nameof(RedX)}: {RedX}\n" +
-            $"{nameof(RedY)}: {RedY}\n" +
-            $"{nameof(GreenX)}: {GreenX}\n" +
-            $"{nameof(GreenY)}: {GreenY}\n" +
-            $"{nameof(BlueX)}: {BlueX}\n +" +
-            $"{nameof(BlueY)}: {BlueY}";
+            return $"{base.ToString()}, " +
+                   $"{nameof(WhitePointX)}: {WhitePointX}, " +
+                   $"{nameof(WhitePointY)}: {WhitePointY}, " +
+                   $"{nameof(RedX)}: {RedX}, " +
+                   $"{nameof(RedY)}: {RedY}, " +
+                   $"{nameof(GreenX)}: {GreenX}, " +
+                   $"{nameof(GreenY)}: {GreenY}, " +
+                   $"{nameof(BlueX)}: {BlueX}, " +
+                   $"{nameof(BlueY)}: {BlueY}";
         }
     }
 }
