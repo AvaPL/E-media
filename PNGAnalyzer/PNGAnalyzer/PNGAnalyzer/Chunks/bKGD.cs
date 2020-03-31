@@ -4,7 +4,7 @@ namespace PNGAnalyzer
 {
     public class bKGD : Chunk
     {
-        public bKGD(string type, byte[] data, int crc) : base(type, data, crc)
+        public bKGD(string type, byte[] data, uint crc) : base(type, data, crc)
         {
             if (type != "bKGD")
                 throw new ArgumentException("Invalid chunk type passed to bKGD");

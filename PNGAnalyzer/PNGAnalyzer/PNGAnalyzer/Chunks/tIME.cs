@@ -4,9 +4,9 @@ namespace PNGAnalyzer
 {
     public class tIME : Chunk
     {
-        public tIME(string type, byte[] data, int crc) : base(type, data, crc)
+        public tIME(string type, byte[] data, uint crc) : base(type, data, crc)
         {
-            if(type != "tIME")
+            if (type != "tIME")
                 throw new ArgumentException("Invalid chunk type passed to tIME");
             ParseData(data);
         }
@@ -22,7 +22,7 @@ namespace PNGAnalyzer
 
         private void ParseData(byte[] data)
         {
-            LatestModificationDate = 
+            LatestModificationDate =
                 new DateTime(Converter.ToInt16(data), data[2], data[3], data[4], data[5], data[6]);
         }
 
@@ -30,7 +30,7 @@ namespace PNGAnalyzer
         {
             return base.GetInfo() + "\n" + ToString();
         }
-        
+
         public override string ToString()
         {
             return LatestModificationDate.ToString("dd/MM/yyyy HH:mm:ss");

@@ -37,23 +37,22 @@ namespace PNGAnalyzerUI
             this.AnonymizeButton = new System.Windows.Forms.Button();
             this.FourierTransformButton = new System.Windows.Forms.Button();
             this.OpenFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.SaveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.SuspendLayout();
             // 
             // FilepathTextBox
             // 
-            this.FilepathTextBox.Location = new System.Drawing.Point(14, 16);
-            this.FilepathTextBox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.FilepathTextBox.Location = new System.Drawing.Point(12, 12);
             this.FilepathTextBox.Name = "FilepathTextBox";
             this.FilepathTextBox.ReadOnly = true;
-            this.FilepathTextBox.Size = new System.Drawing.Size(437, 27);
+            this.FilepathTextBox.Size = new System.Drawing.Size(383, 23);
             this.FilepathTextBox.TabIndex = 0;
             // 
             // BrowseButton
             // 
-            this.BrowseButton.Location = new System.Drawing.Point(458, 16);
-            this.BrowseButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.BrowseButton.Location = new System.Drawing.Point(401, 12);
             this.BrowseButton.Name = "BrowseButton";
-            this.BrowseButton.Size = new System.Drawing.Size(81, 31);
+            this.BrowseButton.Size = new System.Drawing.Size(71, 23);
             this.BrowseButton.TabIndex = 1;
             this.BrowseButton.Text = "Browse...";
             this.BrowseButton.UseVisualStyleBackColor = true;
@@ -62,10 +61,9 @@ namespace PNGAnalyzerUI
             // ChunksButton
             // 
             this.ChunksButton.Enabled = false;
-            this.ChunksButton.Location = new System.Drawing.Point(14, 55);
-            this.ChunksButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.ChunksButton.Location = new System.Drawing.Point(12, 42);
             this.ChunksButton.Name = "ChunksButton";
-            this.ChunksButton.Size = new System.Drawing.Size(170, 31);
+            this.ChunksButton.Size = new System.Drawing.Size(149, 23);
             this.ChunksButton.TabIndex = 2;
             this.ChunksButton.Text = "Chunks";
             this.ChunksButton.UseVisualStyleBackColor = true;
@@ -74,10 +72,9 @@ namespace PNGAnalyzerUI
             // AnonymizeButton
             // 
             this.AnonymizeButton.Enabled = false;
-            this.AnonymizeButton.Location = new System.Drawing.Point(191, 55);
-            this.AnonymizeButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.AnonymizeButton.Location = new System.Drawing.Point(167, 42);
             this.AnonymizeButton.Name = "AnonymizeButton";
-            this.AnonymizeButton.Size = new System.Drawing.Size(171, 31);
+            this.AnonymizeButton.Size = new System.Drawing.Size(150, 23);
             this.AnonymizeButton.TabIndex = 3;
             this.AnonymizeButton.Text = "Anonymize";
             this.AnonymizeButton.UseVisualStyleBackColor = true;
@@ -86,10 +83,9 @@ namespace PNGAnalyzerUI
             // FourierTransformButton
             // 
             this.FourierTransformButton.Enabled = false;
-            this.FourierTransformButton.Location = new System.Drawing.Point(369, 55);
-            this.FourierTransformButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.FourierTransformButton.Location = new System.Drawing.Point(323, 42);
             this.FourierTransformButton.Name = "FourierTransformButton";
-            this.FourierTransformButton.Size = new System.Drawing.Size(170, 31);
+            this.FourierTransformButton.Size = new System.Drawing.Size(149, 23);
             this.FourierTransformButton.TabIndex = 4;
             this.FourierTransformButton.Text = "Fourier transform";
             this.FourierTransformButton.UseVisualStyleBackColor = true;
@@ -100,17 +96,21 @@ namespace PNGAnalyzerUI
             this.OpenFileDialog.DefaultExt = "png";
             this.OpenFileDialog.Filter = "PNG files (*.png)|*.png|All files (*.*)|*.*";
             // 
+            // SaveFileDialog
+            // 
+            this.SaveFileDialog.DefaultExt = "png";
+            this.SaveFileDialog.Filter = "PNG files (*.png)|*.png|All files (*.*)|*.*";
+            // 
             // MainWindow
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(553, 101);
+            this.ClientSize = new System.Drawing.Size(484, 76);
             this.Controls.Add(this.FourierTransformButton);
             this.Controls.Add(this.AnonymizeButton);
             this.Controls.Add(this.ChunksButton);
             this.Controls.Add(this.BrowseButton);
             this.Controls.Add(this.FilepathTextBox);
-            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "MainWindow";
             this.Text = "PNG Analyzer";
             this.ResumeLayout(false);
@@ -125,5 +125,6 @@ namespace PNGAnalyzerUI
         private System.Windows.Forms.TextBox FilepathTextBox;
         private System.Windows.Forms.Button BrowseButton;
         private System.Windows.Forms.OpenFileDialog OpenFileDialog;
+        private System.Windows.Forms.SaveFileDialog SaveFileDialog;
     }
 }

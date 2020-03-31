@@ -7,13 +7,13 @@ namespace PNGAnalyzerTests
     public class zTXtTests
     {
         [Test]
-        public void ShouldReadszTXT()
+        public void ShouldReadzTXT()
         {
             string filePath = @"../../../Data/czerwony.png";
             zTXt ztxt = new zTXt(PNGFile.Read(filePath)[2]);
             Assert.AreEqual("zTXt", ztxt.Type);
         }
-        
+
         [Test]
         public void ShouldContainCorrectData()
         {
@@ -25,8 +25,11 @@ namespace PNGAnalyzerTests
         [Test]
         public void ShouldContainDecompressedText()
         {
-            string filePath = @"../../../Data/exif.png";
-            zTXt ztxt = new zTXt(PNGReader.Read(filePath)[PNGReader.Read(filePath).Count-2]);
+            string filePath = @"../../../Data/czerwony.png";
+            zTXt ztxt = new zTXt(PNGFile.Read(filePath)[2]);
+            Assert.AreEqual(
+                "\ngeneric profile\n      34\n49492a0008000000010031010200070000001a00000000000000476f6f676c650000\n",
+                ztxt.Text);
         }
     }
 }

@@ -8,7 +8,7 @@ namespace PNGAnalyzer
 {
     public class iTXt : Chunk
     {
-        public iTXt(string type, byte[] data, int crc) : base(type, data, crc)
+        public iTXt(string type, byte[] data, uint crc) : base(type, data, crc)
         {
             if (type != "iTXt")
                 throw new ArgumentException("Invalid chunk type passed to iTXt");
@@ -52,16 +52,7 @@ namespace PNGAnalyzer
         {
             return CompressionFlag == 0
                 ? Encoding.UTF8.GetString(data, startIndex, data.Length - startIndex)
-                : DecompressData(data.Skip(startIndex).ToArray());
-        }
-
-        private string DecompressData(byte[] data)
-        {
-            using var compressedStream = new MemoryStream(data);
-            using var decompressionStream = new GZipStream(compressedStream, CompressionMode.Decompress);
-            using var resultStream = new MemoryStream();
-            decompressionStream.CopyTo(resultStream);
-            return Encoding.UTF8.GetString(resultStream.ToArray());
+                : Encoding.UTF8.GetString(GZipCompression.Decompress(data.Skip(startIndex).ToArray()));
         }
 
         public override string GetInfo()

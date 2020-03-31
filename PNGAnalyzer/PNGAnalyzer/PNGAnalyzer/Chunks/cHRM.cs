@@ -4,7 +4,7 @@ namespace PNGAnalyzer
 {
     public class cHRM : Chunk
     {
-        public cHRM(string type, byte[] data, int crc) : base(type, data, crc)
+        public cHRM(string type, byte[] data, uint crc) : base(type, data, crc)
         {
             if (type != "cHRM")
                 throw new ArgumentException("Invalid chunk type passed to cHRM");

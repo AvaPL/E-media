@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Text;
+using Force.Crc32;
 
 namespace PNGAnalyzer
 {
     public class IDAT : Chunk
     {
-        public IDAT(string type, byte[] data, int crc) : base(type, data, crc)
+        private static byte[] TypeBytes = Encoding.ASCII.GetBytes("IDAT");
+        
+        public IDAT(string type, byte[] data, uint crc) : base(type, data, crc)
         {
             if (type != "IDAT")
                 throw new ArgumentException("Invalid chunk type passed to IDAT");
@@ -18,10 +22,23 @@ namespace PNGAnalyzer
 
         public static IDAT operator +(IDAT idat1, IDAT idat2)
         {
+            // byte[] idat1Decompressed = GZipCompression.Decompress(idat1.Data);
+            // byte[] idat2Decompressed = GZipCompression.Decompress(idat2.Data);
+            // byte[] decompressedData = new byte[idat1Decompressed.Length + idat2Decompressed.Length];
+            // idat1Decompressed.CopyTo(decompressedData, 0);
+            // idat2Decompressed.CopyTo(decompressedData, idat1Decompressed.Length);
+            // byte[] compressedData = GZipCompression.Compress(decompressedData);
+            // byte[] crcData = new byte[TypeBytes.Length + compressedData.Length];
+            // TypeBytes.CopyTo(crcData, 0);
+            // compressedData.CopyTo(crcData, TypeBytes.Length);
+            // return new IDAT(idat1.Type, compressedData, Crc32Algorithm.Compute(crcData));
             byte[] data = new byte[idat1.Data.Length + idat2.Data.Length];
             idat1.Data.CopyTo(data, 0);
             idat2.Data.CopyTo(data, idat1.Data.Length);
-            return new IDAT(idat1.Type, data, idat1.CRC + idat2.CRC);
+            byte[] crcData = new byte[TypeBytes.Length + data.Length];
+            TypeBytes.CopyTo(crcData, 0);
+            data.CopyTo(crcData, TypeBytes.Length);
+            return new IDAT(idat1.Type, data, Crc32Algorithm.Compute(crcData));
         }
     }
 }

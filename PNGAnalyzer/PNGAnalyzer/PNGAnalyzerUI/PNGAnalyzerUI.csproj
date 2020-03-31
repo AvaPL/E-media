@@ -79,5 +79,11 @@
     <ItemGroup>
         <None Include="App.config" />
     </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\PNGAnalyzer\PNGAnalyzer.csproj">
+        <Project>{2a691304-7972-460f-9d2f-54a6ced3f137}</Project>
+        <Name>PNGAnalyzer</Name>
+      </ProjectReference>
+    </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

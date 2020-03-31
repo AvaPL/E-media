@@ -4,7 +4,7 @@ namespace PNGAnalyzer
 {
     public class hIST : Chunk
     {
-        public hIST(string type, byte[] data, int crc) : base(type, data, crc)
+        public hIST(string type, byte[] data, uint crc) : base(type, data, crc)
         {
             if (type != "hIST")
                 throw new ArgumentException("Invalid chunk type passed to hIST");

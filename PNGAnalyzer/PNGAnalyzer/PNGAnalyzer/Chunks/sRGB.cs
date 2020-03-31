@@ -4,7 +4,7 @@ namespace PNGAnalyzer
 {
     public class sRGB : Chunk
     {
-        public sRGB(string type, byte[] data, int crc) : base(type, data, crc)
+        public sRGB(string type, byte[] data, uint crc) : base(type, data, crc)
         {
             if(type != "sRGB")
                 throw new ArgumentException("Invalid chunk type passed to sRGB");
