@@ -42,17 +42,17 @@ namespace PNGAnalyzerUI
             // 
             // FilepathTextBox
             // 
-            this.FilepathTextBox.Location = new System.Drawing.Point(12, 12);
+            this.FilepathTextBox.Location = new System.Drawing.Point(10, 10);
             this.FilepathTextBox.Name = "FilepathTextBox";
             this.FilepathTextBox.ReadOnly = true;
-            this.FilepathTextBox.Size = new System.Drawing.Size(383, 23);
+            this.FilepathTextBox.Size = new System.Drawing.Size(329, 20);
             this.FilepathTextBox.TabIndex = 0;
             // 
             // BrowseButton
             // 
-            this.BrowseButton.Location = new System.Drawing.Point(401, 12);
+            this.BrowseButton.Location = new System.Drawing.Point(344, 10);
             this.BrowseButton.Name = "BrowseButton";
-            this.BrowseButton.Size = new System.Drawing.Size(71, 23);
+            this.BrowseButton.Size = new System.Drawing.Size(61, 20);
             this.BrowseButton.TabIndex = 1;
             this.BrowseButton.Text = "Browse...";
             this.BrowseButton.UseVisualStyleBackColor = true;
@@ -61,9 +61,9 @@ namespace PNGAnalyzerUI
             // ChunksButton
             // 
             this.ChunksButton.Enabled = false;
-            this.ChunksButton.Location = new System.Drawing.Point(12, 42);
+            this.ChunksButton.Location = new System.Drawing.Point(10, 36);
             this.ChunksButton.Name = "ChunksButton";
-            this.ChunksButton.Size = new System.Drawing.Size(149, 23);
+            this.ChunksButton.Size = new System.Drawing.Size(128, 20);
             this.ChunksButton.TabIndex = 2;
             this.ChunksButton.Text = "Chunks";
             this.ChunksButton.UseVisualStyleBackColor = true;
@@ -72,9 +72,9 @@ namespace PNGAnalyzerUI
             // AnonymizeButton
             // 
             this.AnonymizeButton.Enabled = false;
-            this.AnonymizeButton.Location = new System.Drawing.Point(167, 42);
+            this.AnonymizeButton.Location = new System.Drawing.Point(143, 36);
             this.AnonymizeButton.Name = "AnonymizeButton";
-            this.AnonymizeButton.Size = new System.Drawing.Size(150, 23);
+            this.AnonymizeButton.Size = new System.Drawing.Size(129, 20);
             this.AnonymizeButton.TabIndex = 3;
             this.AnonymizeButton.Text = "Anonymize";
             this.AnonymizeButton.UseVisualStyleBackColor = true;
@@ -83,9 +83,9 @@ namespace PNGAnalyzerUI
             // FourierTransformButton
             // 
             this.FourierTransformButton.Enabled = false;
-            this.FourierTransformButton.Location = new System.Drawing.Point(323, 42);
+            this.FourierTransformButton.Location = new System.Drawing.Point(277, 36);
             this.FourierTransformButton.Name = "FourierTransformButton";
-            this.FourierTransformButton.Size = new System.Drawing.Size(149, 23);
+            this.FourierTransformButton.Size = new System.Drawing.Size(128, 20);
             this.FourierTransformButton.TabIndex = 4;
             this.FourierTransformButton.Text = "Fourier transform";
             this.FourierTransformButton.UseVisualStyleBackColor = true;
@@ -103,9 +103,9 @@ namespace PNGAnalyzerUI
             // 
             // MainWindow
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(484, 76);
+            this.ClientSize = new System.Drawing.Size(415, 66);
             this.Controls.Add(this.FourierTransformButton);
             this.Controls.Add(this.AnonymizeButton);
             this.Controls.Add(this.ChunksButton);
@@ -115,6 +115,7 @@ namespace PNGAnalyzerUI
             this.Text = "PNG Analyzer";
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
         #endregion

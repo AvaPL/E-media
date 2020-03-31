@@ -22,7 +22,7 @@
 
         public virtual string GetInfo()
         {
-            return ToString();
+            return base.ToString();
         }
 
         public override string ToString()
