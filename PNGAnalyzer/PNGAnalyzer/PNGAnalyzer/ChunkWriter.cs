@@ -5,7 +5,6 @@ namespace PNGAnalyzer
 {
     public class ChunkWriter
     {
-        
         private readonly List<byte> bytes = new List<byte>();
 
         public void Write(Chunk chunk)

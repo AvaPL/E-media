@@ -5,7 +5,6 @@ using PNGAnalyzer;
 
 namespace PNGAnalyzerTests
 {
-
     [TestFixture]
     public class PNGFileTests
     {
@@ -15,7 +14,7 @@ namespace PNGAnalyzerTests
             string PNGfilePath = @"../../../Data/Plan.png";
             Assert.DoesNotThrow(() => PNGFile.Read(PNGfilePath));
         }
-        
+
         [Test]
         public void ShouldThrowExceptionGivenNotPNGFile()
         {

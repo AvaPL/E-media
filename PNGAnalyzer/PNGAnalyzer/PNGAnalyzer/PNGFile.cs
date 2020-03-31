@@ -34,7 +34,7 @@ namespace PNGAnalyzer
         {
             byte[] sequence = new byte[] {137, 80, 78, 71, 13, 10, 26, 10};
             ChunkWriter chunkWriter = new ChunkWriter();
-            foreach (var chunk in chunks) 
+            foreach (var chunk in chunks)
                 chunkWriter.Write(chunk);
             byte[] chunkBytes = chunkWriter.GetBytes();
             byte[] result = new byte[sequence.Length + chunkBytes.Length];
