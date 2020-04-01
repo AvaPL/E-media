@@ -32,7 +32,7 @@ namespace PNGAnalyzer
                 "tEXt" => new tEXt(chunk),
                 "tIME" => new tIME(chunk),
                 "zTXt" => new zTXt(chunk),
-                _ => throw new FormatException("Invalid chunk type.")
+                _ => chunk
             };
         }
     }
