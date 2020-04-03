@@ -49,6 +49,7 @@
         <Compile Include="ChunkParserTests.cs" />
         <Compile Include="Chunks\bKGDTests.cs" />
         <Compile Include="Chunks\cHRMTests.cs" />
+        <Compile Include="Chunks\eXIfTests.cs" />
         <Compile Include="Chunks\gAMATests.cs" />
         <Compile Include="Chunks\iCCPTests.cs" />
         <Compile Include="Chunks\IDATTests.cs" />

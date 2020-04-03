@@ -49,6 +49,7 @@
         <Compile Include="Chunks\cHRM.cs" />
         <Compile Include="Chunks\bKGD.cs" />
         <Compile Include="Chunks\Chunk.cs" />
+        <Compile Include="Chunks\eXIf.cs" />
         <Compile Include="Chunks\gAMA.cs" />
         <Compile Include="Chunks\hIST.cs" />
         <Compile Include="Chunks\iCCP.cs" />

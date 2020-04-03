@@ -17,6 +17,7 @@ namespace PNGAnalyzer
             {
                 "bKGD" => new bKGD(chunk),
                 "cHRM" => new cHRM(chunk),
+                "eXIf" => new eXIf(chunk),
                 "gAMA" => new gAMA(chunk),
                 "hIST" => new hIST(chunk),
                 "iCCP" => new iCCP(chunk),
