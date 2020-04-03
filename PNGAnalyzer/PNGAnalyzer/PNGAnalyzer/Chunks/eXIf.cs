@@ -22,32 +22,68 @@ namespace PNGAnalyzer
         }
 
         public string EndianFlag { get; private set; }
+        public int Offset { get; private set; }
 
 
         private void ParseData(byte[] data)
         {
             EndianFlag = Encoding.GetEncoding("ISO-8859-1").GetString(data.Take(2).ToArray());
             int index = 2;
-            if (Converter.ToInt16(data, index)!=42)
+            if (Converter.ToInt16(data, index) != 42)
             {
                 throw new FormatException("eXIf data is not in TIFF format");
             }
+
             index += 2;
+            Offset = Converter.ToInt32(data, index);
+            index = Offset;
+            IFD ifd0 = new IFD(data.Skip(index).ToArray());
         }
 
 
-        public class IFD
+        private class IFD
         {
+            public IFD(byte[] data)
+            {
+                int index = 0;
+                short length = Converter.ToInt16(data, index);
+                index += 2;
+                Tags = new List<Tag>(length);
+                for (int i = 0; i < length; i++)
+                {
+                    Tags.Add(new Tag(data.Skip(index).Take(12).ToArray()));
+                    index += 12;
+                }
+
+                Data = data.Skip(index).ToArray();
+            }
+
+            public List<Tag> Tags { get; }
+            public byte[] Data { get; }
+
             public class Tag
             {
-                public short TagID { get; private set; }
-                public short TagType { get; private set; }
-                public uint Count { get; private set; }
-                public uint Offset { get; private set; }
+                public Tag(byte[] data)
+                {
+                    int index = 0;
+                    short id = Converter.ToInt16(data, index);
+                    index += 2;
+                    short type = Converter.ToInt16(data, index);
+                    index += 2;
+                    uint count = Converter.ToUInt32(data, index);
+                    index += 4;
+                    uint offset = Converter.ToUInt32(data, index);
+                    TagID = id;
+                    TagType = type;
+                    Count = count;
+                    Offset = offset;
+                }
+
+                public short TagID { get; }
+                public short TagType { get; }
+                public uint Count { get; }
+                public uint Offset { get; }
             }
-            
-            public List<Tag> Tags { get; private set; }
-            public short Length { get; private set; }
         }
     }
 }
