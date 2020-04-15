@@ -6,6 +6,7 @@ from matplotlib import pyplot as plt
 parser = argparse.ArgumentParser()
 parser.add_argument("path", help="path to an image")
 args = parser.parse_args()
+
 image = cv.imread(args.path, cv.IMREAD_GRAYSCALE)
 transform = cv.dft(np.float32(image), flags=cv.DFT_COMPLEX_OUTPUT)
 shifted_transform = np.fft.fftshift(transform)

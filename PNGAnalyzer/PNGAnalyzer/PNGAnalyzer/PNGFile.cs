@@ -32,7 +32,7 @@ namespace PNGAnalyzer
 
         public static void Write(string filePath, List<Chunk> chunks)
         {
-            byte[] sequence = new byte[] {137, 80, 78, 71, 13, 10, 26, 10};
+            byte[] sequence = {137, 80, 78, 71, 13, 10, 26, 10};
             ChunkWriter chunkWriter = new ChunkWriter();
             foreach (var chunk in chunks)
                 chunkWriter.Write(chunk);
