@@ -50,7 +50,7 @@ namespace PNGAnalyzer
         {
             return CompressionFlag == 0
                 ? Encoding.UTF8.GetString(data, startIndex, data.Length - startIndex)
-                : Encoding.UTF8.GetString(GZipCompression.Decompress(data.Skip(startIndex).ToArray()));
+                : Encoding.UTF8.GetString(ZlibCompression.Decompress(data.Skip(startIndex).ToArray()));
         }
 
         public override string ToString()
