@@ -67,6 +67,7 @@
         <Compile Include="Chunks\zTXt.cs" />
         <Compile Include="ChunkWriter.cs" />
         <Compile Include="GZipCompression.cs" />
+        <Compile Include="IDATConverter.cs" />
         <Compile Include="PNGFile.cs" />
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
