@@ -89,5 +89,25 @@ namespace PNGAnalyzerTests
             Assert.AreEqual(expectedSecondChunkData, result[1].Data);
             Assert.AreEqual(expectedThirdChunkData, result[2].Data);
         }
+
+        [Test]
+        public void ShouldConcatAndThenSplitImage()
+        {
+            string filePath = @"../../../Data/lena.png";
+            List<Chunk> chunks = PNGFile.Read(filePath);
+            List<Chunk> parsedChunks = ChunkParser.Parse(chunks);
+            int firstIdatIndex = parsedChunks.TakeWhile(chunk => !IsIDAT(chunk)).Count();
+            List<IDAT> idats = parsedChunks.Where(IsIDAT).Select(chunk => (IDAT) chunk).ToList();
+            byte[] bytes = IDATConverter.ConcatToBytes(idats);
+            List<Chunk> resultIdats = IDATConverter.SplitToIDATs(bytes).Select(idat => (Chunk) idat).ToList();
+            List<Chunk> resultChunks = parsedChunks.Where(chunk => !IsIDAT(chunk)).ToList();
+            resultChunks.InsertRange(firstIdatIndex, resultIdats);
+            PNGFile.Write(@"../../../Data/lenaConverted.png", resultChunks);
+        }
+
+        private static bool IsIDAT(Chunk chunk)
+        {
+            return chunk.Type == "IDAT";
+        }
     }
 }
