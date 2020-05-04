@@ -1,12 +1,12 @@
-﻿namespace PNGAnalyzer.RSA
+﻿using System.Security.Cryptography;
+
+namespace PNGAnalyzer.RSA
 {
     public interface IRSA
     {
         byte[] Encrypt(byte[] data);
         byte[] Decrypt(byte[] data);
-        void ImportPublicKey(string publicKey);
-        void ImportPrivateKey(string privateKey);
-        void ImportKeyPair(KeyPair keyPair);
-        KeyPair GenerateKeyPair(int numberOfBits);
+        void ImportParameters(RSAParameters parameters);
+        RSAParameters GenerateKeyPair(int numberOfBits);
     }
 }
