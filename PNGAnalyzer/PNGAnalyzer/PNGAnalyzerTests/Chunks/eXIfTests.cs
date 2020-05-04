@@ -10,7 +10,7 @@ namespace PNGAnalyzerTests
         [Test]
         public void ShouldReadeXIf()
         {
-            string filePath = @"../../../Data/sinusExif.png";
+            string filePath = @"../../../Data/kostkiExif.png";
             List<Chunk> chunks = PNGFile.Read(filePath);
             eXIf exif = new eXIf(chunks[chunks.Count - 2]);
             Assert.AreEqual("eXIf", exif.Type);
@@ -19,7 +19,7 @@ namespace PNGAnalyzerTests
         [Test]
         public void ShouldContainCorrectEndianFlag()
         {
-            string filePath = @"../../../Data/sinusExif.png";
+            string filePath = @"../../../Data/kostkiExif.png";
             List<Chunk> chunks = PNGFile.Read(filePath);
             eXIf exif = new eXIf(chunks[chunks.Count - 2]);
             Assert.AreEqual("MM", exif.EndianFlag);

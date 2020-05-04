@@ -10,7 +10,7 @@ namespace PNGAnalyzerTests
         {
             string filePath = @"../../../Data/Ruch_wirowy.png";
             bKGD bkgd = new bKGD(PNGFile.Read(filePath)[1]);
-            Assert.AreEqual("Red: 255\nGreen: 255\nBlue: 255", bkgd.BackgroundColor.ToString());
+            Assert.AreEqual("Red: 255, Green: 255, Blue: 255", bkgd.BackgroundColor.ToString());
         }
     }
 }

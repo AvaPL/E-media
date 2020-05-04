@@ -16,12 +16,12 @@ namespace PNGAnalyzer
 
         public static byte[] Compress(byte[] bytes)
         {
-            //TODO: Change names.
-            using var originalFileStream = new MemoryStream(bytes);
-            using var compressedFileStream = new MemoryStream();
-            using var compressionStream = new GZipStream(compressedFileStream, CompressionMode.Compress);
-            originalFileStream.CopyTo(compressionStream);
-            return compressedFileStream.ToArray();
+            using var decompressedStream = new MemoryStream(bytes);
+            using var resultStream = new MemoryStream();
+            using var compressionStream = new GZipStream(resultStream, CompressionMode.Compress);
+            decompressedStream.CopyTo(compressionStream);
+            compressionStream.Close();
+            return resultStream.ToArray();
         }
     }
 }
