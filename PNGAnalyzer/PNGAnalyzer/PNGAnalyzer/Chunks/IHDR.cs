@@ -4,10 +4,8 @@ namespace PNGAnalyzer
 {
     public class IHDR : Chunk
     {
-        public IHDR(string type, byte[] data, uint crc) : base(type, data, crc)
+        public IHDR(byte[] data, uint crc) : base("IHDR", data, crc)
         {
-            if (type != "IHDR")
-                throw new ArgumentException("Invalid chunk type passed to IHDR");
             ParseData(data);
         }
 

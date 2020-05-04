@@ -8,10 +8,8 @@ namespace PNGAnalyzer
 {
     public class iTXt : Chunk
     {
-        public iTXt(string type, byte[] data, uint crc) : base(type, data, crc)
+        public iTXt(byte[] data, uint crc) : base("iTXt", data, crc)
         {
-            if (type != "iTXt")
-                throw new ArgumentException("Invalid chunk type passed to iTXt");
             ParseData(data);
         }
 

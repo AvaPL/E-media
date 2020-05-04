@@ -5,10 +5,8 @@ namespace PNGAnalyzer
 {
     public class PLTE : Chunk
     {
-        public PLTE(string type, byte[] data, uint crc) : base(type, data, crc)
+        public PLTE(byte[] data, uint crc) : base("PLTE", data, crc)
         {
-            if (type != "PLTE")
-                throw new ArgumentException("Invalid chunk type passed to PLTE");
             Entries = new List<Entry>(data.Length / 3);
             ParseData(data);
         }
