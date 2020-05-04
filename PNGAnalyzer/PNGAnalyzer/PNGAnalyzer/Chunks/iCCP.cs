@@ -6,10 +6,8 @@ namespace PNGAnalyzer
 {
     public class iCCP : Chunk
     {
-        public iCCP(string type, byte[] data, uint crc) : base(type, data, crc)
+        public iCCP(byte[] data, uint crc) : base("iCCP", data, crc)
         {
-            if (type != "iCCP")
-                throw new ArgumentException("Invalid chunk type passed to iCCP");
             ParseData(data);
         }
 

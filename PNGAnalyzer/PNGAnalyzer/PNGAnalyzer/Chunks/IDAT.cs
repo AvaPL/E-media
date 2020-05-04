@@ -7,10 +7,8 @@ namespace PNGAnalyzer
     {
         private static byte[] TypeBytes = Encoding.ASCII.GetBytes("IDAT");
 
-        public IDAT(string type, byte[] data, uint crc) : base(type, data, crc)
+        public IDAT(byte[] data, uint crc) : base("IDAT", data, crc)
         {
-            if (type != "IDAT")
-                throw new ArgumentException("Invalid chunk type passed to IDAT");
         }
 
         public IDAT(Chunk chunk) : base(chunk)
