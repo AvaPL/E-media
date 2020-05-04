@@ -74,6 +74,7 @@
         <Compile Include="RSA\IRSA.cs" />
         <Compile Include="RSA\MyRSA.cs" />
         <Compile Include="RSA\PrimeExtensions.cs" />
+        <Compile Include="RSA\RSAKeySerializer.cs" />
         <Compile Include="ZlibCompression.cs" />
         <Compile Include="IDATConverter.cs" />
         <Compile Include="PNGFile.cs" />

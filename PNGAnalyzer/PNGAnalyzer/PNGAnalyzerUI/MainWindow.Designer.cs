@@ -38,7 +38,7 @@ namespace PNGAnalyzerUI
             this.FourierTransformButton = new System.Windows.Forms.Button();
             this.OpenFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.SaveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.EncryptionButton = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // FilepathTextBox
@@ -107,22 +107,22 @@ namespace PNGAnalyzerUI
             this.SaveFileDialog.DefaultExt = "png";
             this.SaveFileDialog.Filter = "PNG files (*.png)|*.png|All files (*.*)|*.*";
             // 
-            // EncryptionButton
+            // button1
             // 
-            this.EncryptionButton.Location = new System.Drawing.Point(547, 55);
-            this.EncryptionButton.Name = "EncryptionButton";
-            this.EncryptionButton.Size = new System.Drawing.Size(134, 31);
-            this.EncryptionButton.TabIndex = 5;
-            this.EncryptionButton.Text = "Encryption";
-            this.EncryptionButton.UseVisualStyleBackColor = true;
-            this.EncryptionButton.Click += new System.EventHandler(this.button1_Click);
+            this.button1.Location = new System.Drawing.Point(547, 55);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(134, 31);
+            this.button1.TabIndex = 5;
+            this.button1.Text = "Encryption";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(703, 101);
-            this.Controls.Add(this.EncryptionButton);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.FourierTransformButton);
             this.Controls.Add(this.AnonymizeButton);
             this.Controls.Add(this.ChunksButton);
@@ -144,6 +144,6 @@ namespace PNGAnalyzerUI
         private System.Windows.Forms.Button BrowseButton;
         private System.Windows.Forms.OpenFileDialog OpenFileDialog;
         private System.Windows.Forms.SaveFileDialog SaveFileDialog;
-        private System.Windows.Forms.Button EncryptionButton;
+        private System.Windows.Forms.Button button1;
     }
 }
