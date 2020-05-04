@@ -40,7 +40,7 @@ namespace PNGAnalyzer
         {
             byte[] data = bytes.Skip(startIndex).Take(short.MaxValue).ToArray();
             uint crc = Crc32Algorithm.Compute(data);
-            IDAT idat = new IDAT("IDAT", data, crc);
+            IDAT idat = new IDAT(data, crc);
             return idat;
         }
     }
