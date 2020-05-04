@@ -8,10 +8,8 @@ namespace PNGAnalyzer
 {
     public class zTXt : Chunk
     {
-        public zTXt(string type, byte[] data, uint crc) : base(type, data, crc)
+        public zTXt(byte[] data, uint crc) : base("IDAT", data, crc)
         {
-            if (type != "zTXt")
-                throw new ArgumentException("Invalid chunk type passed to zTXt");
             ParseData(data);
         }
 

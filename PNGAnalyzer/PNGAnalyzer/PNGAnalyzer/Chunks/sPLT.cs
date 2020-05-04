@@ -7,10 +7,8 @@ namespace PNGAnalyzer
 {
     public class sPLT : Chunk
     {
-        public sPLT(string type, byte[] data, uint crc) : base(type, data, crc)
+        public sPLT(byte[] data, uint crc) : base("sPLT", data, crc)
         {
-            if (type != "sPLT")
-                throw new ArgumentException("Invalid chunk type passed to sPLT");
             Entries = new List<Entry>();
             ParseData(data);
         }
