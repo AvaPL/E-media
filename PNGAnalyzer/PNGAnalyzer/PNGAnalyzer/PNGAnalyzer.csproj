@@ -37,6 +37,10 @@
           <HintPath>..\packages\Crc32.NET.1.2.0\lib\net20\Crc32.NET.dll</HintPath>
           <Private>True</Private>
         </Reference>
+        <Reference Include="ICSharpCode.SharpZipLib, Version=1.2.0.246, Culture=neutral, PublicKeyToken=1b03e6acf1164f73">
+          <HintPath>..\packages\SharpZipLib.1.2.0\lib\net45\ICSharpCode.SharpZipLib.dll</HintPath>
+          <Private>True</Private>
+        </Reference>
         <Reference Include="System" />
         <Reference Include="System.Core" />
         <Reference Include="System.Data" />
@@ -66,7 +70,7 @@
         <Compile Include="Chunks\tIME.cs" />
         <Compile Include="Chunks\zTXt.cs" />
         <Compile Include="ChunkWriter.cs" />
-        <Compile Include="GZipCompression.cs" />
+        <Compile Include="ZlibCompression.cs" />
         <Compile Include="IDATConverter.cs" />
         <Compile Include="PNGFile.cs" />
         <Compile Include="Program.cs" />

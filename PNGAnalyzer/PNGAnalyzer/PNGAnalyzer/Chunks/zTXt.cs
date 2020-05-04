@@ -32,7 +32,7 @@ namespace PNGAnalyzer
             int index = Keyword.Length + 1;
             CompressionMethod = data[index];
             index += 1;
-            Text = Encoding.GetEncoding("ISO-8859-1").GetString(GZipCompression.Decompress(data.Skip(index).ToArray()));
+            Text = Encoding.GetEncoding("ISO-8859-1").GetString(ZlibCompression.Decompress(data.Skip(index).ToArray()));
         }
 
         private string GetKeyword(byte[] data)

@@ -104,6 +104,23 @@ namespace PNGAnalyzerTests
             resultChunks.InsertRange(firstIdatIndex, resultIdats);
             PNGFile.Write(@"../../../Data/lenaConverted.png", resultChunks);
         }
+        
+        [Test]
+        public void ShouldConcatDecompressCompressAndThenSplitImage()
+        {
+            string filePath = @"../../../Data/lena.png";
+            List<Chunk> chunks = PNGFile.Read(filePath);
+            List<Chunk> parsedChunks = ChunkParser.Parse(chunks);
+            int firstIdatIndex = parsedChunks.TakeWhile(chunk => !IsIDAT(chunk)).Count();
+            List<IDAT> idats = parsedChunks.Where(IsIDAT).Select(chunk => (IDAT) chunk).ToList();
+            byte[] bytes = IDATConverter.ConcatToBytes(idats);
+            byte[] decompressedBytes = ZlibCompression.Decompress(bytes);
+            byte[] compressedBytes = ZlibCompression.Compress(decompressedBytes);
+            List<Chunk> resultIdats = IDATConverter.SplitToIDATs(compressedBytes).Select(idat => (Chunk) idat).ToList();
+            List<Chunk> resultChunks = parsedChunks.Where(chunk => !IsIDAT(chunk)).ToList();
+            resultChunks.InsertRange(firstIdatIndex, resultIdats);
+            PNGFile.Write(@"../../../Data/lenaCompressed.png", resultChunks);
+        }
 
         private static bool IsIDAT(Chunk chunk)
         {
