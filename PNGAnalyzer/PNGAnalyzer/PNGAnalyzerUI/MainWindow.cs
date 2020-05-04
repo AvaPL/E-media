@@ -54,5 +54,11 @@ namespace PNGAnalyzerUI
             };
             process.Start();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Form encryptionWindow = new EncryptionWindow(FilepathTextBox.Text);
+            encryptionWindow.Show();
+        }
     }
 }

@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EncryptionWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EncryptionWindow.Designer.cs">
+      <DependentUpon>EncryptionWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="ImageInfo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -60,6 +66,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="EncryptionWindow.resx">
+      <DependentUpon>EncryptionWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ImageInfo.resx">
       <DependentUpon>ImageInfo.cs</DependentUpon>
     </EmbeddedResource>
