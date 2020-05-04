@@ -4,10 +4,8 @@ namespace PNGAnalyzer
 {
     public class gAMA : Chunk
     {
-        public gAMA(string type, byte[] data, uint crc) : base(type, data, crc)
+        public gAMA(byte[] data, uint crc) : base("gAMA", data, crc)
         {
-            if (type != "gAMA")
-                throw new ArgumentException("Invalid chunk type passed to gAMA");
             ParseData(data);
         }
 

@@ -8,10 +8,8 @@ namespace PNGAnalyzer
 {
     public class eXIf : Chunk
     {
-        public eXIf(string type, byte[] data, uint crc) : base(type, data, crc)
+        public eXIf(byte[] data, uint crc) : base("eXIf", data, crc)
         {
-            if (type != "eXIf")
-                throw new ArgumentException("Invalid chunk type passed to eXIf");
             ParseData(data);
         }
 
