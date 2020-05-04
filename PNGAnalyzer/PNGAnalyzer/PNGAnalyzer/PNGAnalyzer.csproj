@@ -70,6 +70,8 @@
         <Compile Include="Chunks\tIME.cs" />
         <Compile Include="Chunks\zTXt.cs" />
         <Compile Include="ChunkWriter.cs" />
+        <Compile Include="RSA\IRSA.cs" />
+        <Compile Include="RSA\KeyPair.cs" />
         <Compile Include="ZlibCompression.cs" />
         <Compile Include="IDATConverter.cs" />
         <Compile Include="PNGFile.cs" />
