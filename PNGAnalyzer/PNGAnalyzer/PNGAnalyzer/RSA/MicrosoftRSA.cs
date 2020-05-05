@@ -31,6 +31,11 @@ namespace PNGAnalyzer.RSA
         {
             cryptoServiceProvider.ImportParameters(parameters);
         }
+        
+        public RSAParameters ExportParameters()
+        {
+            return cryptoServiceProvider.ExportParameters(true);
+        }
 
         RSAParameters IRSA.GenerateKeyPair(int numberOfBits)
         {

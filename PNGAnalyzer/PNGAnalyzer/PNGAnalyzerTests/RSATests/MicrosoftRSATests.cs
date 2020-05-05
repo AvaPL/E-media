@@ -59,8 +59,7 @@ namespace PNGAnalyzerTests.RSATests
         [Test]
         public void ShouldCompressAndDecompressMaxSizeArray()
         {
-            RSAParameters parameters = MicrosoftRSA.GenerateKeyPair(1048);
-            MicrosoftRsa.ImportParameters(parameters);
+            RSAParameters parameters = MicrosoftRsa.ExportParameters();
             int maxValue = parameters.Modulus.Length - 11;
             byte[] data = Enumerable.Range(0, maxValue).Select(i => (byte) i).ToArray();
             EncryptAndDecrypt(data);
@@ -69,8 +68,7 @@ namespace PNGAnalyzerTests.RSATests
         [Test]
         public void ShouldThrowExceptionForArrayLongerThanModulusSize()
         {
-            RSAParameters parameters = MicrosoftRSA.GenerateKeyPair(1048);
-            MicrosoftRsa.ImportParameters(parameters);
+            RSAParameters parameters = MicrosoftRsa.ExportParameters();
             int maxValue = parameters.Modulus.Length - 10;
             byte[] data = Enumerable.Range(0, maxValue).Select(i => (byte) i).ToArray();
             Assert.Throws<CryptographicException>(()=> {MicrosoftRsa.Encrypt(data);});
