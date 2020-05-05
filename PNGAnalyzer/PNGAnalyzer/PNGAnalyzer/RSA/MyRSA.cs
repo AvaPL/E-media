@@ -1,4 +1,6 @@
-﻿using System.Security.Cryptography;
+﻿using System;
+using System.Diagnostics;
+using System.Security.Cryptography;
 using Extreme.Mathematics;
 
 namespace PNGAnalyzer.RSA
@@ -27,19 +29,35 @@ namespace PNGAnalyzer.RSA
 
         public static RSAParameters GenerateKeyPair(int numberOfBits)
         {
-            BigInteger
-                primeMin = new BigInteger(6074001000) <<
-                           (numberOfBits / 2 - 33); // primeMin ≈ √2 × 2^(bits - 1), assures key length
+            try
+            {
+                return SafeGenerateKeyPair(numberOfBits);
+            }
+            catch (ArithmeticException e)
+            {
+                // Should occur only in really rare cases when p and q aren't coprime,
+                // which means they aren't prime anyway.
+                Debug.WriteLine("ArithmeticException: probably p and q were not coprime");
+                Debug.WriteLine(e);
+                return GenerateKeyPair(numberOfBits);
+            }
+        }
+
+        private static RSAParameters SafeGenerateKeyPair(int numberOfBits)
+        {
+            BigInteger primeMin = new BigInteger(6074001000)
+                                  << (numberOfBits / 2 - 33); // primeMin ≈ √2 × 2^(bits - 1), assures key length
             BigInteger p = RandomPrimeAbove(primeMin, numberOfBits / 2);
             BigInteger q = RandomPrimeAbove(primeMin, numberOfBits / 2);
+            BigInteger inverseQ = BigInteger.ModularInverse(q, p);
             BigInteger n = p * q; // Modulus
             BigInteger lcm = IntegerMath.LeastCommonMultiple(p - 1, q - 1);
-            BigInteger e = RandomCoprimeBelow(lcm); // Exponent
+            BigInteger e = RandomCoprimeBelow(lcm, numberOfBits / 2); // Exponent
             BigInteger d = BigInteger.ModularInverse(e, lcm);
             // Remaining in RSAParameters
             BigInteger dp = d % (p - 1);
             BigInteger dq = d % (q - 1);
-            BigInteger inverseQ = BigInteger.ModularInverse(q, p);
+
             return new RSAParameters
             {
                 D = d.ToByteArray(),
@@ -77,30 +95,44 @@ namespace PNGAnalyzer.RSA
 
         private static BigInteger RandomBigInteger(int numberOfBits)
         {
-            RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider();
-            byte[] bytes = new byte[numberOfBits / 8 + 1]; // Include sign bit
-            rng.GetBytes(bytes);
-            bytes[bytes.Length - 1] &= 0x7F; // Force sign bit to positive
-            return new BigInteger(bytes);
+            try
+            {
+                return SafeRandomBigInteger(numberOfBits);
+            }
+            catch (IndexOutOfRangeException e)
+            {
+                // Should occur only in really rare cases on internal library
+                Debug.WriteLine("IndexOutOfRangeException: internal library error");
+                Debug.WriteLine(e);
+                return RandomBigInteger(numberOfBits);
+            }
         }
 
-        private static BigInteger RandomCoprimeBelow(BigInteger bound)
+        private static BigInteger SafeRandomBigInteger(int numberOfBits)
+        {
+            RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider();
+            byte[] bytes = new byte[numberOfBits / 8];
+            rng.GetBytes(bytes);
+            return new BigInteger(1, bytes);
+        }
+
+        private static BigInteger RandomCoprimeBelow(BigInteger bound, int numberOfBits)
         {
             BigInteger result;
             do
             {
-                result = RandomPrimeBelow(bound);
-            } while (bound % result == 0);
+                result = RandomPrimeBelow(bound, numberOfBits);
+            } while (IntegerMath.GreatestCommonDivisor(result, bound) != 1);
 
             return result;
         }
 
-        private static BigInteger RandomPrimeBelow(BigInteger bound)
+        private static BigInteger RandomPrimeBelow(BigInteger bound, int numberOfBits)
         {
             BigInteger result;
             do
             {
-                result = RandomPrime(bound.BitCount);
+                result = RandomPrime(numberOfBits);
             } while (result >= bound);
 
             return result;

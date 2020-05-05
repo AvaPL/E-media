@@ -10,12 +10,11 @@ namespace PNGAnalyzerTests
         [Test]
         public void ShouldGenerateKeyOfSpecifiedLength()
         {
-            int[] keyLengths = {512 /*, 1024, 2048, 4096*/};
-            foreach (var keyLength in keyLengths)
+            int keyLength = 512;
+            for (int i = 0; i < 1000; i++) // Repeat 10 times to ensure correct output because of randomness
             {
                 RSAParameters rsaParameters = MyRSA.GenerateKeyPair(keyLength);
-                Assert.AreEqual(keyLength + 2 * 8 /* additional sign bytes from p and q */,
-                    rsaParameters.Modulus.Length * 8);
+                Assert.AreEqual(keyLength + 8, rsaParameters.Modulus.Length * 8); // Include sign bit
             }
         }
     }
