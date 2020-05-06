@@ -39,6 +39,7 @@ namespace PNGAnalyzerUI
             this.OpenFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.SaveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.button1 = new System.Windows.Forms.Button();
+            this.OurEncryption = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // FilepathTextBox
@@ -47,12 +48,12 @@ namespace PNGAnalyzerUI
             this.FilepathTextBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.FilepathTextBox.Name = "FilepathTextBox";
             this.FilepathTextBox.ReadOnly = true;
-            this.FilepathTextBox.Size = new System.Drawing.Size(579, 27);
+            this.FilepathTextBox.Size = new System.Drawing.Size(681, 27);
             this.FilepathTextBox.TabIndex = 0;
             // 
             // BrowseButton
             // 
-            this.BrowseButton.Location = new System.Drawing.Point(600, 13);
+            this.BrowseButton.Location = new System.Drawing.Point(721, 13);
             this.BrowseButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.BrowseButton.Name = "BrowseButton";
             this.BrowseButton.Size = new System.Drawing.Size(81, 31);
@@ -67,7 +68,7 @@ namespace PNGAnalyzerUI
             this.ChunksButton.Location = new System.Drawing.Point(10, 55);
             this.ChunksButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.ChunksButton.Name = "ChunksButton";
-            this.ChunksButton.Size = new System.Drawing.Size(171, 31);
+            this.ChunksButton.Size = new System.Drawing.Size(118, 31);
             this.ChunksButton.TabIndex = 2;
             this.ChunksButton.Text = "Chunks";
             this.ChunksButton.UseVisualStyleBackColor = true;
@@ -76,10 +77,10 @@ namespace PNGAnalyzerUI
             // AnonymizeButton
             // 
             this.AnonymizeButton.Enabled = false;
-            this.AnonymizeButton.Location = new System.Drawing.Point(189, 55);
+            this.AnonymizeButton.Location = new System.Drawing.Point(136, 55);
             this.AnonymizeButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.AnonymizeButton.Name = "AnonymizeButton";
-            this.AnonymizeButton.Size = new System.Drawing.Size(172, 31);
+            this.AnonymizeButton.Size = new System.Drawing.Size(132, 31);
             this.AnonymizeButton.TabIndex = 3;
             this.AnonymizeButton.Text = "Anonymize";
             this.AnonymizeButton.UseVisualStyleBackColor = true;
@@ -88,10 +89,10 @@ namespace PNGAnalyzerUI
             // FourierTransformButton
             // 
             this.FourierTransformButton.Enabled = false;
-            this.FourierTransformButton.Location = new System.Drawing.Point(369, 55);
+            this.FourierTransformButton.Location = new System.Drawing.Point(276, 55);
             this.FourierTransformButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.FourierTransformButton.Name = "FourierTransformButton";
-            this.FourierTransformButton.Size = new System.Drawing.Size(171, 31);
+            this.FourierTransformButton.Size = new System.Drawing.Size(151, 31);
             this.FourierTransformButton.TabIndex = 4;
             this.FourierTransformButton.Text = "Fourier transform";
             this.FourierTransformButton.UseVisualStyleBackColor = true;
@@ -109,19 +110,31 @@ namespace PNGAnalyzerUI
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(547, 55);
+            this.button1.Location = new System.Drawing.Point(434, 57);
+            this.button1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(134, 31);
+            this.button1.Size = new System.Drawing.Size(173, 31);
             this.button1.TabIndex = 5;
-            this.button1.Text = "Encryption";
+            this.button1.Text = "Microsoft Encryption";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // OurEncryption
+            // 
+            this.OurEncryption.Location = new System.Drawing.Point(613, 57);
+            this.OurEncryption.Name = "OurEncryption";
+            this.OurEncryption.Size = new System.Drawing.Size(189, 31);
+            this.OurEncryption.TabIndex = 6;
+            this.OurEncryption.Text = "PajaceTeam Encryption";
+            this.OurEncryption.UseVisualStyleBackColor = true;
+            this.OurEncryption.Click += new System.EventHandler(this.OurEncryption_Click);
             // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(703, 101);
+            this.ClientSize = new System.Drawing.Size(815, 99);
+            this.Controls.Add(this.OurEncryption);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.FourierTransformButton);
             this.Controls.Add(this.AnonymizeButton);
@@ -145,5 +158,6 @@ namespace PNGAnalyzerUI
         private System.Windows.Forms.OpenFileDialog OpenFileDialog;
         private System.Windows.Forms.SaveFileDialog SaveFileDialog;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button OurEncryption;
     }
 }

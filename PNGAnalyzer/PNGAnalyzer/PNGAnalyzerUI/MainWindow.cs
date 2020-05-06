@@ -57,7 +57,13 @@ namespace PNGAnalyzerUI
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Form encryptionWindow = new EncryptionWindow(FilepathTextBox.Text);
+            Form encryptionWindow = new EncryptionWindow(FilepathTextBox.Text, EncryptionType.MicrosoftEncryption);
+            encryptionWindow.Show();
+        }
+
+        private void OurEncryption_Click(object sender, EventArgs e)
+        {
+            Form encryptionWindow = new EncryptionWindow(FilepathTextBox.Text, EncryptionType.PajaceTeamEncryption);
             encryptionWindow.Show();
         }
     }

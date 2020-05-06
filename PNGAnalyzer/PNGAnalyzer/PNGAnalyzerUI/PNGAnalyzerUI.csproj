@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EncryptionType.cs" />
     <Compile Include="EncryptionWindow.cs">
       <SubType>Form</SubType>
     </Compile>
