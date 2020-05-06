@@ -12,7 +12,7 @@ namespace PNGAnalyzerTests.RSATests
         [SetUp]
         public void Setup()
         {
-            RSAParameters parameters = MicrosoftRSA.GenerateKeyPair(2048);
+            RSAParameters parameters = MicrosoftRSA.GenerateKeyPair(512);
             MicrosoftRsa = new MicrosoftRSA(parameters);
         }
 
