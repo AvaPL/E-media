@@ -77,8 +77,8 @@
         <Compile Include="ChunkWriter.cs" />
         <Compile Include="RSA\IRSA.cs" />
         <Compile Include="RSA\MyRSA.cs" />
-        <Compile Include="RSA\PrimeExtensions.cs" />
         <Compile Include="RSA\MicrosoftRSA.cs" />
+        <Compile Include="Support\BigIntegerExtensions.cs" />
         <Compile Include="ZlibCompression.cs" />
         <Compile Include="IDATConverter.cs" />
         <Compile Include="PNGFile.cs" />

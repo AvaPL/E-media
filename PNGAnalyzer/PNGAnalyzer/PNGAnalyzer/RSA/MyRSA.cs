@@ -7,6 +7,18 @@ namespace PNGAnalyzer.RSA
 {
     public class MyRSA : IRSA
     {
+        public RSAParameters Parameters { get; private set; }
+
+        public MyRSA(int numberOfBits)
+        {
+            Parameters = GenerateKeyPair(numberOfBits);
+        }
+
+        public MyRSA(RSAParameters parameters)
+        {
+            Parameters = parameters;
+        }
+
         public byte[] Encrypt(byte[] data)
         {
             throw new System.NotImplementedException();
@@ -19,7 +31,7 @@ namespace PNGAnalyzer.RSA
 
         public void ImportParameters(RSAParameters parameters)
         {
-            throw new System.NotImplementedException();
+            Parameters = parameters;
         }
 
         RSAParameters IRSA.GenerateKeyPair(int numberOfBits)
