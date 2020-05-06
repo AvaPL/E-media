@@ -1,4 +1,6 @@
-﻿using System.Security.Cryptography;
+﻿using System;
+using System.Linq;
+using System.Security.Cryptography;
 using NUnit.Framework;
 using PNGAnalyzer.RSA;
 
@@ -32,6 +34,42 @@ namespace PNGAnalyzerTests
             MyRSA myRsa = new MyRSA(512);
             byte[] toEncrypt = {1, 2, 3};
             Assert.DoesNotThrow(() => myRsa.Encrypt(toEncrypt));
+        }
+
+        [Test]
+        public void ShouldEncryptAndDecrypt()
+        {
+            MyRSA myRsa = new MyRSA(512);
+            byte[] toEncrypt = {1, 2, 3};
+            byte[] encrypted = myRsa.Encrypt(toEncrypt);
+            byte[] decrypted = myRsa.Decrypt(encrypted);
+            Assert.AreEqual(toEncrypt, decrypted);
+        }
+        
+        [Test]
+        public void ShouldEncryptAndDecryptEmptyArray()
+        {
+            MyRSA myRsa = new MyRSA(512);
+            byte[] toEncrypt = {};
+            byte[] encrypted = myRsa.Encrypt(toEncrypt);
+            byte[] decrypted = myRsa.Decrypt(encrypted);
+            Assert.AreEqual(toEncrypt, decrypted);
+        }
+
+        [Test]
+        public void ShouldEncryptAndDecrypt100SetsOfRandomData()
+        {
+            int keyLength = 1024; // 1024 bit key for max data length of 64 bytes
+            MyRSA myRsa = new MyRSA(keyLength);
+            Random random = new Random();
+            for (int i = 0; i < 100; i++)
+            {
+                byte[] toEncrypt = Enumerable.Range(0, random.Next(0, keyLength / (8 * 2))).Select(i => (byte) i)
+                    .ToArray();
+                byte[] encrypted = myRsa.Encrypt(toEncrypt);
+                byte[] decrypted = myRsa.Decrypt(encrypted);
+                Assert.AreEqual(toEncrypt, decrypted);
+            }
         }
     }
 }

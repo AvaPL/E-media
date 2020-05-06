@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Numerics;
 using System.Security.Cryptography;
-using Extreme.Mathematics;
 
 namespace PNGAnalyzer.RSA
 {
@@ -21,12 +21,22 @@ namespace PNGAnalyzer.RSA
 
         public byte[] Encrypt(byte[] data)
         {
-            throw new System.NotImplementedException();
+            if (data.Length == 0)
+                return data;
+
+            BigInteger exponent = new BigInteger(Parameters.Exponent);
+            BigInteger modulus = new BigInteger(Parameters.Modulus);
+            return BigInteger.ModPow(new BigInteger(data), exponent, modulus).ToByteArray();
         }
 
         public byte[] Decrypt(byte[] data)
         {
-            throw new System.NotImplementedException();
+            if (data.Length == 0)
+                return data;
+
+            BigInteger d = new BigInteger(Parameters.D);
+            BigInteger modulus = new BigInteger(Parameters.Modulus);
+            return BigInteger.ModPow(new BigInteger(data), d, modulus).ToByteArray();
         }
 
         public void ImportParameters(RSAParameters parameters)
@@ -61,11 +71,11 @@ namespace PNGAnalyzer.RSA
                                   << (numberOfBits / 2 - 33); // primeMin ≈ √2 × 2^(bits - 1), assures key length
             BigInteger p = RandomPrimeAbove(primeMin, numberOfBits / 2);
             BigInteger q = RandomPrimeAbove(primeMin, numberOfBits / 2);
-            BigInteger inverseQ = BigInteger.ModularInverse(q, p);
+            BigInteger inverseQ = q.ModularInverse(p);
             BigInteger n = p * q; // Modulus
-            BigInteger lcm = IntegerMath.LeastCommonMultiple(p - 1, q - 1);
+            BigInteger lcm = (p - 1).LeastCommonMultiple(q - 1);
             BigInteger e = RandomCoprimeBelow(lcm, numberOfBits / 2); // Exponent
-            BigInteger d = BigInteger.ModularInverse(e, lcm);
+            BigInteger d = e.ModularInverse(lcm);
             // Remaining in RSAParameters
             BigInteger dp = d % (p - 1);
             BigInteger dq = d % (q - 1);
@@ -99,34 +109,34 @@ namespace PNGAnalyzer.RSA
             BigInteger result;
             do
             {
-                result = RandomBigInteger(numberOfBits);
-            } while (!result.IsPseudoPrime(256));
+                result = BigIntegerExtensions.Random(numberOfBits);
+            } while (!result.IsProbablyPrime(256));
 
             return result;
         }
 
-        private static BigInteger RandomBigInteger(int numberOfBits)
-        {
-            try
-            {
-                return SafeRandomBigInteger(numberOfBits);
-            }
-            catch (IndexOutOfRangeException e)
-            {
-                // Should occur only in really rare cases on internal library
-                Debug.WriteLine("IndexOutOfRangeException: internal library error");
-                Debug.WriteLine(e);
-                return RandomBigInteger(numberOfBits);
-            }
-        }
-
-        private static BigInteger SafeRandomBigInteger(int numberOfBits)
-        {
-            RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider();
-            byte[] bytes = new byte[numberOfBits / 8];
-            rng.GetBytes(bytes);
-            return new BigInteger(1, bytes);
-        }
+        // private static BigInteger RandomBigInteger(int numberOfBits)
+        // {
+        //     try
+        //     {
+        //         return SafeRandomBigInteger(numberOfBits);
+        //     }
+        //     catch (IndexOutOfRangeException e)
+        //     {
+        //         // Should occur only in really rare cases on internal library
+        //         Debug.WriteLine("IndexOutOfRangeException: internal library error");
+        //         Debug.WriteLine(e);
+        //         return RandomBigInteger(numberOfBits);
+        //     }
+        // }
+        //
+        // private static BigInteger SafeRandomBigInteger(int numberOfBits)
+        // {
+        //     RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider();
+        //     byte[] bytes = new byte[numberOfBits / 8];
+        //     rng.GetBytes(bytes);
+        //     return new BigInteger(1, bytes);
+        // }
 
         private static BigInteger RandomCoprimeBelow(BigInteger bound, int numberOfBits)
         {
@@ -134,7 +144,7 @@ namespace PNGAnalyzer.RSA
             do
             {
                 result = RandomPrimeBelow(bound, numberOfBits);
-            } while (IntegerMath.GreatestCommonDivisor(result, bound) != 1);
+            } while (result.GreatestCommonDivisor(bound) != 1);
 
             return result;
         }
