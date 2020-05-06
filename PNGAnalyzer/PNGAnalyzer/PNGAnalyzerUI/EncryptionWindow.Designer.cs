@@ -44,6 +44,7 @@ namespace PNGAnalyzerUI
             // KeyTextBox
             // 
             this.KeyTextBox.Location = new System.Drawing.Point(22, 25);
+            this.KeyTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.KeyTextBox.Multiline = true;
             this.KeyTextBox.Name = "KeyTextBox";
             this.KeyTextBox.Size = new System.Drawing.Size(604, 88);
@@ -52,8 +53,9 @@ namespace PNGAnalyzerUI
             // EncryptButton
             // 
             this.EncryptButton.Location = new System.Drawing.Point(22, 134);
+            this.EncryptButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.EncryptButton.Name = "EncryptButton";
-            this.EncryptButton.Size = new System.Drawing.Size(174, 33);
+            this.EncryptButton.Size = new System.Drawing.Size(174, 32);
             this.EncryptButton.TabIndex = 1;
             this.EncryptButton.Text = "Encrypt";
             this.EncryptButton.UseVisualStyleBackColor = true;
@@ -62,8 +64,9 @@ namespace PNGAnalyzerUI
             // DecryptButton
             // 
             this.DecryptButton.Location = new System.Drawing.Point(234, 134);
+            this.DecryptButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.DecryptButton.Name = "DecryptButton";
-            this.DecryptButton.Size = new System.Drawing.Size(181, 33);
+            this.DecryptButton.Size = new System.Drawing.Size(181, 32);
             this.DecryptButton.TabIndex = 2;
             this.DecryptButton.Text = "Decrypt";
             this.DecryptButton.UseVisualStyleBackColor = true;
@@ -72,8 +75,9 @@ namespace PNGAnalyzerUI
             // GenerateKeysButton
             // 
             this.GenerateKeysButton.Location = new System.Drawing.Point(444, 134);
+            this.GenerateKeysButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.GenerateKeysButton.Name = "GenerateKeysButton";
-            this.GenerateKeysButton.Size = new System.Drawing.Size(182, 33);
+            this.GenerateKeysButton.Size = new System.Drawing.Size(182, 32);
             this.GenerateKeysButton.TabIndex = 3;
             this.GenerateKeysButton.Text = "Generate keys";
             this.GenerateKeysButton.UseVisualStyleBackColor = true;
@@ -82,6 +86,7 @@ namespace PNGAnalyzerUI
             // PrivateKeyTextBox
             // 
             this.PrivateKeyTextBox.Location = new System.Drawing.Point(22, 245);
+            this.PrivateKeyTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.PrivateKeyTextBox.Multiline = true;
             this.PrivateKeyTextBox.Name = "PrivateKeyTextBox";
             this.PrivateKeyTextBox.ReadOnly = true;
@@ -101,6 +106,7 @@ namespace PNGAnalyzerUI
             // PublicKeyTextbox
             // 
             this.PublicKeyTextbox.Location = new System.Drawing.Point(329, 245);
+            this.PublicKeyTextbox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.PublicKeyTextbox.Multiline = true;
             this.PublicKeyTextbox.Name = "PublicKeyTextbox";
             this.PublicKeyTextbox.ReadOnly = true;
