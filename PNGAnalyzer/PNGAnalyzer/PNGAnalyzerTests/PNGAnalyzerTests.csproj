@@ -46,6 +46,7 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="AnonymizerTests.cs" />
+        <Compile Include="BlockCiphersTest\ElectronicCodebookTests.cs" />
         <Compile Include="ChunkParserTests.cs" />
         <Compile Include="Chunks\bKGDTests.cs" />
         <Compile Include="Chunks\cHRMTests.cs" />
