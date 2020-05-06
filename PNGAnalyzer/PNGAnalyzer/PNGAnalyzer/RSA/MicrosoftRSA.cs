@@ -14,6 +14,11 @@ namespace PNGAnalyzer.RSA
             cryptoServiceProvider = new RSACryptoServiceProvider();
             cryptoServiceProvider.ImportParameters(parameters);
         }
+        
+        public MicrosoftRSA(int keyLength)
+        {
+            cryptoServiceProvider = new RSACryptoServiceProvider(keyLength);
+        }
 
         public byte[] Encrypt(byte[] data)
         {
