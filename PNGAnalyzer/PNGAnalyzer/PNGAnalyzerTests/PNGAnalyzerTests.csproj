@@ -35,6 +35,10 @@
         <WarningLevel>4</WarningLevel>
     </PropertyGroup>
     <ItemGroup>
+        <Reference Include="Extreme.Numerics, Version=7.0.12.0, Culture=neutral, PublicKeyToken=9e513770f58567b2">
+          <HintPath>..\packages\Extreme.Numerics.7.0.12\lib\net46\Extreme.Numerics.dll</HintPath>
+          <Private>True</Private>
+        </Reference>
         <Reference Include="nunit.framework, Version=3.12.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb">
           <HintPath>..\packages\NUnit.3.12.0\lib\net45\nunit.framework.dll</HintPath>
           <Private>True</Private>
@@ -42,10 +46,12 @@
         <Reference Include="System" />
         <Reference Include="System.Core" />
         <Reference Include="System.Data" />
+        <Reference Include="System.Numerics" />
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
         <Compile Include="AnonymizerTests.cs" />
+        <Compile Include="BigIntegerExtensionsTests.cs" />
         <Compile Include="ChunkParserTests.cs" />
         <Compile Include="Chunks\bKGDTests.cs" />
         <Compile Include="Chunks\cHRMTests.cs" />
@@ -64,6 +70,7 @@
         <Compile Include="Chunks\tIMETests.cs" />
         <Compile Include="Chunks\zTXtTests.cs" />
         <Compile Include="RSATests\MicrosoftRSATests.cs" />
+        <Compile Include="RSATests\MyRSATests.cs" />
         <Compile Include="ZlibCompressionTests.cs" />
         <Compile Include="IDATConverterTests.cs" />
         <Compile Include="PNGFileTests.cs" />
