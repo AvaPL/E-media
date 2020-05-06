@@ -44,6 +44,7 @@
         <Reference Include="System" />
         <Reference Include="System.Core" />
         <Reference Include="System.Data" />
+        <Reference Include="System.Numerics" />
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
@@ -70,6 +71,10 @@
         <Compile Include="Chunks\tIME.cs" />
         <Compile Include="Chunks\zTXt.cs" />
         <Compile Include="ChunkWriter.cs" />
+        <Compile Include="RSA\IRSA.cs" />
+        <Compile Include="RSA\MyRSA.cs" />
+        <Compile Include="RSA\PrimeExtensions.cs" />
+        <Compile Include="RSA\MicrosoftRSA.cs" />
         <Compile Include="ZlibCompression.cs" />
         <Compile Include="IDATConverter.cs" />
         <Compile Include="PNGFile.cs" />
