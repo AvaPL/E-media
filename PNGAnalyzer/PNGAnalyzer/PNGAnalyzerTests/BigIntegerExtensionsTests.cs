@@ -3,7 +3,7 @@ using System.Numerics;
 using NUnit.Framework;
 using PNGAnalyzer;
 
-namespace PNGAnalyzerTests.RSATests
+namespace PNGAnalyzerTests
 {
     [TestFixture]
     public class BigIntegerExtensionsTests
@@ -127,6 +127,12 @@ namespace PNGAnalyzerTests.RSATests
             AssertBigIntegerEqual(112181, new BigInteger(455345).ModularInverse(235453));
             AssertBigIntegerEqual(6170, new BigInteger(456482).ModularInverse(12357));
             AssertBigIntegerEqual(37, new BigInteger(97531).ModularInverse(213));
+        }
+
+        [Test]
+        public void ShouldThrowForModularInverseOnNonCoprimeValues()
+        {
+            Assert.Throws<ArithmeticException>(() => new BigInteger(51).ModularInverse(17));
         }
 
         [Test]
