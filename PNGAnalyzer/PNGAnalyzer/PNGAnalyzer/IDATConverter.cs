@@ -7,6 +7,18 @@ namespace PNGAnalyzer
 {
     public class IDATConverter
     {
+        private static bool IsIDAT(Chunk chunk)
+        {
+            return chunk.Type == "IDAT";
+        }
+
+        public static List<IDAT> GetAllIDats(List<Chunk> allChunks)
+        {
+            int firstIdatIndex = allChunks.TakeWhile(chunk => !IsIDAT(chunk)).Count();
+            List<IDAT> idats = allChunks.Where(IsIDAT).Select(chunk => (IDAT) chunk).ToList();
+            return idats;
+        }
+        
         public static byte[] ConcatToBytes(List<IDAT> idats)
         {
             long bytesCount = idats.Select(idat => idat.Data.Length).Sum();

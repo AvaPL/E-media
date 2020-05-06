@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using PNGAnalyzer.RSA;
@@ -19,7 +20,8 @@ namespace PNGAnalyzer.BlockCiphers
 
         public byte[] Cipher(byte[] data)
         {
-            List<byte[]> blocks = DivideIntoBlocks(data, BlockSize);
+            byte[] dataToDivide = AddPadding(data);
+            List<byte[]> blocks = DivideIntoBlocks(dataToDivide, BlockSize);
             for (int i = 0; i < blocks.Count; i++)
             {
                 blocks[i] = rsa.Encrypt(blocks[i]);
@@ -38,12 +40,13 @@ namespace PNGAnalyzer.BlockCiphers
                 blocks[i] = rsa.Decrypt(blocks[i]);
             }
 
-            return ConcatenateBlocks(blocks).Take(originalDataLength).ToArray();
+            byte[] imageData = ConcatenateBlocks(blocks);
+            int bytesToTake = imageData.Length - Convert.ToInt32(imageData[imageData.Length - 1]); 
+            return imageData.Take(bytesToTake).ToArray();
         }
 
-        private static List<byte[]> DivideIntoBlocks(byte[] data, int blockSize)
+        private static List<byte[]> DivideIntoBlocks(byte[] dataToDivide, int blockSize)
         {
-            byte[] dataToDivide = AddPadding(data);
             List<byte[]> result = new List<byte[]>();
             for (int i = 0; i < dataToDivide.Length; i += blockSize)
                 result.Add(dataToDivide.Skip(i).Take(blockSize).ToArray());
@@ -54,16 +57,18 @@ namespace PNGAnalyzer.BlockCiphers
         private static byte[] AddPadding(byte[] data)
         {
             int remainder = data.Length % BlockSize;
+            int bytesToAdd;
             if (remainder != 0)
-            {
-                byte[] dataWithPadding = new byte[data.Length + BlockSize - remainder];
-                byte[] dataToAppend = new byte[BlockSize - remainder];
-                data.CopyTo(dataWithPadding, 0);
-                dataToAppend.CopyTo(dataWithPadding, data.Length);
-                return dataWithPadding;
-            }
-
-            return data;
+                bytesToAdd = BlockSize - remainder;
+            else
+                bytesToAdd = BlockSize;
+            
+            byte[] dataWithPadding = new byte[data.Length + bytesToAdd];
+            byte[] dataToAppend = new byte[bytesToAdd];
+            dataToAppend[dataToAppend.Length - 1] = Convert.ToByte(bytesToAdd);
+            data.CopyTo(dataWithPadding, 0);
+            dataToAppend.CopyTo(dataWithPadding, data.Length);
+            return dataWithPadding;
         }
 
         private byte[] ConcatenateBlocks(List<byte[]> blocks)
@@ -79,5 +84,17 @@ namespace PNGAnalyzer.BlockCiphers
 
             return data;
         }
+
+        // public List<Chunk> CipherImage(List<Chunk> chunks)
+        // {
+        //     int firstIdatIndex = chunks.TakeWhile(chunk => !IsIDAT(chunk)).Count();
+        //     List<IDAT> idats = chunks.Where(IsIDAT).Select(chunk => (IDAT) chunk).ToList();
+        //     byte[] bytes = IDATConverter.ConcatToBytes(idats);
+        //     byte[] decompressedBytes = ZlibCompression.Decompress(bytes);
+        //     byte[] compressedBytes = ZlibCompression.Compress(decompressedBytes);
+        //     List<Chunk> resultIdats = IDATConverter.SplitToIDATs(compressedBytes).Select(idat => (Chunk) idat).ToList();
+        //     List<Chunk> resultChunks = chunks.Where(chunk => !IsIDAT(chunk)).ToList();
+        //     resultChunks.InsertRange(firstIdatIndex, resultIdats);
+        // }
     }
 }
