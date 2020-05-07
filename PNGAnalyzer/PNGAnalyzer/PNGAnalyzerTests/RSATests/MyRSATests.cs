@@ -81,6 +81,17 @@ namespace PNGAnalyzerTests.RSATests
             byte[] decrypted = myRsa.Decrypt(encrypted);
             Assert.AreEqual(toEncrypt, decrypted);
         }
+        
+        [Test]
+        public void ShouldEncryptAndDecryptMultipleZeros()
+        {
+            MyRSA myRsa = new MyRSA(512);
+            byte[] toEncrypt = {0, 0, 0};
+            byte[] encrypted = myRsa.Encrypt(toEncrypt);
+            Assert.AreEqual(64, encrypted.Length);
+            byte[] decrypted = myRsa.Decrypt(encrypted);
+            Assert.AreEqual(toEncrypt, decrypted);
+        }
 
         [Test]
         public void ShouldEncryptAndDecrypt100SetsOfRandomData()
@@ -90,8 +101,8 @@ namespace PNGAnalyzerTests.RSATests
             Random random = new Random();
             for (int i = 0; i < 100; i++)
             {
-                byte[] toEncrypt = Enumerable.Range(0, random.Next(1, keyLength / (8 * 2) + 1))
-                    .Select(i => (byte) i).ToArray();
+                byte[] toEncrypt = new byte[random.Next(1, keyLength / (8 * 2))];
+                random.NextBytes(toEncrypt);
                 byte[] encrypted = myRsa.Encrypt(toEncrypt);
                 Assert.AreEqual(keyLength / 8, encrypted.Length);
                 byte[] decrypted = myRsa.Decrypt(encrypted);

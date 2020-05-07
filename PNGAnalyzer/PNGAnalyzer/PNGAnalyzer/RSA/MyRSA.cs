@@ -60,13 +60,8 @@ namespace PNGAnalyzer.RSA
         {
             BigInteger modulus = BigIntegerExtensions.UnsignedFromBytes(Parameters.Modulus);
             BigInteger dataBigInteger = BigIntegerExtensions.UnsignedFromBytes(data);
-            byte[] result = BigInteger.ModPow(dataBigInteger, exponent, modulus).ToByteArray();
-            return FormatByteArray(result);
-        }
-
-        private byte[] FormatByteArray(byte[] bytes)
-        {
-            return bytes.Length > Parameters.Modulus.Length ? bytes.Take(bytes.Length - 1).ToArray() : bytes;
+            BigInteger result = BigInteger.ModPow(dataBigInteger, exponent, modulus);
+            return BigIntegerExtensions.UnsignedToBytes(result);
         }
 
         public static RSAParameters GenerateKeyPair(int numberOfBits)

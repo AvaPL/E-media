@@ -22,6 +22,21 @@ namespace PNGAnalyzer
             return new BigInteger(bytes.Append((byte) 0x00).ToArray());
         }
 
+        public static byte[] UnsignedToBytes(BigInteger value)
+        {
+            if (value.Sign < 0)
+                throw new ArgumentException("Only non-negative values allowed");
+            byte[] bytes = value.ToByteArray();
+            return ShouldTrimSign(bytes) ? bytes.Take(bytes.Length - 1).ToArray() : bytes;
+        }
+
+        private static bool ShouldTrimSign(byte[] bytes)
+        {
+            if (bytes.Length <= 1)
+                return false;
+            return bytes[bytes.Length - 1] == 0;
+        }
+
         public static Extreme.Mathematics.BigInteger ToUnsignedExtremeMathematics(BigInteger value)
         {
             if (value.Sign < 0)
