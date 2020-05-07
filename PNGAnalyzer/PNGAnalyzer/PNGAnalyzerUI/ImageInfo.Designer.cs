@@ -33,49 +33,54 @@ namespace PNGAnalyzerUI
         {
             this.PictureBox = new System.Windows.Forms.PictureBox();
             this.InfoText = new System.Windows.Forms.TextBox();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize) (this.PictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // PictureBox
             // 
             this.PictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.PictureBox.Location = new System.Drawing.Point(12, 12);
+            this.PictureBox.Location = new System.Drawing.Point(16, 19);
+            this.PictureBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.PictureBox.Name = "PictureBox";
-            this.PictureBox.Size = new System.Drawing.Size(769, 737);
+            this.PictureBox.Size = new System.Drawing.Size(1025, 1133);
             this.PictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.PictureBox.TabIndex = 0;
             this.PictureBox.TabStop = false;
             // 
-            // ChunkInfo
+            // InfoText
             // 
-            this.InfoText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.InfoText.Anchor =
+                ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top |
+                                                        System.Windows.Forms.AnchorStyles.Bottom) |
+                                                       System.Windows.Forms.AnchorStyles.Right)));
             this.InfoText.BackColor = System.Drawing.SystemColors.Window;
             this.InfoText.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.InfoText.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.InfoText.Location = new System.Drawing.Point(787, 12);
+            this.InfoText.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular,
+                System.Drawing.GraphicsUnit.Point, ((byte) (238)));
+            this.InfoText.Location = new System.Drawing.Point(1049, 19);
+            this.InfoText.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.InfoText.MaxLength = 0;
             this.InfoText.Multiline = true;
             this.InfoText.Name = "InfoText";
             this.InfoText.ReadOnly = true;
             this.InfoText.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.InfoText.Size = new System.Drawing.Size(385, 737);
+            this.InfoText.Size = new System.Drawing.Size(512, 1132);
             this.InfoText.TabIndex = 1;
             // 
             // ImageInfo
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1184, 761);
+            this.ClientSize = new System.Drawing.Size(1579, 1055);
             this.Controls.Add(this.InfoText);
             this.Controls.Add(this.PictureBox);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MaximizeBox = false;
             this.Name = "ImageInfo";
             this.Text = "Chunks";
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize) (this.PictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         #endregion

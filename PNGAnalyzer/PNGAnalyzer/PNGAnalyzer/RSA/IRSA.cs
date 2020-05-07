@@ -7,6 +7,7 @@ namespace PNGAnalyzer.RSA
         byte[] Encrypt(byte[] data);
         byte[] Decrypt(byte[] data);
         void ImportParameters(RSAParameters parameters);
+        RSAParameters ExportParameters();
         RSAParameters GenerateKeyPair(int numberOfBits);
     }
 }

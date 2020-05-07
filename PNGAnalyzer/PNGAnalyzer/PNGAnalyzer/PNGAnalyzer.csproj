@@ -53,6 +53,7 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="Anonymizer.cs" />
+        <Compile Include="BlockCiphers\ElectronicCodebook.cs" />
         <Compile Include="ChunkParser.cs" />
         <Compile Include="ChunkReader.cs" />
         <Compile Include="Chunks\cHRM.cs" />
@@ -78,6 +79,7 @@
         <Compile Include="RSA\IRSA.cs" />
         <Compile Include="RSA\MyRSA.cs" />
         <Compile Include="RSA\MicrosoftRSA.cs" />
+        <Compile Include="RSA\RSAKeySerializer.cs" />
         <Compile Include="Support\BigIntegerExtensions.cs" />
         <Compile Include="ZlibCompression.cs" />
         <Compile Include="IDATConverter.cs" />

@@ -25,7 +25,7 @@ namespace PNGAnalyzerTests.RSATests
         {
             RSAParameters parameters = MyRSA.GenerateKeyPair(512);
             MyRSA myRsa = new MyRSA(parameters);
-            Assert.AreEqual(parameters, myRsa.Parameters);
+            Assert.AreEqual(parameters, myRsa.ExportParameters());
         }
 
         [Test]
