@@ -53,6 +53,7 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="Anonymizer.cs" />
+        <Compile Include="BlockCiphers\CipherBlockChaining.cs" />
         <Compile Include="BlockCiphers\ElectronicCodebook.cs" />
         <Compile Include="ChunkParser.cs" />
         <Compile Include="ChunkReader.cs" />
