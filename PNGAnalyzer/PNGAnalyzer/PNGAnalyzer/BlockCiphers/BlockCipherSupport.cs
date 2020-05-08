@@ -74,5 +74,20 @@ namespace PNGAnalyzer.BlockCiphers
             resultChunks.InsertRange(firstIdatIndex, resultIdats);
             return resultChunks;
         }
+
+        public static byte[] PadWithZeroes(byte[] bytes, int blockSize)
+        {
+            if (bytes.Length == blockSize) return bytes;
+            byte[] result = new byte[blockSize];
+            bytes.CopyTo(result, 0);
+            new byte[blockSize - bytes.Length].CopyTo(result, bytes.Length);
+            return result;
+        }
+
+        public static byte[] RemovePadding(byte[] imageData)
+        {
+            int bytesToTake = imageData.Length - Convert.ToInt32(imageData[imageData.Length - 1]);
+            return imageData.Take(bytesToTake).ToArray();
+        }
     }
 }

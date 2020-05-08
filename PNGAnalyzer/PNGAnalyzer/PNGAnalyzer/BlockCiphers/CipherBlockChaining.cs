@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Security.Cryptography;
 using PNGAnalyzer.RSA;
 
 namespace PNGAnalyzer.BlockCiphers
@@ -53,6 +54,41 @@ namespace PNGAnalyzer.BlockCiphers
                 blocks[i] = BigIntegerExtensions.UnsignedToBytes(block);
                 blocks[i] = rsa.Encrypt(blocks[i]);
             }
+        }
+        
+        public List<Chunk> DecipherImage(List<Chunk> chunks)
+        {
+            byte[] decompressedBytes = BlockCipherSupport.DecompressIDATs(chunks);
+            byte[] decipheredBytes = Decipher(decompressedBytes);
+            List<Chunk> resultIdats = BlockCipherSupport.CompressIDATs(decipheredBytes);
+            List<Chunk> resultChunks = BlockCipherSupport.SwapIDATs(chunks, resultIdats);
+            return resultChunks;
+        }
+        
+        public byte[] Decipher(byte[] data)
+        {
+            RSAParameters parameters = rsa.ExportParameters();
+            int keySize = parameters.Modulus.Length;
+            List<byte[]> blocks = BlockCipherSupport.DivideIntoBlocks(data, keySize);
+            List<byte[]> decipheredBlocks = DecipherBlocks(blocks);
+            return BlockCipherSupport.RemovePadding(BlockCipherSupport.ConcatenateBlocks(decipheredBlocks));
+        }
+
+        private List<byte[]> DecipherBlocks(List<byte[]> blocks)
+        {
+            List<byte[]> decipheredBlocks = new List<byte[]>(blocks.Count);
+            for (int i = 0; i < blocks.Count; i++)
+            {
+                BigInteger cipheredPreviousBlock =
+                    i > 0 ? BigIntegerExtensions.UnsignedFromBytes(blocks[i - 1]) : initializationVector;
+                decipheredBlocks.Add(rsa.Decrypt(blocks[i]));
+                BigInteger decipheredBlock = BigIntegerExtensions.UnsignedFromBytes(decipheredBlocks[i]);
+                decipheredBlock ^= cipheredPreviousBlock;
+                decipheredBlocks[i] = BigIntegerExtensions.UnsignedToBytes(decipheredBlock);
+                decipheredBlocks[i] = BlockCipherSupport.PadWithZeroes(decipheredBlocks[i], BlockSize);
+            }
+
+            return decipheredBlocks;
         }
     }
 }

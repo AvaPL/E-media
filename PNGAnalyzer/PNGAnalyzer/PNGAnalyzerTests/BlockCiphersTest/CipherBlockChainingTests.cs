@@ -8,39 +8,57 @@ using PNGAnalyzer.RSA;
 
 namespace PNGAnalyzerTests.BlockCiphersTest
 {
-    [TestFixture (typeof(MicrosoftRSA))]
-    // [TestFixture (typeof(MyRSA))] TODO: Run when ready.
+    // [TestFixture (typeof(MicrosoftRSA))]
+    [TestFixture (typeof(MyRSA))]
     public class CipherBlockChainingTests<T> where T:IRSA
     {
-        // private CipherBlockChaining cipherBlockChaining;
-        //
-        // [SetUp]
-        // public void Setup()
-        // {
-        //     IRSA rsa = (T) Activator.CreateInstance(typeof(T), 1024);
-        //     cipherBlockChaining = new CipherBlockChaining(rsa);
-        // }
-        //
-        // [Test]
-        // public void ShouldCipherAndDecipherByteArray()
-        // {
-        //     byte[] data = Enumerable.Range(0, 1024).Select(i => (byte) i).ToArray();
-        //     byte[] cipheredData = cipherBlockChaining.Cipher(data);
-        //     byte[] decipheredData = cipherBlockChaining.Decipher(cipheredData);
-        //     Assert.AreEqual(data, decipheredData);
-        // }
-        //
-        // [Test]
-        // public void ShouldCipherAndDecipherImage()
-        // {
-        //     string filePathToRead = @"../../../Data/square_wave.png";
-        //     string filePathToWrite = @"../../../Data/square_wave_encrypted_and_decrypted.png";
-        //     List<Chunk> chunks = PNGFile.Read(filePathToRead);
-        //     List<Chunk> parsedChunks = ChunkParser.Parse(chunks);
-        //     List<Chunk> cipheredChunks = cipherBlockChaining.CipherImage(parsedChunks);
-        //     List<Chunk> decipheredChunks = cipherBlockChaining.DecipherImage(cipheredChunks);
-        //     PNGFile.Write(filePathToWrite, decipheredChunks);
-        // }
+        private CipherBlockChaining cipherBlockChaining;
+        
+        [SetUp]
+        public void Setup()
+        {
+            IRSA rsa = (T) Activator.CreateInstance(typeof(T), 1024);
+            cipherBlockChaining = new CipherBlockChaining(rsa);
+        }
+        
+        [Test]
+        public void ShouldCipherAndDecipherByteArraySmallerThanBlockSize()
+        {
+            byte[] data = Enumerable.Range(0, 16).Select(i => (byte) i).ToArray();
+            byte[] cipheredData = cipherBlockChaining.Cipher(data);
+            byte[] decipheredData = cipherBlockChaining.Decipher(cipheredData);
+            Assert.AreEqual(data, decipheredData);
+        }
+        
+        [Test]
+        public void ShouldCipherAndDecipherByteArrayUsing2Blocks()
+        {
+            byte[] data = Enumerable.Range(0, 48).Select(i => (byte) i).ToArray();
+            byte[] cipheredData = cipherBlockChaining.Cipher(data);
+            byte[] decipheredData = cipherBlockChaining.Decipher(cipheredData);
+            Assert.AreEqual(data, decipheredData);
+        }
+        
+        [Test]
+        public void ShouldCipherAndDecipherByteArray()
+        {
+            byte[] data = Enumerable.Range(0, 1024).Select(i => (byte) i).ToArray();
+            byte[] cipheredData = cipherBlockChaining.Cipher(data);
+            byte[] decipheredData = cipherBlockChaining.Decipher(cipheredData);
+            Assert.AreEqual(data, decipheredData);
+        }
+        
+        [Test]
+        public void ShouldCipherAndDecipherImage()
+        {
+            string filePathToRead = @"../../../Data/square_wave.png";
+            string filePathToWrite = @"../../../Data/square_wave_encrypted_and_decrypted.png";
+            List<Chunk> chunks = PNGFile.Read(filePathToRead);
+            List<Chunk> parsedChunks = ChunkParser.Parse(chunks);
+            List<Chunk> cipheredChunks = cipherBlockChaining.CipherImage(parsedChunks);
+            List<Chunk> decipheredChunks = cipherBlockChaining.DecipherImage(cipheredChunks);
+            PNGFile.Write(filePathToWrite, decipheredChunks);
+        }
     }
     
     // [TestFixture (typeof(MicrosoftRSA))]
