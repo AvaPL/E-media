@@ -84,15 +84,15 @@ namespace PNGAnalyzerTests.BlockCiphersTest
             PNGFile.Write(filePathToWrite, cipheredChunks);
         }
 
-        // [Test]
-        // public void ShouldDecipherImage()
-        // {
-        //     string filePathToRead = @"../../../Data/square_wave_encrypted.png";
-        //     string filePathToWrite = @"../../../Data/square_wave_decrypted.png";
-        //     List<Chunk> chunks = PNGFile.Read(filePathToRead);
-        //     List<Chunk> parsedChunks = ChunkParser.Parse(chunks);
-        //     List<Chunk> decipheredChunks = cipherBlockChaining.DecipherImage(parsedChunks);
-        //     PNGFile.Write(filePathToWrite, decipheredChunks);
-        // }
+        [Test]
+        public void ShouldDecipherImage()
+        {
+            string filePathToRead = @"../../../Data/square_wave_encrypted.png";
+            string filePathToWrite = @"../../../Data/square_wave_decrypted.png";
+            List<Chunk> chunks = PNGFile.Read(filePathToRead);
+            List<Chunk> parsedChunks = ChunkParser.Parse(chunks);
+            List<Chunk> decipheredChunks = cipherBlockChaining.DecipherImage(parsedChunks);
+            PNGFile.Write(filePathToWrite, decipheredChunks);
+        }
     }
 }
