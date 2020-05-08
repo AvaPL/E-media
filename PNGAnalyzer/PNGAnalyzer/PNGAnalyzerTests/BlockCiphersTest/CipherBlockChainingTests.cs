@@ -8,8 +8,8 @@ using PNGAnalyzer.RSA;
 
 namespace PNGAnalyzerTests.BlockCiphersTest
 {
-    // [TestFixture (typeof(MicrosoftRSA))]
-    [TestFixture (typeof(MyRSA))]
+    [TestFixture (typeof(MicrosoftRSA))]
+    // [TestFixture (typeof(MyRSA))]
     public class CipherBlockChainingTests<T> where T:IRSA
     {
         private CipherBlockChaining cipherBlockChaining;

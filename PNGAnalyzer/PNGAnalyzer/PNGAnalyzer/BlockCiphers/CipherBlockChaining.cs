@@ -16,8 +16,7 @@ namespace PNGAnalyzer.BlockCiphers
         public CipherBlockChaining(IRSA rsa)
         {
             this.rsa = rsa;
-            int keyLengthBits = rsa.ExportParameters().Modulus.Length * 8;
-            initializationVector = BigIntegerExtensions.Random(keyLengthBits);
+            initializationVector = BigIntegerExtensions.Random(BlockSize);
         }
 
         public CipherBlockChaining(IRSA rsa, BigInteger initializationVector)
@@ -48,7 +47,7 @@ namespace PNGAnalyzer.BlockCiphers
             for (int i = 0; i < blocks.Count; i++)
             {
                 BigInteger cipheredPreviousBlock =
-                    i > 0 ? BigIntegerExtensions.UnsignedFromBytes(blocks[i - 1]) : initializationVector;
+                    i > 0 ? BigIntegerExtensions.UnsignedFromBytes(blocks[i - 1].Take(BlockSize).ToArray()) : initializationVector;
                 BigInteger block = BigIntegerExtensions.UnsignedFromBytes(blocks[i]);
                 block ^= cipheredPreviousBlock;
                 blocks[i] = BigIntegerExtensions.UnsignedToBytes(block);
@@ -80,7 +79,7 @@ namespace PNGAnalyzer.BlockCiphers
             for (int i = 0; i < blocks.Count; i++)
             {
                 BigInteger cipheredPreviousBlock =
-                    i > 0 ? BigIntegerExtensions.UnsignedFromBytes(blocks[i - 1]) : initializationVector;
+                    i > 0 ? BigIntegerExtensions.UnsignedFromBytes(blocks[i - 1].Take(BlockSize).ToArray()) : initializationVector;
                 decipheredBlocks.Add(rsa.Decrypt(blocks[i]));
                 BigInteger decipheredBlock = BigIntegerExtensions.UnsignedFromBytes(decipheredBlocks[i]);
                 decipheredBlock ^= cipheredPreviousBlock;
