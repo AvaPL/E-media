@@ -54,6 +54,7 @@
         <Compile Include="BlockCiphersTest\CipherBlockChainingTests.cs" />
         <Compile Include="BlockCiphersTest\ElectronicCodebookTests.cs" />
         <Compile Include="BigIntegerExtensionsTests.cs" />
+        <Compile Include="BlockCiphersTest\PropagatingCipherBlockChainingTests.cs" />
         <Compile Include="ChunkParserTests.cs" />
         <Compile Include="Chunks\bKGDTests.cs" />
         <Compile Include="Chunks\cHRMTests.cs" />
