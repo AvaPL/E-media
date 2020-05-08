@@ -25,7 +25,7 @@ namespace PNGAnalyzerTests.RSATests
         {
             RSAParameters parameters = MyRSA.GenerateKeyPair(512);
             MyRSA myRsa = new MyRSA(parameters);
-            Assert.AreEqual(parameters, myRsa.Parameters);
+            Assert.AreEqual(parameters, myRsa.ExportParameters());
         }
 
         [Test]
@@ -83,6 +83,18 @@ namespace PNGAnalyzerTests.RSATests
         }
 
         [Test]
+        public void ShouldEncryptAndDecryptMultipleZerosToOneZero()
+        {
+            MyRSA myRsa = new MyRSA(512);
+            byte[] toEncrypt = {0, 0, 0};
+            byte[] encrypted = myRsa.Encrypt(toEncrypt);
+            Assert.AreEqual(64, encrypted.Length);
+            byte[] decrypted = myRsa.Decrypt(encrypted);
+            Assert.AreEqual(1, decrypted.Length);
+            Assert.AreEqual(new byte[] {0}, decrypted);
+        }
+
+        [Test]
         public void ShouldEncryptAndDecrypt100SetsOfRandomData()
         {
             int keyLength = 1024; // 1024 bit key for max data length of 64 bytes
@@ -90,8 +102,9 @@ namespace PNGAnalyzerTests.RSATests
             Random random = new Random();
             for (int i = 0; i < 100; i++)
             {
-                byte[] toEncrypt = Enumerable.Range(0, random.Next(1, keyLength / (8 * 2) + 1))
-                    .Select(i => (byte) i).ToArray();
+                byte[] toEncrypt = new byte[random.Next(1, keyLength / (8 * 2))];
+                random.NextBytes(toEncrypt);
+                toEncrypt[toEncrypt.Length - 1] |= (byte) random.Next(1, 255); // Prevent leading zeros
                 byte[] encrypted = myRsa.Encrypt(toEncrypt);
                 Assert.AreEqual(keyLength / 8, encrypted.Length);
                 byte[] decrypted = myRsa.Decrypt(encrypted);

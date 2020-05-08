@@ -8,28 +8,28 @@ namespace PNGAnalyzer.RSA
     {
         public MyRSA(int numberOfBits)
         {
-            Parameters = GenerateKeyPair(numberOfBits);
+            parameters = GenerateKeyPair(numberOfBits);
         }
 
         public MyRSA(RSAParameters parameters)
         {
-            Parameters = parameters;
+            this.parameters = parameters;
         }
 
-        public RSAParameters Parameters { get; private set; }
+        private RSAParameters parameters;
 
         public byte[] Encrypt(byte[] data)
         {
             if (data.Length == 0)
                 return data;
 
-            BigInteger exponent = BigIntegerExtensions.UnsignedFromBytes(Parameters.Exponent);
+            BigInteger exponent = BigIntegerExtensions.UnsignedFromBytes(parameters.Exponent);
             return PadWithZeroes(ModPow(data, exponent)); // Pad in case result is shorter than key
         }
 
         private byte[] PadWithZeroes(byte[] bytes)
         {
-            int targetLength = Parameters.Modulus.Length;
+            int targetLength = parameters.Modulus.Length;
             if (bytes.Length == targetLength) return bytes;
             byte[] result = new byte[targetLength];
             bytes.CopyTo(result, 0);
@@ -42,13 +42,18 @@ namespace PNGAnalyzer.RSA
             if (data.Length == 0)
                 return data;
 
-            BigInteger d = BigIntegerExtensions.UnsignedFromBytes(Parameters.D);
+            BigInteger d = BigIntegerExtensions.UnsignedFromBytes(parameters.D);
             return ModPow(data, d);
         }
 
         public void ImportParameters(RSAParameters parameters)
         {
-            Parameters = parameters;
+            this.parameters = parameters;
+        }
+
+        public RSAParameters ExportParameters()
+        {
+            return parameters;
         }
 
         RSAParameters IRSA.GenerateKeyPair(int numberOfBits)
@@ -58,15 +63,10 @@ namespace PNGAnalyzer.RSA
 
         private byte[] ModPow(byte[] data, BigInteger exponent)
         {
-            BigInteger modulus = BigIntegerExtensions.UnsignedFromBytes(Parameters.Modulus);
+            BigInteger modulus = BigIntegerExtensions.UnsignedFromBytes(parameters.Modulus);
             BigInteger dataBigInteger = BigIntegerExtensions.UnsignedFromBytes(data);
-            byte[] result = BigInteger.ModPow(dataBigInteger, exponent, modulus).ToByteArray();
-            return FormatByteArray(result);
-        }
-
-        private byte[] FormatByteArray(byte[] bytes)
-        {
-            return bytes.Length > Parameters.Modulus.Length ? bytes.Take(bytes.Length - 1).ToArray() : bytes;
+            BigInteger result = BigInteger.ModPow(dataBigInteger, exponent, modulus);
+            return BigIntegerExtensions.UnsignedToBytes(result);
         }
 
         public static RSAParameters GenerateKeyPair(int numberOfBits)

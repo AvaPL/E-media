@@ -7,6 +7,11 @@ namespace PNGAnalyzer
 {
     public class IDATConverter
     {
+        private static bool IsIDAT(Chunk chunk)
+        {
+            return chunk.Type == "IDAT";
+        }
+
         public static byte[] ConcatToBytes(List<IDAT> idats)
         {
             long bytesCount = idats.Select(idat => idat.Data.Length).Sum();

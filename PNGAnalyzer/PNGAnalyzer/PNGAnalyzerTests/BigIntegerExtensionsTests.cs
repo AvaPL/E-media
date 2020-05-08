@@ -71,6 +71,7 @@ namespace PNGAnalyzerTests
         {
             byte[][] testBytes =
             {
+                // Little endian
                 new byte[] {127},
                 new byte[] {255},
                 new byte[] {0xFF, 0xFF, 0x7F},
@@ -94,6 +95,7 @@ namespace PNGAnalyzerTests
         {
             byte[][] testBytes =
             {
+                // Little endian
                 new byte[] {127},
                 new byte[] {255},
                 new byte[] {0xFF, 0xFF, 0x7F},
@@ -117,6 +119,34 @@ namespace PNGAnalyzerTests
             Extreme.Mathematics.BigInteger value = new Extreme.Mathematics.BigInteger(-12345);
             value += 12345 * 2;
             Assert.AreEqual(new BigInteger(12345), BigIntegerExtensions.ToUnsignedBigInteger(value));
+        }
+
+        [Test]
+        public void ShouldConvertBigIntegerWithSignByteToUnsignedBytes()
+        {
+            BigInteger[] testValues =
+            {
+                128,
+                170,
+                255,
+                32768,
+                33940,
+                65535,
+                4294967295
+            };
+            byte[][] expectedValues =
+            {
+                // Little endian
+                new byte[] {128},
+                new byte[] {170},
+                new byte[] {255},
+                new byte[] {0x00, 0x80},
+                new byte[] {0x94, 0x84},
+                new byte[] {0xFF, 0xFF},
+                new byte[] {0xFF, 0xFF, 0xFF, 0xFF}
+            };
+            for (int i = 0; i < testValues.Length; i++)
+                Assert.AreEqual(expectedValues[i], BigIntegerExtensions.UnsignedToBytes(testValues[i]));
         }
 
         [Test]
