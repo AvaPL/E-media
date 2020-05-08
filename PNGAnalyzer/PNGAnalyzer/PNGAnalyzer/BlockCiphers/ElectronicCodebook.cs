@@ -118,10 +118,22 @@ namespace PNGAnalyzer.BlockCiphers
             RSAParameters parameters = rsa.ExportParameters();
             int keySize = parameters.Modulus.Length;
             List<byte[]> blocks = DivideIntoBlocks(data, keySize);
-            for (int i = 0; i < blocks.Count; i++) 
+            for (int i = 0; i < blocks.Count; i++)
+            {
                 blocks[i] = rsa.Decrypt(blocks[i]);
+                blocks[i] = PadWithZeroes(blocks[i]);
+            }
 
             return RemovePadding(ConcatenateBlocks(blocks));
+        }
+        
+        private byte[] PadWithZeroes(byte[] bytes)
+        {
+            if (bytes.Length == BlockSize) return bytes;
+            byte[] result = new byte[BlockSize];
+            bytes.CopyTo(result, 0);
+            new byte[BlockSize - bytes.Length].CopyTo(result, bytes.Length);
+            return result;
         }
 
         private static byte[] RemovePadding(byte[] imageData)
