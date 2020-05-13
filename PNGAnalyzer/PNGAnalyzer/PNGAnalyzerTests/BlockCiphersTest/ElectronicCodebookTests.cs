@@ -11,16 +11,18 @@ using PNGAnalyzer.RSA;
 namespace PNGAnalyzerTests.BlockCiphersTest
 {
     [TestFixture (typeof(MicrosoftRSA))]
-    // [TestFixture (typeof(MyRSA))] TODO: Run when ready.
+    // [TestFixture (typeof(MyRSA))] 
     public class ElectronicCodebookTests<T> where T:IRSA
     {
         private ElectronicCodebook electronicCodebook;
+        private BlockCipherImage blockCipherImage;
 
         [SetUp]
         public void Setup()
         {
             IRSA rsa = (T) Activator.CreateInstance(typeof(T), 1024);
             electronicCodebook = new ElectronicCodebook(rsa);
+            blockCipherImage = new BlockCipherImage(electronicCodebook);
         }
 
         [Test]
@@ -39,8 +41,8 @@ namespace PNGAnalyzerTests.BlockCiphersTest
             string filePathToWrite = @"../../../Data/square_wave_encrypted_and_decrypted.png";
             List<Chunk> chunks = PNGFile.Read(filePathToRead);
             List<Chunk> parsedChunks = ChunkParser.Parse(chunks);
-            List<Chunk> cipheredChunks = electronicCodebook.CipherImage(parsedChunks);
-            List<Chunk> decipheredChunks = electronicCodebook.DecipherImage(cipheredChunks);
+            List<Chunk> cipheredChunks = blockCipherImage.Cipher(parsedChunks);
+            List<Chunk> decipheredChunks = blockCipherImage.Decipher(cipheredChunks);
             PNGFile.Write(filePathToWrite, decipheredChunks);
         }
     }
@@ -50,56 +52,56 @@ namespace PNGAnalyzerTests.BlockCiphersTest
     [TestFixture (typeof(MyRSA))]
     public class ElectronicCodebookTestsOnFiles<T> where T:IRSA
     {
-        private readonly ElectronicCodebook electronicCodebook;
+        private readonly BlockCipherImage blockCipherImage;
 
         public ElectronicCodebookTestsOnFiles()
         {
             IRSA rsa = (T) Activator.CreateInstance(typeof(T), 1024);
-            electronicCodebook = new ElectronicCodebook(rsa);
+            blockCipherImage = new BlockCipherImage(new ElectronicCodebook(rsa));
         }
 
+        [Test]
+        public void ShouldCipherImage()
+        {
+            string filePathToRead = @"../../../Data/square_wave.png";
+            string filePathToWrite = @"../../../Data/square_wave_encrypted.png";
+            List<Chunk> chunks = PNGFile.Read(filePathToRead);
+            List<Chunk> parsedChunks = ChunkParser.Parse(chunks);
+            List<Chunk> cipheredChunks = blockCipherImage.Cipher(parsedChunks);
+            PNGFile.Write(filePathToWrite, cipheredChunks);
+        }
+        
+        [Test]
+        public void ShouldDecipherImage()
+        {
+            string filePathToRead = @"../../../Data/square_wave_encrypted.png";
+            string filePathToWrite = @"../../../Data/square_wave_decrypted.png";
+            List<Chunk> chunks = PNGFile.Read(filePathToRead);
+            List<Chunk> parsedChunks = ChunkParser.Parse(chunks);
+            List<Chunk> decipheredChunks = blockCipherImage.Decipher(parsedChunks);
+            PNGFile.Write(filePathToWrite, decipheredChunks);
+        }
+        
         // [Test]
-        // public void ShouldCipherImage()
+        // public void ShouldCipherLenaImage()
         // {
-        //     string filePathToRead = @"../../../Data/square_wave.png";
-        //     string filePathToWrite = @"../../../Data/square_wave_encrypted.png";
+        //     string filePathToRead = @"../../../Data/Lena.png";
+        //     string filePathToWrite = @"../../../Data/Lena_encrypted.png";
         //     List<Chunk> chunks = PNGFile.Read(filePathToRead);
         //     List<Chunk> parsedChunks = ChunkParser.Parse(chunks);
-        //     List<Chunk> cipheredChunks = electronicCodebook.CipherImage(parsedChunks);
+        //     List<Chunk> cipheredChunks = blockCipherImage.Cipher(parsedChunks);
         //     PNGFile.Write(filePathToWrite, cipheredChunks);
         // }
         //
         // [Test]
-        // public void ShouldDecipherImage()
+        // public void ShouldDecipherLenaImage()
         // {
-        //     string filePathToRead = @"../../../Data/square_wave_encrypted.png";
-        //     string filePathToWrite = @"../../../Data/square_wave_decrypted.png";
+        //     string filePathToRead = @"../../../Data/Lena_encrypted.png";
+        //     string filePathToWrite = @"../../../Data/Lena_decrypted.png";
         //     List<Chunk> chunks = PNGFile.Read(filePathToRead);
         //     List<Chunk> parsedChunks = ChunkParser.Parse(chunks);
-        //     List<Chunk> decipheredChunks = electronicCodebook.DecipherImage(parsedChunks);
+        //     List<Chunk> decipheredChunks = blockCipherImage.Decipher(parsedChunks);
         //     PNGFile.Write(filePathToWrite, decipheredChunks);
         // }
-        
-        [Test]
-        public void ShouldCipherLenaImage()
-        {
-            string filePathToRead = @"../../../Data/Lena.png";
-            string filePathToWrite = @"../../../Data/Lena_encrypted.png";
-            List<Chunk> chunks = PNGFile.Read(filePathToRead);
-            List<Chunk> parsedChunks = ChunkParser.Parse(chunks);
-            List<Chunk> cipheredChunks = electronicCodebook.CipherImage(parsedChunks);
-            PNGFile.Write(filePathToWrite, cipheredChunks);
-        }
-
-        [Test]
-        public void ShouldDecipherLenaImage()
-        {
-            string filePathToRead = @"../../../Data/Lena_encrypted.png";
-            string filePathToWrite = @"../../../Data/Lena_decrypted.png";
-            List<Chunk> chunks = PNGFile.Read(filePathToRead);
-            List<Chunk> parsedChunks = ChunkParser.Parse(chunks);
-            List<Chunk> decipheredChunks = electronicCodebook.DecipherImage(parsedChunks);
-            PNGFile.Write(filePathToWrite, decipheredChunks);
-        }
     }
 }
