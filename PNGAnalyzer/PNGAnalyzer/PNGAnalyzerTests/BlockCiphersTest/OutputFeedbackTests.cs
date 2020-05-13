@@ -12,6 +12,7 @@ namespace PNGAnalyzerTests.BlockCiphersTest
     public class OutputFeedbackTests
     {
         private OutputFeedback outputFeedback;
+        private ImageBlockCipher imageBlockCipher;
         private IRSA rsa;
 
         [SetUp]
@@ -19,6 +20,7 @@ namespace PNGAnalyzerTests.BlockCiphersTest
         {
             rsa = new MyRSA(1024);
             outputFeedback = new OutputFeedback(rsa);
+            imageBlockCipher = new ImageBlockCipher(outputFeedback);
         }
 
         [Test]
@@ -85,8 +87,8 @@ namespace PNGAnalyzerTests.BlockCiphersTest
             string filePathToWrite = @"../../../Data/square_wave_encrypted_and_decrypted.png";
             List<Chunk> chunks = PNGFile.Read(filePathToRead);
             List<Chunk> parsedChunks = ChunkParser.Parse(chunks);
-            List<Chunk> cipheredChunks = outputFeedback.CipherImage(parsedChunks);
-            List<Chunk> decipheredChunks = outputFeedback.DecipherImage(cipheredChunks);
+            List<Chunk> cipheredChunks = imageBlockCipher.Cipher(parsedChunks);
+            List<Chunk> decipheredChunks = imageBlockCipher.Decipher(cipheredChunks);
             PNGFile.Write(filePathToWrite, decipheredChunks);
         }
     }
@@ -94,12 +96,12 @@ namespace PNGAnalyzerTests.BlockCiphersTest
     [TestFixture]
     public class OutputFeedbackTestsOnFiles
     {
-        private readonly OutputFeedback outputFeedback;
+        private readonly ImageBlockCipher imageBlockCipher;
 
         public OutputFeedbackTestsOnFiles()
         {
             IRSA rsa = new MyRSA(1024);
-            outputFeedback = new OutputFeedback(rsa);
+            imageBlockCipher = new ImageBlockCipher(new OutputFeedback(rsa));
         }
 
         [Test]
@@ -109,7 +111,7 @@ namespace PNGAnalyzerTests.BlockCiphersTest
             string filePathToWrite = @"../../../Data/square_wave_encrypted.png";
             List<Chunk> chunks = PNGFile.Read(filePathToRead);
             List<Chunk> parsedChunks = ChunkParser.Parse(chunks);
-            List<Chunk> cipheredChunks = outputFeedback.CipherImage(parsedChunks);
+            List<Chunk> cipheredChunks = imageBlockCipher.Cipher(parsedChunks);
             PNGFile.Write(filePathToWrite, cipheredChunks);
         }
 
@@ -120,7 +122,7 @@ namespace PNGAnalyzerTests.BlockCiphersTest
             string filePathToWrite = @"../../../Data/square_wave_decrypted.png";
             List<Chunk> chunks = PNGFile.Read(filePathToRead);
             List<Chunk> parsedChunks = ChunkParser.Parse(chunks);
-            List<Chunk> decipheredChunks = outputFeedback.DecipherImage(parsedChunks);
+            List<Chunk> decipheredChunks = imageBlockCipher.Decipher(parsedChunks);
             PNGFile.Write(filePathToWrite, decipheredChunks);
         }
     }
