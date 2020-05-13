@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Windows.Forms;
+using PNGAnalyzer;
 using PNGAnalyzer.BlockCiphers;
 using PNGAnalyzer.RSA;
 
@@ -27,6 +28,10 @@ namespace PNGAnalyzerUI
         private static readonly int[] KeySizes = {512, 1024, 2048};
 
         private string imagePath;
+        private RSAMethod? rsaMethod;
+        private BlockCipherMethod? blockCipherMethod;
+        private int? keySize;
+        private RSAParameters? rsaParameters;
 
         public EncryptionWindow(string imagePath)
         {
@@ -63,7 +68,30 @@ namespace PNGAnalyzerUI
 
         private void GenerateKeysButton_Click(object sender, EventArgs e)
         {
-            throw new System.NotImplementedException();
+            // TODO: Generate keypair in a separate thread.
+            if (!keySize.HasValue) return;
+            if (rsaMethod == RSAMethod.MicrosoftRSA)
+                SetRSAParameters(MicrosoftRSA.GenerateKeyPair(keySize.Value));
+            else if (rsaMethod == RSAMethod.MyRSA)
+                SetRSAParameters(MyRSA.GenerateKeyPair(keySize.Value));
+            if (blockCipherMethod.HasValue)
+            {
+                EncryptButton.Enabled = true;
+                DecryptButton.Enabled = true;
+            }
+        }
+
+        private void SetRSAParameters(RSAParameters rsaParameters)
+        {
+            this.rsaParameters = rsaParameters;
+            ModulusTextBox.Text = BytesToBigIntegerString(rsaParameters.Modulus);
+            PublicKeyExponentTextBox.Text = BytesToBigIntegerString(rsaParameters.Exponent);
+            PrivateKeyExponentTextBox.Text = BytesToBigIntegerString(rsaParameters.D);
+        }
+
+        private string BytesToBigIntegerString(byte[] bytes)
+        {
+            return BigIntegerExtensions.UnsignedFromBytes(bytes).ToString();
         }
 
         private void MethodComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -77,25 +105,41 @@ namespace PNGAnalyzerUI
 
         private void SelectedIndexChangedToMicrosoftRSA()
         {
-            BlockCipherComboBox.Items.Clear();
-            ClearKeyTextBoxes();
-            BlockCipherComboBox.Items.AddRange(ToString(MicrosoftRSABlockCipherMethods));
+            rsaMethod = RSAMethod.MicrosoftRSA;
+            ClearRSAParameters();
+            SetBlockCipherItems(ToString(MicrosoftRSABlockCipherMethods));
             SetKeyTextBoxesReadOnly(true);
-            SetKeyButtonsEnabled(false);
+            ChangeButtonsEnabled();
+        }
+
+        private void SetBlockCipherItems(object[] items)
+        {
+            blockCipherMethod = null;
+            BlockCipherComboBox.Items.Clear();
+            BlockCipherComboBox.Items.AddRange(items);
+        }
+
+        private void ChangeButtonsEnabled()
+        {
+            GenerateKeysButton.Enabled = keySize.HasValue;
+            EncryptButton.Enabled = false;
+            DecryptButton.Enabled = false;
+        }
+
+        private void ClearRSAParameters()
+        {
+            rsaParameters = null;
+            ModulusTextBox.Clear();
+            PublicKeyExponentTextBox.Clear();
+            PrivateKeyExponentTextBox.Clear();
         }
 
         private void SelectedIndexChangedToMyRSA()
         {
-            BlockCipherComboBox.Items.Clear();
-            BlockCipherComboBox.Items.AddRange(ToString(MyRSABlockCipherMethods));
+            rsaMethod = RSAMethod.MyRSA;
+            SetBlockCipherItems(ToString(MyRSABlockCipherMethods));
             SetKeyTextBoxesReadOnly(false);
-        }
-
-        private void ClearKeyTextBoxes()
-        {
-            ModulusTextBox.Clear();
-            PublicKeyExponentTextBox.Clear();
-            PrivateKeyExponentTextBox.Clear();
+            ChangeButtonsEnabled();
         }
 
         private void SetKeyTextBoxesReadOnly(bool isReadOnly)
@@ -107,15 +151,26 @@ namespace PNGAnalyzerUI
 
         private void BlockCipherComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // TODO: Change behaviour in case of Microsoft RSA.
-            SetKeyButtonsEnabled(true);
+            if (BlockCipherComboBox.SelectedItem.ToString() == BlockCipherMethod.ElectronicCodebook.ToMethodString())
+                blockCipherMethod = BlockCipherMethod.ElectronicCodebook;
+            else if (BlockCipherComboBox.SelectedItem.ToString() == BlockCipherMethod.CipherBlockChaining.ToMethodString())
+                blockCipherMethod = BlockCipherMethod.CipherBlockChaining;
+            else if (BlockCipherComboBox.SelectedItem.ToString() == BlockCipherMethod.PropagatingCipherBlockChaining.ToMethodString())
+                blockCipherMethod = BlockCipherMethod.PropagatingCipherBlockChaining;
+            else if (BlockCipherComboBox.SelectedItem.ToString() == BlockCipherMethod.CipherFeedback.ToMethodString())
+                blockCipherMethod = BlockCipherMethod.CipherFeedback;
+            else if (BlockCipherComboBox.SelectedItem.ToString() == BlockCipherMethod.OutputFeedback.ToMethodString())
+                blockCipherMethod = BlockCipherMethod.OutputFeedback;
+            else if (BlockCipherComboBox.SelectedItem.ToString() == BlockCipherMethod.Counter.ToMethodString())
+                blockCipherMethod = BlockCipherMethod.Counter;
+            EncryptButton.Enabled = rsaParameters.HasValue;
+            DecryptButton.Enabled = rsaParameters.HasValue;
         }
 
-        private void SetKeyButtonsEnabled(bool isEnabled)
+        private void KeySizeComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            GenerateKeysButton.Enabled = isEnabled;
-            EncryptButton.Enabled = isEnabled;
-            DecryptButton.Enabled = isEnabled;
+            keySize = int.Parse(KeySizeComboBox.SelectedItem.ToString());
+            GenerateKeysButton.Enabled = rsaMethod.HasValue;
         }
     }
 }

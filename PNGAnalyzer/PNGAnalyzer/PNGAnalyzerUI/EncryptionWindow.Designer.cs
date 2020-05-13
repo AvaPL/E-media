@@ -202,6 +202,8 @@ namespace PNGAnalyzerUI
             this.KeySizeComboBox.Name = "KeySizeComboBox";
             this.KeySizeComboBox.Size = new System.Drawing.Size(200, 28);
             this.KeySizeComboBox.TabIndex = 17;
+            this.KeySizeComboBox.SelectedIndexChanged +=
+                new System.EventHandler(this.KeySizeComboBox_SelectedIndexChanged);
             // 
             // EncryptionWindow
             // 
