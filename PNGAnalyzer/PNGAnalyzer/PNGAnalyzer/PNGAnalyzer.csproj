@@ -58,6 +58,7 @@
         <Compile Include="BlockCiphers\Counter.cs" />
         <Compile Include="BlockCiphers\CipherFeedback.cs" />
         <Compile Include="BlockCiphers\ElectronicCodebook.cs" />
+        <Compile Include="BlockCiphers\PropagatingCipherBlockChaining.cs" />
         <Compile Include="ChunkParser.cs" />
         <Compile Include="ChunkReader.cs" />
         <Compile Include="Chunks\cHRM.cs" />
