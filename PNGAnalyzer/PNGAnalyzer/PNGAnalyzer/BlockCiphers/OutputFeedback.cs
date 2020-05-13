@@ -6,19 +6,19 @@ using PNGAnalyzer.RSA;
 
 namespace PNGAnalyzer.BlockCiphers
 {
-    public class CipherFeedback
+    public class OutputFeedback
     {
         private const int BlockSize = 32;
         private readonly IRSA rsa;
         private readonly BigInteger initializationVector;
 
-        public CipherFeedback(IRSA rsa)
+        public OutputFeedback(IRSA rsa)
         {
             this.rsa = rsa;
             initializationVector = BigIntegerExtensions.Random(BlockSize);
         }
 
-        public CipherFeedback(IRSA rsa, BigInteger initializationVector)
+        public OutputFeedback(IRSA rsa, BigInteger initializationVector)
         {
             this.rsa = rsa;
             this.initializationVector = initializationVector;
@@ -45,30 +45,24 @@ namespace PNGAnalyzer.BlockCiphers
         private List<byte[]> CipherBlocks(List<byte[]> blocks)
         {
             List<byte[]> cipheredBlocks = new List<byte[]>(blocks.Count);
+            byte[] beforeXor = BigIntegerExtensions.UnsignedToBytes(initializationVector);
             for (int i = 0; i < blocks.Count; i++)
             {
-                byte[] cipheredPreviousBlock = GetCipheredPreviousBlock(cipheredBlocks, i);
-                BigInteger cipheredAgainPreviousBlock = BigIntegerExtensions.UnsignedFromBytes(rsa.Encrypt(cipheredPreviousBlock));
+                cipheredBlocks.Add(rsa.Encrypt(beforeXor.Take(BlockSize).ToArray()));
+                BigInteger beforeXorBlock = BigIntegerExtensions.UnsignedFromBytes(beforeXor);
                 BigInteger block = BigIntegerExtensions.UnsignedFromBytes(blocks[i]);
-                byte[] xorResult = XorKeySizePadding(cipheredAgainPreviousBlock, block);
-                cipheredBlocks.Add(xorResult);
+                beforeXor = cipheredBlocks[i];
+                cipheredBlocks[i] = XorWithKeySizePadding(beforeXorBlock, block);
             }
 
             return cipheredBlocks;
         }
 
-        private byte[] XorKeySizePadding(BigInteger cipheredAgainPreviousBlock, BigInteger block)
+        private byte[] XorWithKeySizePadding(BigInteger beforeXorBlock, BigInteger block)
         {
-            byte[] xorResult = BigIntegerExtensions.UnsignedToBytes(cipheredAgainPreviousBlock ^ block);
+            byte[] xorResult = BigIntegerExtensions.UnsignedToBytes(beforeXorBlock ^ block);
             int keySize = rsa.ExportParameters().Modulus.Length;
             return BlockCipherSupport.PadWithZeroes(xorResult, keySize);
-        }
-
-        private byte[] GetCipheredPreviousBlock(List<byte[]> cipheredBlocks, int index)
-        {
-            return index > 0
-                ? cipheredBlocks[index - 1].Take(BlockSize).ToArray()
-                : BigIntegerExtensions.UnsignedToBytes(initializationVector);
         }
 
         public List<Chunk> DecipherImage(List<Chunk> chunks)
@@ -80,7 +74,7 @@ namespace PNGAnalyzer.BlockCiphers
             List<Chunk> resultChunks = BlockCipherSupport.SwapIDATs(chunks, resultIdats);
             return resultChunks;
         }
-        
+
         public byte[] Decipher(byte[] data)
         {
             RSAParameters parameters = rsa.ExportParameters();
@@ -93,16 +87,23 @@ namespace PNGAnalyzer.BlockCiphers
         private List<byte[]> DecipherBlocks(List<byte[]> blocks)
         {
             List<byte[]> decipheredBlocks = new List<byte[]>(blocks.Count);
+            byte[] beforeXor = BigIntegerExtensions.UnsignedToBytes(initializationVector);
             for (int i = 0; i < blocks.Count; i++)
             {
-                byte[] cipheredPreviousBlock = GetCipheredPreviousBlock(blocks, i);
-                BigInteger cipheredAgainPreviousBlock = BigIntegerExtensions.UnsignedFromBytes(rsa.Encrypt(cipheredPreviousBlock)); // Cipher intended
+                decipheredBlocks.Add(rsa.Encrypt(beforeXor.Take(BlockSize).ToArray()));
+                BigInteger beforeXorBlock = BigIntegerExtensions.UnsignedFromBytes(beforeXor);
                 BigInteger block = BigIntegerExtensions.UnsignedFromBytes(blocks[i]);
-                decipheredBlocks.Add(BigIntegerExtensions.UnsignedToBytes(cipheredAgainPreviousBlock ^ block));
-                decipheredBlocks[i] = BlockCipherSupport.PadWithZeroes(decipheredBlocks[i], BlockSize);
+                beforeXor = decipheredBlocks[i];
+                decipheredBlocks[i] = XorWithBlockSizePadding(beforeXorBlock, block);
             }
-        
+
             return decipheredBlocks;
+        }
+        
+        private byte[] XorWithBlockSizePadding(BigInteger beforeXorBlock, BigInteger block)
+        {
+            byte[] xorResult = BigIntegerExtensions.UnsignedToBytes(beforeXorBlock ^ block);
+            return BlockCipherSupport.PadWithZeroes(xorResult, BlockSize);
         }
     }
 }
