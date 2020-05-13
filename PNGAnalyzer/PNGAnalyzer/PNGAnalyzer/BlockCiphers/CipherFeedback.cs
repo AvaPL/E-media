@@ -40,14 +40,14 @@ namespace PNGAnalyzer.BlockCiphers
                 byte[] cipheredPreviousBlock = GetCipheredPreviousBlock(cipheredBlocks, i);
                 BigInteger cipheredAgainPreviousBlock = BigIntegerExtensions.UnsignedFromBytes(rsa.Encrypt(cipheredPreviousBlock));
                 BigInteger block = BigIntegerExtensions.UnsignedFromBytes(blocks[i]);
-                byte[] xorResult = Xor(cipheredAgainPreviousBlock, block);
+                byte[] xorResult = XorKeySizePadding(cipheredAgainPreviousBlock, block);
                 cipheredBlocks.Add(xorResult);
             }
 
             return cipheredBlocks;
         }
 
-        private byte[] Xor(BigInteger cipheredAgainPreviousBlock, BigInteger block)
+        private byte[] XorKeySizePadding(BigInteger cipheredAgainPreviousBlock, BigInteger block)
         {
             byte[] xorResult = BigIntegerExtensions.UnsignedToBytes(cipheredAgainPreviousBlock ^ block);
             int keySize = rsa.ExportParameters().Modulus.Length;
