@@ -4,6 +4,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
 using System.Security.Cryptography;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using PNGAnalyzer;
 using PNGAnalyzer.BlockCiphers;
@@ -92,17 +94,66 @@ namespace PNGAnalyzerUI
         private void GenerateKeysButton_Click(object sender, EventArgs e)
         {
             // TODO: Generate keypair in a separate thread.
-            if (!keySize.HasValue) return;
-            if (rsaMethod == RSAMethod.MicrosoftRSA)
-                SetRSAParameters(MicrosoftRSA.GenerateKeyPair(keySize.Value));
-            else if (rsaMethod == RSAMethod.MyRSA)
-                SetRSAParameters(MyRSA.GenerateKeyPair(keySize.Value));
+            GenerateKeypairAsync();
             haveParametersChangedInTextBoxes = false;
             if (blockCipherMethod.HasValue)
             {
                 EncryptButton.Enabled = true;
                 DecryptButton.Enabled = true;
             }
+        }
+
+        private void GenerateKeypairAsync()
+        {
+            if (!keySize.HasValue) return;
+            Task.Run(() => GenerateKeypair(keySize.Value));
+        }
+
+        private void GenerateKeypair(int keySize)
+        {
+            SetKeypairInputActive(false);
+            Task.Run(AnimateGeneratingText);
+            if (rsaMethod == RSAMethod.MicrosoftRSA)
+                SetRSAParameters(MicrosoftRSA.GenerateKeyPair(keySize));
+            else if (rsaMethod == RSAMethod.MyRSA)
+                SetRSAParameters(MyRSA.GenerateKeyPair(keySize));
+            SetKeypairInputActive(true);
+        }
+
+        private void SetKeypairInputActive(bool isActive)
+        {
+            GenerateKeysButton.Enabled = isActive;
+            if (rsaMethod == RSAMethod.MicrosoftRSA) return;
+            ModulusTextBox.ReadOnly = !isActive;
+            PublicKeyExponentTextBox.ReadOnly = !isActive;
+            PrivateKeyExponentTextBox.ReadOnly = !isActive;
+        }
+
+        private void AnimateGeneratingText()
+        {
+            string generateKeysButtonText = GenerateKeysButton.Text;
+            for (int i = 0; GenerateKeysButton.Enabled == false; i++)
+            {
+                string generatingText = CreateGeneratingText(i);
+                SetKeypairInputText(generatingText);
+                Thread.Sleep(500);
+            }
+
+            GenerateKeysButton.Text = generateKeysButtonText;
+        }
+
+        private void SetKeypairInputText(string generatingText)
+        {
+            ModulusTextBox.Text = generatingText;
+            PublicKeyExponentTextBox.Text = generatingText;
+            PrivateKeyExponentTextBox.Text = generatingText;
+        }
+
+        private static string CreateGeneratingText(int i)
+        {
+            string generating = "Generating";
+            string dots = string.Concat(Enumerable.Repeat(".", i % 4));
+            return generating + dots;
         }
 
         private void SetRSAParameters(RSAParameters rsaParameters)
@@ -232,7 +283,7 @@ namespace PNGAnalyzerUI
         {
             KeyTextBoxTextChanged();
         }
-        
+
         private void OnlyDigitsTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
             e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
