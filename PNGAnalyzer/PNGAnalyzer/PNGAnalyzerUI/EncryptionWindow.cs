@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Numerics;
 using System.Security.Cryptography;
 using System.Windows.Forms;
 using PNGAnalyzer;
@@ -32,6 +34,7 @@ namespace PNGAnalyzerUI
         private BlockCipherMethod? blockCipherMethod;
         private int? keySize;
         private RSAParameters? rsaParameters;
+        private bool haveParametersChangedInTextBoxes;
 
         public EncryptionWindow(string imagePath)
         {
@@ -58,11 +61,31 @@ namespace PNGAnalyzerUI
 
         private void EncryptButton_Click(object sender, EventArgs e)
         {
+            // TODO: Encrypt in a separate thread.
+            if (haveParametersChangedInTextBoxes)
+                UpdateRSAParametersUsingTextBoxes();
             throw new System.NotImplementedException();
+        }
+
+        private void UpdateRSAParametersUsingTextBoxes()
+        {
+            BigInteger modulus = BigInteger.Parse(ModulusTextBox.Text);
+            BigInteger exponent = BigInteger.Parse(PublicKeyExponentTextBox.Text);
+            BigInteger d = BigInteger.Parse(PrivateKeyExponentTextBox.Text);
+            rsaParameters = new RSAParameters
+            {
+                Modulus = BigIntegerExtensions.UnsignedToBytes(modulus),
+                Exponent = BigIntegerExtensions.UnsignedToBytes(exponent),
+                D = BigIntegerExtensions.UnsignedToBytes(d)
+            };
+            Debug.WriteLine("Parameters updated");
         }
 
         private void DecryptButton_Click(object sender, EventArgs e)
         {
+            // TODO: Decrypt in a separate thread.
+            if (haveParametersChangedInTextBoxes)
+                UpdateRSAParametersUsingTextBoxes();
             throw new System.NotImplementedException();
         }
 
@@ -74,6 +97,7 @@ namespace PNGAnalyzerUI
                 SetRSAParameters(MicrosoftRSA.GenerateKeyPair(keySize.Value));
             else if (rsaMethod == RSAMethod.MyRSA)
                 SetRSAParameters(MyRSA.GenerateKeyPair(keySize.Value));
+            haveParametersChangedInTextBoxes = false;
             if (blockCipherMethod.HasValue)
             {
                 EncryptButton.Enabled = true;
@@ -122,13 +146,14 @@ namespace PNGAnalyzerUI
         private void ChangeButtonsEnabled()
         {
             GenerateKeysButton.Enabled = keySize.HasValue;
-            EncryptButton.Enabled = false;
-            DecryptButton.Enabled = false;
+            EncryptButton.Enabled = !IsAnyKeyTextBoxEmpty();
+            DecryptButton.Enabled = !IsAnyKeyTextBoxEmpty();
         }
 
         private void ClearRSAParameters()
         {
             rsaParameters = null;
+            haveParametersChangedInTextBoxes = false;
             ModulusTextBox.Clear();
             PublicKeyExponentTextBox.Clear();
             PrivateKeyExponentTextBox.Clear();
@@ -153,9 +178,11 @@ namespace PNGAnalyzerUI
         {
             if (BlockCipherComboBox.SelectedItem.ToString() == BlockCipherMethod.ElectronicCodebook.ToMethodString())
                 blockCipherMethod = BlockCipherMethod.ElectronicCodebook;
-            else if (BlockCipherComboBox.SelectedItem.ToString() == BlockCipherMethod.CipherBlockChaining.ToMethodString())
+            else if (BlockCipherComboBox.SelectedItem.ToString() ==
+                     BlockCipherMethod.CipherBlockChaining.ToMethodString())
                 blockCipherMethod = BlockCipherMethod.CipherBlockChaining;
-            else if (BlockCipherComboBox.SelectedItem.ToString() == BlockCipherMethod.PropagatingCipherBlockChaining.ToMethodString())
+            else if (BlockCipherComboBox.SelectedItem.ToString() ==
+                     BlockCipherMethod.PropagatingCipherBlockChaining.ToMethodString())
                 blockCipherMethod = BlockCipherMethod.PropagatingCipherBlockChaining;
             else if (BlockCipherComboBox.SelectedItem.ToString() == BlockCipherMethod.CipherFeedback.ToMethodString())
                 blockCipherMethod = BlockCipherMethod.CipherFeedback;
@@ -163,14 +190,52 @@ namespace PNGAnalyzerUI
                 blockCipherMethod = BlockCipherMethod.OutputFeedback;
             else if (BlockCipherComboBox.SelectedItem.ToString() == BlockCipherMethod.Counter.ToMethodString())
                 blockCipherMethod = BlockCipherMethod.Counter;
-            EncryptButton.Enabled = rsaParameters.HasValue;
-            DecryptButton.Enabled = rsaParameters.HasValue;
+            EncryptButton.Enabled = rsaParameters.HasValue || !IsAnyKeyTextBoxEmpty();
+            DecryptButton.Enabled = rsaParameters.HasValue || !IsAnyKeyTextBoxEmpty();
         }
 
         private void KeySizeComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             keySize = int.Parse(KeySizeComboBox.SelectedItem.ToString());
             GenerateKeysButton.Enabled = rsaMethod.HasValue;
+        }
+
+        private void ModulusTextBox_TextChanged(object sender, EventArgs e)
+        {
+            KeyTextBoxTextChanged();
+        }
+
+        private void KeyTextBoxTextChanged()
+        {
+            haveParametersChangedInTextBoxes = true;
+            if (IsAnyKeyTextBoxEmpty()) return;
+            if (rsaMethod.HasValue && blockCipherMethod.HasValue)
+            {
+                EncryptButton.Enabled = true;
+                DecryptButton.Enabled = true;
+            }
+        }
+
+        private bool IsAnyKeyTextBoxEmpty()
+        {
+            return string.IsNullOrWhiteSpace(ModulusTextBox.Text) ||
+                   string.IsNullOrWhiteSpace(PublicKeyExponentTextBox.Text) ||
+                   string.IsNullOrWhiteSpace(PrivateKeyExponentTextBox.Text);
+        }
+
+        private void PublicKeyExponentTextBox_TextChanged(object sender, EventArgs e)
+        {
+            KeyTextBoxTextChanged();
+        }
+
+        private void PrivateKeyExponentTextBox_TextChanged(object sender, EventArgs e)
+        {
+            KeyTextBoxTextChanged();
+        }
+        
+        private void OnlyDigitsTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
         }
     }
 }

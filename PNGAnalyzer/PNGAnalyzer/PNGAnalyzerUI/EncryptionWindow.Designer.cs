@@ -51,11 +51,11 @@ namespace PNGAnalyzerUI
             // EncryptButton
             // 
             this.EncryptButton.Enabled = false;
-            this.EncryptButton.Location = new System.Drawing.Point(607, 124);
+            this.EncryptButton.Location = new System.Drawing.Point(607, 123);
             this.EncryptButton.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.EncryptButton.Name = "EncryptButton";
             this.EncryptButton.Size = new System.Drawing.Size(108, 23);
-            this.EncryptButton.TabIndex = 1;
+            this.EncryptButton.TabIndex = 8;
             this.EncryptButton.Text = "Encrypt";
             this.EncryptButton.UseVisualStyleBackColor = true;
             this.EncryptButton.Click += new System.EventHandler(this.EncryptButton_Click);
@@ -67,7 +67,7 @@ namespace PNGAnalyzerUI
             this.DecryptButton.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.DecryptButton.Name = "DecryptButton";
             this.DecryptButton.Size = new System.Drawing.Size(108, 23);
-            this.DecryptButton.TabIndex = 2;
+            this.DecryptButton.TabIndex = 9;
             this.DecryptButton.Text = "Decrypt";
             this.DecryptButton.UseVisualStyleBackColor = true;
             this.DecryptButton.Click += new System.EventHandler(this.DecryptButton_Click);
@@ -79,7 +79,7 @@ namespace PNGAnalyzerUI
             this.GenerateKeysButton.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.GenerateKeysButton.Name = "GenerateKeysButton";
             this.GenerateKeysButton.Size = new System.Drawing.Size(108, 23);
-            this.GenerateKeysButton.TabIndex = 3;
+            this.GenerateKeysButton.TabIndex = 7;
             this.GenerateKeysButton.Text = "Generate keys";
             this.GenerateKeysButton.UseVisualStyleBackColor = true;
             this.GenerateKeysButton.Click += new System.EventHandler(this.GenerateKeysButton_Click);
@@ -91,7 +91,7 @@ namespace PNGAnalyzerUI
             this.PrivateKeyExponentLabel.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.PrivateKeyExponentLabel.Name = "PrivateKeyExponentLabel";
             this.PrivateKeyExponentLabel.Size = new System.Drawing.Size(170, 24);
-            this.PrivateKeyExponentLabel.TabIndex = 5;
+            this.PrivateKeyExponentLabel.TabIndex = 14;
             this.PrivateKeyExponentLabel.Text = "Private key exponent:";
             // 
             // PublicKeyExponentLabel
@@ -101,7 +101,7 @@ namespace PNGAnalyzerUI
             this.PublicKeyExponentLabel.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.PublicKeyExponentLabel.Name = "PublicKeyExponentLabel";
             this.PublicKeyExponentLabel.Size = new System.Drawing.Size(170, 24);
-            this.PublicKeyExponentLabel.TabIndex = 7;
+            this.PublicKeyExponentLabel.TabIndex = 13;
             this.PublicKeyExponentLabel.Text = "Public key exponent:";
             // 
             // ModulusLabel
@@ -111,7 +111,7 @@ namespace PNGAnalyzerUI
             this.ModulusLabel.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.ModulusLabel.Name = "ModulusLabel";
             this.ModulusLabel.Size = new System.Drawing.Size(170, 24);
-            this.ModulusLabel.TabIndex = 8;
+            this.ModulusLabel.TabIndex = 12;
             this.ModulusLabel.Text = "Modulus:";
             // 
             // MethodComboBox
@@ -122,7 +122,7 @@ namespace PNGAnalyzerUI
             this.MethodComboBox.Location = new System.Drawing.Point(138, 12);
             this.MethodComboBox.Name = "MethodComboBox";
             this.MethodComboBox.Size = new System.Drawing.Size(200, 28);
-            this.MethodComboBox.TabIndex = 9;
+            this.MethodComboBox.TabIndex = 1;
             this.MethodComboBox.SelectedIndexChanged +=
                 new System.EventHandler(this.MethodComboBox_SelectedIndexChanged);
             // 
@@ -135,7 +135,7 @@ namespace PNGAnalyzerUI
             this.BlockCipherComboBox.Location = new System.Drawing.Point(138, 52);
             this.BlockCipherComboBox.Name = "BlockCipherComboBox";
             this.BlockCipherComboBox.Size = new System.Drawing.Size(576, 28);
-            this.BlockCipherComboBox.TabIndex = 10;
+            this.BlockCipherComboBox.TabIndex = 3;
             this.BlockCipherComboBox.SelectedIndexChanged +=
                 new System.EventHandler(this.BlockCipherComboBox_SelectedIndexChanged);
             // 
@@ -146,7 +146,7 @@ namespace PNGAnalyzerUI
             this.MethodLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.MethodLabel.Name = "MethodLabel";
             this.MethodLabel.Size = new System.Drawing.Size(125, 24);
-            this.MethodLabel.TabIndex = 11;
+            this.MethodLabel.TabIndex = 10;
             this.MethodLabel.Text = "Method:";
             // 
             // BlockCipherLabel
@@ -156,32 +156,43 @@ namespace PNGAnalyzerUI
             this.BlockCipherLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.BlockCipherLabel.Name = "BlockCipherLabel";
             this.BlockCipherLabel.Size = new System.Drawing.Size(125, 24);
-            this.BlockCipherLabel.TabIndex = 12;
+            this.BlockCipherLabel.TabIndex = 11;
             this.BlockCipherLabel.Text = "Block cipher:";
             // 
             // PrivateKeyExponentTextBox
             // 
-            this.PrivateKeyExponentTextBox.Location = new System.Drawing.Point(186, 158);
+            this.PrivateKeyExponentTextBox.Location = new System.Drawing.Point(185, 158);
             this.PrivateKeyExponentTextBox.Name = "PrivateKeyExponentTextBox";
             this.PrivateKeyExponentTextBox.ReadOnly = true;
             this.PrivateKeyExponentTextBox.Size = new System.Drawing.Size(416, 23);
-            this.PrivateKeyExponentTextBox.TabIndex = 13;
+            this.PrivateKeyExponentTextBox.TabIndex = 6;
+            this.PrivateKeyExponentTextBox.TextChanged +=
+                new System.EventHandler(this.PrivateKeyExponentTextBox_TextChanged);
+            this.PrivateKeyExponentTextBox.KeyPress +=
+                new System.Windows.Forms.KeyPressEventHandler(this.OnlyDigitsTextBox_KeyPress);
             // 
             // PublicKeyExponentTextBox
             // 
-            this.PublicKeyExponentTextBox.Location = new System.Drawing.Point(186, 124);
+            this.PublicKeyExponentTextBox.Location = new System.Drawing.Point(185, 123);
             this.PublicKeyExponentTextBox.Name = "PublicKeyExponentTextBox";
             this.PublicKeyExponentTextBox.ReadOnly = true;
             this.PublicKeyExponentTextBox.Size = new System.Drawing.Size(416, 23);
-            this.PublicKeyExponentTextBox.TabIndex = 14;
+            this.PublicKeyExponentTextBox.TabIndex = 5;
+            this.PublicKeyExponentTextBox.TextChanged +=
+                new System.EventHandler(this.PublicKeyExponentTextBox_TextChanged);
+            this.PublicKeyExponentTextBox.KeyPress +=
+                new System.Windows.Forms.KeyPressEventHandler(this.OnlyDigitsTextBox_KeyPress);
             // 
             // ModulusTextBox
             // 
-            this.ModulusTextBox.Location = new System.Drawing.Point(186, 90);
+            this.ModulusTextBox.Location = new System.Drawing.Point(185, 90);
             this.ModulusTextBox.Name = "ModulusTextBox";
             this.ModulusTextBox.ReadOnly = true;
             this.ModulusTextBox.Size = new System.Drawing.Size(416, 23);
-            this.ModulusTextBox.TabIndex = 15;
+            this.ModulusTextBox.TabIndex = 4;
+            this.ModulusTextBox.TextChanged += new System.EventHandler(this.ModulusTextBox_TextChanged);
+            this.ModulusTextBox.KeyPress +=
+                new System.Windows.Forms.KeyPressEventHandler(this.OnlyDigitsTextBox_KeyPress);
             // 
             // KeySizeLabel
             // 
@@ -190,7 +201,7 @@ namespace PNGAnalyzerUI
             this.KeySizeLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.KeySizeLabel.Name = "KeySizeLabel";
             this.KeySizeLabel.Size = new System.Drawing.Size(125, 24);
-            this.KeySizeLabel.TabIndex = 16;
+            this.KeySizeLabel.TabIndex = 15;
             this.KeySizeLabel.Text = "Key size:";
             // 
             // KeySizeComboBox
@@ -201,7 +212,7 @@ namespace PNGAnalyzerUI
             this.KeySizeComboBox.Location = new System.Drawing.Point(514, 12);
             this.KeySizeComboBox.Name = "KeySizeComboBox";
             this.KeySizeComboBox.Size = new System.Drawing.Size(200, 28);
-            this.KeySizeComboBox.TabIndex = 17;
+            this.KeySizeComboBox.TabIndex = 2;
             this.KeySizeComboBox.SelectedIndexChanged +=
                 new System.EventHandler(this.KeySizeComboBox_SelectedIndexChanged);
             // 
