@@ -46,7 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EncryptionType.cs" />
+    <Compile Include="BlockCipherMethod.cs" />
     <Compile Include="EncryptionWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -67,6 +67,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RSAMethod.cs" />
     <EmbeddedResource Include="EncryptionWindow.resx">
       <DependentUpon>EncryptionWindow.cs</DependentUpon>
     </EmbeddedResource>
