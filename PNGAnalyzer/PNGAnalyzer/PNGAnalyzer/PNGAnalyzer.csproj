@@ -55,6 +55,8 @@
         <Compile Include="Anonymizer.cs" />
         <Compile Include="BlockCiphers\BlockCipherSupport.cs" />
         <Compile Include="BlockCiphers\CipherBlockChaining.cs" />
+        <Compile Include="BlockCiphers\Counter.cs" />
+        <Compile Include="BlockCiphers\CipherFeedback.cs" />
         <Compile Include="BlockCiphers\ElectronicCodebook.cs" />
         <Compile Include="BlockCiphers\PropagatingCipherBlockChaining.cs" />
         <Compile Include="ChunkParser.cs" />

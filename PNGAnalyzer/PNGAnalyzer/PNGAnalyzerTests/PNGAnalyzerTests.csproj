@@ -52,6 +52,8 @@
     <ItemGroup>
         <Compile Include="AnonymizerTests.cs" />
         <Compile Include="BlockCiphersTest\CipherBlockChainingTests.cs" />
+        <Compile Include="BlockCiphersTest\CounterTest.cs" />
+        <Compile Include="BlockCiphersTest\CipherFeedbackTests.cs" />
         <Compile Include="BlockCiphersTest\ElectronicCodebookTests.cs" />
         <Compile Include="BigIntegerExtensionsTests.cs" />
         <Compile Include="BlockCiphersTest\PropagatingCipherBlockChainingTests.cs" />
