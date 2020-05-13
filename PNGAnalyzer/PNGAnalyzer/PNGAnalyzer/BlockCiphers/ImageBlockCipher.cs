@@ -2,11 +2,11 @@
 
 namespace PNGAnalyzer.BlockCiphers
 {
-    public class BlockCipherImage
+    public class ImageBlockCipher
     {
         private readonly IBlockCipher blockCipher;
 
-        public BlockCipherImage(IBlockCipher blockCipher)
+        public ImageBlockCipher(IBlockCipher blockCipher)
         {
             this.blockCipher = blockCipher;
         }

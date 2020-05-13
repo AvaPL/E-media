@@ -6,32 +6,22 @@ using PNGAnalyzer.RSA;
 
 namespace PNGAnalyzer.BlockCiphers
 {
-    public class PropagatingCipherBlockChaining
-    { 
+    public class PropagatingCipherBlockChaining : IBlockCipher
+    {
         private const int BlockSize = 32;
         private readonly IRSA rsa;
-        private BigInteger initializationVector;
-        
+        private readonly BigInteger initializationVector;
+
         public PropagatingCipherBlockChaining(IRSA rsa)
         {
             this.rsa = rsa;
             initializationVector = BigIntegerExtensions.Random(BlockSize);
         }
-        
+
         public PropagatingCipherBlockChaining(IRSA rsa, BigInteger initializationVector)
         {
             this.rsa = rsa;
             this.initializationVector = initializationVector;
-        }
-        
-        
-        public List<Chunk> CipherImage(List<Chunk> chunks)
-        {
-            byte[] decompressedBytes = BlockCipherSupport.DecompressIDATs(chunks);
-            byte[] cipheredBytes = Cipher(decompressedBytes);
-            List<Chunk> resultIdats = BlockCipherSupport.CompressIDATs(cipheredBytes);
-            List<Chunk> resultChunks = BlockCipherSupport.SwapIDATs(chunks, resultIdats);
-            return resultChunks;
         }
 
         public byte[] Cipher(byte[] data)
@@ -52,7 +42,7 @@ namespace PNGAnalyzer.BlockCiphers
                 block ^= previousXor;
                 cipheredBlocks.Add(rsa.Encrypt(BigIntegerExtensions.UnsignedToBytes(block).Take(BlockSize).ToArray()));
             }
-            
+
             return cipheredBlocks;
         }
 
@@ -68,15 +58,6 @@ namespace PNGAnalyzer.BlockCiphers
             return initializationVector;
         }
 
-        public List<Chunk> DecipherImage(List<Chunk> chunks)
-        {
-            byte[] decompressedBytes = BlockCipherSupport.DecompressIDATs(chunks);
-            byte[] decipheredBytes = Decipher(decompressedBytes);
-            List<Chunk> resultIdats = BlockCipherSupport.CompressIDATs(decipheredBytes);
-            List<Chunk> resultChunks = BlockCipherSupport.SwapIDATs(chunks, resultIdats);
-            return resultChunks;
-        }
-        
         public byte[] Decipher(byte[] data)
         {
             RSAParameters parameters = rsa.ExportParameters();

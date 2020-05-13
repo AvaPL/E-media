@@ -53,7 +53,7 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="Anonymizer.cs" />
-        <Compile Include="BlockCiphers\BlockCipherImage.cs" />
+        <Compile Include="BlockCiphers\ImageBlockCipher.cs" />
         <Compile Include="BlockCiphers\BlockCipherSupport.cs" />
         <Compile Include="BlockCiphers\CipherBlockChaining.cs" />
         <Compile Include="BlockCiphers\Counter.cs" />
