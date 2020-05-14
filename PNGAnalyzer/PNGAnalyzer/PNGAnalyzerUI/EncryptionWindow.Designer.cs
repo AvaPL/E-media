@@ -90,7 +90,7 @@ namespace PNGAnalyzerUI
             this.PrivateKeyExponentLabel.Location = new System.Drawing.Point(8, 156);
             this.PrivateKeyExponentLabel.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.PrivateKeyExponentLabel.Name = "PrivateKeyExponentLabel";
-            this.PrivateKeyExponentLabel.Size = new System.Drawing.Size(170, 24);
+            this.PrivateKeyExponentLabel.Size = new System.Drawing.Size(200, 24);
             this.PrivateKeyExponentLabel.TabIndex = 14;
             this.PrivateKeyExponentLabel.Text = "Private key exponent:";
             // 
@@ -100,7 +100,7 @@ namespace PNGAnalyzerUI
             this.PublicKeyExponentLabel.Location = new System.Drawing.Point(8, 122);
             this.PublicKeyExponentLabel.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.PublicKeyExponentLabel.Name = "PublicKeyExponentLabel";
-            this.PublicKeyExponentLabel.Size = new System.Drawing.Size(170, 24);
+            this.PublicKeyExponentLabel.Size = new System.Drawing.Size(200, 24);
             this.PublicKeyExponentLabel.TabIndex = 13;
             this.PublicKeyExponentLabel.Text = "Public key exponent:";
             // 
@@ -161,10 +161,10 @@ namespace PNGAnalyzerUI
             // 
             // PrivateKeyExponentTextBox
             // 
-            this.PrivateKeyExponentTextBox.Location = new System.Drawing.Point(185, 158);
+            this.PrivateKeyExponentTextBox.Location = new System.Drawing.Point(197, 158);
             this.PrivateKeyExponentTextBox.Name = "PrivateKeyExponentTextBox";
             this.PrivateKeyExponentTextBox.ReadOnly = true;
-            this.PrivateKeyExponentTextBox.Size = new System.Drawing.Size(416, 23);
+            this.PrivateKeyExponentTextBox.Size = new System.Drawing.Size(404, 23);
             this.PrivateKeyExponentTextBox.TabIndex = 6;
             this.PrivateKeyExponentTextBox.TextChanged +=
                 new System.EventHandler(this.PrivateKeyExponentTextBox_TextChanged);
@@ -173,10 +173,10 @@ namespace PNGAnalyzerUI
             // 
             // PublicKeyExponentTextBox
             // 
-            this.PublicKeyExponentTextBox.Location = new System.Drawing.Point(185, 123);
+            this.PublicKeyExponentTextBox.Location = new System.Drawing.Point(197, 123);
             this.PublicKeyExponentTextBox.Name = "PublicKeyExponentTextBox";
             this.PublicKeyExponentTextBox.ReadOnly = true;
-            this.PublicKeyExponentTextBox.Size = new System.Drawing.Size(416, 23);
+            this.PublicKeyExponentTextBox.Size = new System.Drawing.Size(404, 23);
             this.PublicKeyExponentTextBox.TabIndex = 5;
             this.PublicKeyExponentTextBox.TextChanged +=
                 new System.EventHandler(this.PublicKeyExponentTextBox_TextChanged);
@@ -185,10 +185,10 @@ namespace PNGAnalyzerUI
             // 
             // ModulusTextBox
             // 
-            this.ModulusTextBox.Location = new System.Drawing.Point(185, 90);
+            this.ModulusTextBox.Location = new System.Drawing.Point(197, 90);
             this.ModulusTextBox.Name = "ModulusTextBox";
             this.ModulusTextBox.ReadOnly = true;
-            this.ModulusTextBox.Size = new System.Drawing.Size(416, 23);
+            this.ModulusTextBox.Size = new System.Drawing.Size(404, 23);
             this.ModulusTextBox.TabIndex = 4;
             this.ModulusTextBox.TextChanged += new System.EventHandler(this.ModulusTextBox_TextChanged);
             this.ModulusTextBox.KeyPress +=
