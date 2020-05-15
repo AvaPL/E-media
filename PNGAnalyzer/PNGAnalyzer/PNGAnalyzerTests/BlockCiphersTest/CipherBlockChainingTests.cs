@@ -9,7 +9,7 @@ using PNGAnalyzer.RSA;
 namespace PNGAnalyzerTests.BlockCiphersTest
 {
     [TestFixture (typeof(MicrosoftRSA))]
-    // [TestFixture (typeof(MyRSA))]
+    [TestFixture (typeof(MyRSA))]
     public class CipherBlockChainingTests<T> where T:IRSA
     {
         private CipherBlockChaining cipherBlockChaining;
@@ -63,7 +63,7 @@ namespace PNGAnalyzerTests.BlockCiphersTest
         }
     }
     
-    //[TestFixture (typeof(MicrosoftRSA))]
+    [TestFixture (typeof(MicrosoftRSA))]
     [TestFixture (typeof(MyRSA))]
     public class CipherBlockChainingTestsOnFiles<T> where T:IRSA
     {
@@ -76,7 +76,7 @@ namespace PNGAnalyzerTests.BlockCiphersTest
         }
 
         [Test]
-        public void ShouldCipherImageWithoutFiltering()
+        public void ShouldCipherWithoutFilteringImage()
         {
             string filePathToRead = @"../../../Data/square_wave.png";
             string filePathToWrite = @"../../../Data/square_wave_encrypted.png";
@@ -87,7 +87,7 @@ namespace PNGAnalyzerTests.BlockCiphersTest
         }
         
         [Test]
-        public void ShouldDecipherImageWithoutFiltering()
+        public void ShouldDecipherWithoutFilteringImage()
         {
             string filePathToRead = @"../../../Data/square_wave_encrypted.png";
             string filePathToWrite = @"../../../Data/square_wave_decrypted.png";

@@ -11,19 +11,20 @@ namespace PNGAnalyzer.BlockCiphers
     {
         private const int BlockSize = 32;
         private readonly IRSA rsa;
-        private readonly BigInteger initializationVector;
 
         public CipherBlockChaining(IRSA rsa)
         {
             this.rsa = rsa;
-            initializationVector = BigIntegerExtensions.Random(BlockSize);
+            InitializationVector = BigIntegerExtensions.Random(BlockSize);
         }
 
         public CipherBlockChaining(IRSA rsa, BigInteger initializationVector)
         {
             this.rsa = rsa;
-            this.initializationVector = initializationVector;
+            this.InitializationVector = initializationVector;
         }
+
+        public BigInteger InitializationVector { get; }
 
         public byte[] Cipher(byte[] data)
         {
@@ -31,21 +32,6 @@ namespace PNGAnalyzer.BlockCiphers
             List<byte[]> blocks = BlockCipherSupport.DivideIntoBlocks(dataToDivide, BlockSize);
             CipherBlocks(blocks);
             return BlockCipherSupport.ConcatenateBlocks(blocks);
-        }
-
-        private void CipherBlocks(List<byte[]> blocks)
-        {
-            for (int i = 0; i < blocks.Count; i++)
-            {
-                BigInteger cipheredPreviousBlock =
-                    i > 0
-                        ? BigIntegerExtensions.UnsignedFromBytes(blocks[i - 1].Take(BlockSize).ToArray())
-                        : initializationVector;
-                BigInteger block = BigIntegerExtensions.UnsignedFromBytes(blocks[i]);
-                block ^= cipheredPreviousBlock;
-                blocks[i] = BigIntegerExtensions.UnsignedToBytes(block);
-                blocks[i] = rsa.Encrypt(blocks[i]);
-            }
         }
 
         public byte[] Decipher(byte[] data)
@@ -56,6 +42,22 @@ namespace PNGAnalyzer.BlockCiphers
             List<byte[]> decipheredBlocks = DecipherBlocks(blocks);
             return BlockCipherSupport.RemovePadding(BlockCipherSupport.ConcatenateBlocks(decipheredBlocks));
         }
+
+        private void CipherBlocks(List<byte[]> blocks)
+        {
+            for (int i = 0; i < blocks.Count; i++)
+            {
+                BigInteger cipheredPreviousBlock =
+                    i > 0
+                        ? BigIntegerExtensions.UnsignedFromBytes(blocks[i - 1].Take(BlockSize).ToArray())
+                        : InitializationVector;
+                BigInteger block = BigIntegerExtensions.UnsignedFromBytes(blocks[i]);
+                block ^= cipheredPreviousBlock;
+                blocks[i] = BigIntegerExtensions.UnsignedToBytes(block);
+                blocks[i] = rsa.Encrypt(blocks[i]);
+            }
+        }
+        
 
         public int GetResizeRatio()
         {
@@ -82,7 +84,7 @@ namespace PNGAnalyzer.BlockCiphers
         {
             return index > 0
                 ? BigIntegerExtensions.UnsignedFromBytes(blocks[index - 1].Take(BlockSize).ToArray())
-                : initializationVector;
+                : InitializationVector;
         }
     }
 }

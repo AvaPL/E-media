@@ -105,7 +105,7 @@ namespace PNGAnalyzerTests.BlockCiphersTest
         }
 
         [Test]
-        public void ShouldCipherImage()
+        public void ShouldCipherWithoutFilteringImage()
         {
             string filePathToRead = @"../../../Data/square_wave.png";
             string filePathToWrite = @"../../../Data/square_wave_encrypted.png";
@@ -114,9 +114,9 @@ namespace PNGAnalyzerTests.BlockCiphersTest
             List<Chunk> cipheredChunks = imageBlockCipher.CipherWithoutFiltering(parsedChunks);
             PNGFile.Write(filePathToWrite, cipheredChunks);
         }
-
+        
         [Test]
-        public void ShouldDecipherImage()
+        public void ShouldDecipherWithoutFilteringImage()
         {
             string filePathToRead = @"../../../Data/square_wave_encrypted.png";
             string filePathToWrite = @"../../../Data/square_wave_decrypted.png";
@@ -124,6 +124,22 @@ namespace PNGAnalyzerTests.BlockCiphersTest
             List<Chunk> parsedChunks = ChunkParser.Parse(chunks);
             List<Chunk> decipheredChunks = imageBlockCipher.DecipherWithoutFiltering(parsedChunks);
             PNGFile.Write(filePathToWrite, decipheredChunks);
+        }
+        
+        [Test]
+        public void ShouldCipherImageWithFiltering()
+        {
+            string filePathToRead = @"../../../Data/square_wave.png";
+            string filePathToWrite = @"../../../Data/square_wave_encrypted.png";
+            imageBlockCipher.CipherWithFiltering(filePathToRead, filePathToWrite);
+        }
+        
+        [Test]
+        public void ShouldDecipherImageWithFiltering()
+        {
+            string filePathToRead = @"../../../Data/square_wave_encrypted.png";
+            string filePathToWrite = @"../../../Data/square_wave_decrypted.png";
+            imageBlockCipher.DecipherWithFiltering(filePathToRead, filePathToWrite);
         }
     }
 }
