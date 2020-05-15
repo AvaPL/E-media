@@ -105,7 +105,7 @@ namespace PNGAnalyzerUI
             // 
             // MicrosoftRSAButton
             // 
-            this.MicrosoftRSAButton.Location = new System.Drawing.Point(12, 71);
+            this.MicrosoftRSAButton.Location = new System.Drawing.Point(12, 72);
             this.MicrosoftRSAButton.Name = "MicrosoftRSAButton";
             this.MicrosoftRSAButton.Size = new System.Drawing.Size(202, 23);
             this.MicrosoftRSAButton.TabIndex = 5;
@@ -115,7 +115,7 @@ namespace PNGAnalyzerUI
             // 
             // MyRSAButton
             // 
-            this.MyRSAButton.Location = new System.Drawing.Point(218, 71);
+            this.MyRSAButton.Location = new System.Drawing.Point(218, 72);
             this.MyRSAButton.Name = "MyRSAButton";
             this.MyRSAButton.Size = new System.Drawing.Size(202, 23);
             this.MyRSAButton.TabIndex = 6;

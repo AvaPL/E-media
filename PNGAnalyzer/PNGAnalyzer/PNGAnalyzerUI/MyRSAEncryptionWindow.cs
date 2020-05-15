@@ -16,14 +16,7 @@ namespace PNGAnalyzerUI
 {
     public partial class MyRSAEncryptionWindow : Form
     {
-        private static readonly RSAMethod[] RSAMethods = {RSAMethod.MicrosoftRSA, RSAMethod.MyRSA};
-
-        private static readonly BlockCipherMethod[] MicrosoftRSABlockCipherMethods =
-        {
-            BlockCipherMethod.ElectronicCodebook, BlockCipherMethod.CipherBlockChaining
-        };
-
-        private static readonly BlockCipherMethod[] MyRSABlockCipherMethods =
+        private static readonly BlockCipherMethod[] BlockCipherMethods =
         {
             BlockCipherMethod.ElectronicCodebook, BlockCipherMethod.CipherBlockChaining,
             BlockCipherMethod.PropagatingCipherBlockChaining, BlockCipherMethod.CipherFeedback,
@@ -32,7 +25,6 @@ namespace PNGAnalyzerUI
 
         private static readonly int[] KeySizes = {512, 1024, 2048};
 
-        private RSAMethod? rsaMethod;
         private BlockCipherMethod? blockCipherMethod;
         private int? keySize;
         private RSAParameters? rsaParameters;
@@ -40,13 +32,8 @@ namespace PNGAnalyzerUI
         public MyRSAEncryptionWindow()
         {
             InitializeComponent();
-            // MethodComboBox.Items.AddRange(ToString(RSAMethods));
+            BlockCipherComboBox.Items.AddRange(ToString(BlockCipherMethods));
             KeySizeComboBox.Items.AddRange(ToString(KeySizes));
-        }
-
-        private object[] ToString(RSAMethod[] rsaMethods)
-        {
-            return rsaMethods.Select(method => (object) method.ToMethodString()).ToArray();
         }
 
         private object[] ToString(BlockCipherMethod[] blockCipherMethods)
@@ -61,29 +48,50 @@ namespace PNGAnalyzerUI
 
         private void EncryptButton_Click(object sender, EventArgs e)
         {
-            // TODO: Encrypt in a separate thread.
             UpdateRSAParametersUsingTextBoxes();
             if (!rsaParameters.HasValue) return;
             if (SaveFileDialog.ShowDialog() != DialogResult.OK) return;
-            IRSA rsa = GetRSA();
+            ImageBlockCipher imageBlockCipher = GetImageBlockCipher(rsaParameters.Value);
+            EncryptImageAsync(imageBlockCipher);
+        }
+
+        private void UpdateRSAParametersUsingTextBoxes()
+        {
+            BigInteger modulus = BigInteger.Parse(ModulusTextBox.Text);
+            BigInteger exponent = BigInteger.Parse(PublicKeyExponentTextBox.Text);
+            BigInteger d = BigInteger.Parse(PrivateKeyExponentTextBox.Text);
+            rsaParameters = new RSAParameters
+            {
+                Modulus = BigIntegerExtensions.UnsignedToBytes(modulus),
+                Exponent = BigIntegerExtensions.UnsignedToBytes(exponent),
+                D = BigIntegerExtensions.UnsignedToBytes(d)
+            };
+            Debug.WriteLine("Parameters updated");
+        }
+
+        private ImageBlockCipher GetImageBlockCipher(RSAParameters parameters)
+        {
+            MyRSA rsa = new MyRSA(parameters);
             IBlockCipher blockCipher = GetBlockCipher(rsa);
             ImageBlockCipher imageBlockCipher = new ImageBlockCipher(blockCipher);
-            List<Chunk> chunks = PNGFile.Read(FilepathTextBox.Text);
-            List<Chunk> parsedChunks = ChunkParser.Parse(chunks);
-            List<Chunk> cipheredChunks = imageBlockCipher.Cipher(parsedChunks);
-            PNGFile.Write(SaveFileDialog.FileName, cipheredChunks);
+            return imageBlockCipher;
         }
 
         private IBlockCipher GetBlockCipher(IRSA rsa)
         {
-            BigInteger? initializationVector = null;
-            if (blockCipherMethod != BlockCipherMethod.ElectronicCodebook &&
-                !string.IsNullOrWhiteSpace(InitializationVectorTextBox.Text))
-                initializationVector = BigInteger.Parse(InitializationVectorTextBox.Text);
+            BigInteger? initializationVector = GetInitializationVector();
 
             return initializationVector.HasValue
                 ? GetBlockCipherUsingInitializationVector(rsa, initializationVector.Value)
                 : GetBlockCipherWithoutInitializationVector(rsa);
+        }
+
+        private BigInteger? GetInitializationVector()
+        {
+            if (blockCipherMethod == BlockCipherMethod.ElectronicCodebook ||
+                string.IsNullOrWhiteSpace(InitializationVectorTextBox.Text))
+                return null;
+            return BigInteger.Parse(InitializationVectorTextBox.Text);
         }
 
         private IBlockCipher GetBlockCipherWithoutInitializationVector(IRSA rsa)
@@ -136,46 +144,81 @@ namespace PNGAnalyzerUI
             }
         }
 
-        private IRSA GetRSA()
+        private void EncryptImageAsync(ImageBlockCipher imageBlockCipher)
         {
-            switch (rsaMethod)
-            {
-                case RSAMethod.MicrosoftRSA:
-                    return new MicrosoftRSA(rsaParameters.Value);
-                case RSAMethod.MyRSA:
-                    return new MyRSA(rsaParameters.Value);
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+            Task.Run(() => EncryptImage(imageBlockCipher));
         }
 
-        private void UpdateRSAParametersUsingTextBoxes()
+        private void EncryptImage(ImageBlockCipher imageBlockCipher)
         {
-            BigInteger modulus = BigInteger.Parse(ModulusTextBox.Text);
-            BigInteger exponent = BigInteger.Parse(PublicKeyExponentTextBox.Text);
-            BigInteger d = BigInteger.Parse(PrivateKeyExponentTextBox.Text);
-            rsaParameters = new RSAParameters
+            EncryptButton.Enabled = false;
+            Task.Run(AnimateEncryptingText);
+            List<Chunk> parsedChunks = ReadAndParseChunks();
+            List<Chunk> cipheredChunks = imageBlockCipher.Cipher(parsedChunks);
+            PNGFile.Write(SaveFileDialog.FileName, cipheredChunks);
+            EncryptButton.Enabled = true;
+        }
+
+        private void AnimateEncryptingText()
+        {
+            string decryptButtonText = EncryptButton.Text;
+            for (int i = 0; EncryptButton.Enabled == false; i++)
             {
-                Modulus = BigIntegerExtensions.UnsignedToBytes(modulus),
-                Exponent = BigIntegerExtensions.UnsignedToBytes(exponent),
-                D = BigIntegerExtensions.UnsignedToBytes(d)
-            };
-            Debug.WriteLine("Parameters updated");
+                EncryptButton.Text = CreateTextWithDots("Encrypting", i);
+                Thread.Sleep(500);
+            }
+
+            EncryptButton.Text = decryptButtonText;
+        }
+
+        private static string CreateTextWithDots(string text, int numberOfDots)
+        {
+            string dots = string.Concat(Enumerable.Repeat(".", numberOfDots % 4));
+            string spaces = string.Concat(Enumerable.Repeat(" ", 4 - dots.Length));
+            return text + dots + spaces;
+        }
+
+        private List<Chunk> ReadAndParseChunks()
+        {
+            List<Chunk> chunks = PNGFile.Read(FilepathTextBox.Text);
+            List<Chunk> parsedChunks = ChunkParser.Parse(chunks);
+            return parsedChunks;
         }
 
         private void DecryptButton_Click(object sender, EventArgs e)
         {
-            // TODO: Decrypt in a separate thread.
             UpdateRSAParametersUsingTextBoxes();
             if (!rsaParameters.HasValue) return;
             if (SaveFileDialog.ShowDialog() != DialogResult.OK) return;
-            IRSA rsa = GetRSA();
-            IBlockCipher blockCipher = GetBlockCipher(rsa);
-            ImageBlockCipher imageBlockCipher = new ImageBlockCipher(blockCipher);
-            List<Chunk> chunks = PNGFile.Read(FilepathTextBox.Text);
-            List<Chunk> parsedChunks = ChunkParser.Parse(chunks);
+            ImageBlockCipher imageBlockCipher = GetImageBlockCipher(rsaParameters.Value);
+            DecryptImageAsync(imageBlockCipher);
+        }
+
+        private void DecryptImageAsync(ImageBlockCipher imageBlockCipher)
+        {
+            Task.Run(() => DecryptImage(imageBlockCipher));
+        }
+
+        private void DecryptImage(ImageBlockCipher imageBlockCipher)
+        {
+            DecryptButton.Enabled = false;
+            Task.Run(AnimateDecryptingText);
+            List<Chunk> parsedChunks = ReadAndParseChunks();
             List<Chunk> decipheredChunks = imageBlockCipher.Decipher(parsedChunks);
             PNGFile.Write(SaveFileDialog.FileName, decipheredChunks);
+            DecryptButton.Enabled = true;
+        }
+
+        private void AnimateDecryptingText()
+        {
+            string decryptButtonText = DecryptButton.Text;
+            for (int i = 0; DecryptButton.Enabled == false; i++)
+            {
+                DecryptButton.Text = CreateTextWithDots("Decrypting", i);
+                Thread.Sleep(500);
+            }
+
+            DecryptButton.Text = decryptButtonText;
         }
 
         private void GenerateKeysButton_Click(object sender, EventArgs e)
@@ -194,21 +237,17 @@ namespace PNGAnalyzerUI
             Task.Run(() => GenerateKeypair(keySize.Value));
         }
 
-        private void GenerateKeypair(int keySize)
+        private void GenerateKeypair(int size)
         {
             SetKeypairInputActive(false);
             Task.Run(AnimateGeneratingText);
-            if (rsaMethod == RSAMethod.MicrosoftRSA)
-                SetRSAParameters(MicrosoftRSA.GenerateKeyPair(keySize));
-            else if (rsaMethod == RSAMethod.MyRSA)
-                SetRSAParameters(MyRSA.GenerateKeyPair(keySize));
+            SetRSAParameters(MyRSA.GenerateKeyPair(size));
             SetKeypairInputActive(true);
         }
 
         private void SetKeypairInputActive(bool isActive)
         {
             GenerateKeysButton.Enabled = isActive;
-            if (rsaMethod == RSAMethod.MicrosoftRSA) return;
             ModulusTextBox.ReadOnly = !isActive;
             PublicKeyExponentTextBox.ReadOnly = !isActive;
             PrivateKeyExponentTextBox.ReadOnly = !isActive;
@@ -219,7 +258,7 @@ namespace PNGAnalyzerUI
             string generateKeysButtonText = GenerateKeysButton.Text;
             for (int i = 0; GenerateKeysButton.Enabled == false; i++)
             {
-                string generatingText = CreateGeneratingText(i);
+                string generatingText = CreateTextWithDots("Generating", i);
                 SetKeypairInputText(generatingText);
                 Thread.Sleep(500);
             }
@@ -234,80 +273,17 @@ namespace PNGAnalyzerUI
             PrivateKeyExponentTextBox.Text = generatingText;
         }
 
-        private static string CreateGeneratingText(int i)
+        private void SetRSAParameters(RSAParameters parameters)
         {
-            string generating = "Generating";
-            string dots = string.Concat(Enumerable.Repeat(".", i % 4));
-            return generating + dots;
-        }
-
-        private void SetRSAParameters(RSAParameters rsaParameters)
-        {
-            this.rsaParameters = rsaParameters;
-            ModulusTextBox.Text = BytesToBigIntegerString(rsaParameters.Modulus);
-            PublicKeyExponentTextBox.Text = BytesToBigIntegerString(rsaParameters.Exponent);
-            PrivateKeyExponentTextBox.Text = BytesToBigIntegerString(rsaParameters.D);
+            this.rsaParameters = parameters;
+            ModulusTextBox.Text = BytesToBigIntegerString(parameters.Modulus);
+            PublicKeyExponentTextBox.Text = BytesToBigIntegerString(parameters.Exponent);
+            PrivateKeyExponentTextBox.Text = BytesToBigIntegerString(parameters.D);
         }
 
         private string BytesToBigIntegerString(byte[] bytes)
         {
             return BigIntegerExtensions.UnsignedFromBytes(bytes).ToString();
-        }
-
-        // private void MethodComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        // {
-        //     BlockCipherComboBox.Enabled = true;
-        //     if (MethodComboBox.SelectedItem.ToString() == RSAMethod.MicrosoftRSA.ToMethodString())
-        //         SelectedIndexChangedToMicrosoftRSA();
-        //     else if (MethodComboBox.SelectedItem.ToString() == RSAMethod.MyRSA.ToMethodString())
-        //         SelectedIndexChangedToMyRSA();
-        // }
-
-        private void SelectedIndexChangedToMicrosoftRSA()
-        {
-            rsaMethod = RSAMethod.MicrosoftRSA;
-            ClearRSAParameters();
-            SetBlockCipherItems(ToString(MicrosoftRSABlockCipherMethods));
-            SetKeyTextBoxesReadOnly(true);
-            ChangeButtonsEnabled();
-        }
-
-        private void SetBlockCipherItems(object[] items)
-        {
-            blockCipherMethod = null;
-            BlockCipherComboBox.Items.Clear();
-            BlockCipherComboBox.Items.AddRange(items);
-            UpdateInitializationVectorTextBox();
-        }
-
-        private void ChangeButtonsEnabled()
-        {
-            GenerateKeysButton.Enabled = keySize.HasValue;
-            EncryptButton.Enabled = !IsAnyKeyTextBoxEmpty() && !string.IsNullOrWhiteSpace(FilepathTextBox.Text);
-            DecryptButton.Enabled = !IsAnyKeyTextBoxEmpty() && !string.IsNullOrWhiteSpace(FilepathTextBox.Text); 
-        }
-
-        private void ClearRSAParameters()
-        {
-            rsaParameters = null;
-            ModulusTextBox.Clear();
-            PublicKeyExponentTextBox.Clear();
-            PrivateKeyExponentTextBox.Clear();
-        }
-
-        private void SelectedIndexChangedToMyRSA()
-        {
-            rsaMethod = RSAMethod.MyRSA;
-            SetBlockCipherItems(ToString(MyRSABlockCipherMethods));
-            SetKeyTextBoxesReadOnly(false);
-            ChangeButtonsEnabled();
-        }
-
-        private void SetKeyTextBoxesReadOnly(bool isReadOnly)
-        {
-            ModulusTextBox.ReadOnly = isReadOnly;
-            PublicKeyExponentTextBox.ReadOnly = isReadOnly;
-            PrivateKeyExponentTextBox.ReadOnly = isReadOnly;
         }
 
         private void BlockCipherComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -327,8 +303,10 @@ namespace PNGAnalyzerUI
             else if (BlockCipherComboBox.SelectedItem.ToString() == BlockCipherMethod.Counter.ToMethodString())
                 blockCipherMethod = BlockCipherMethod.Counter;
             UpdateInitializationVectorTextBox();
-            EncryptButton.Enabled = (rsaParameters.HasValue || !IsAnyKeyTextBoxEmpty()) && !string.IsNullOrWhiteSpace(FilepathTextBox.Text);
-            DecryptButton.Enabled = (rsaParameters.HasValue || !IsAnyKeyTextBoxEmpty()) && !string.IsNullOrWhiteSpace(FilepathTextBox.Text);
+            EncryptButton.Enabled = (rsaParameters.HasValue || !IsAnyKeyTextBoxEmpty()) &&
+                                    !string.IsNullOrWhiteSpace(FilepathTextBox.Text);
+            DecryptButton.Enabled = (rsaParameters.HasValue || !IsAnyKeyTextBoxEmpty()) &&
+                                    !string.IsNullOrWhiteSpace(FilepathTextBox.Text);
         }
 
         private void UpdateInitializationVectorTextBox()
@@ -340,19 +318,19 @@ namespace PNGAnalyzerUI
                 return;
             }
 
-            string notUsedText = "Not used";
+            const string NotUsedText = "Not used";
             bool isUsed = blockCipherMethod != BlockCipherMethod.ElectronicCodebook;
             InitializationVectorTextBox.ReadOnly = !isUsed;
             if (!isUsed)
-                InitializationVectorTextBox.Text = notUsedText;
-            else if (InitializationVectorTextBox.Text == notUsedText)
+                InitializationVectorTextBox.Text = NotUsedText;
+            else if (InitializationVectorTextBox.Text == NotUsedText)
                 InitializationVectorTextBox.Clear();
         }
 
         private void KeySizeComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             keySize = int.Parse(KeySizeComboBox.SelectedItem.ToString());
-            GenerateKeysButton.Enabled = rsaMethod.HasValue;
+            GenerateKeysButton.Enabled = true;
         }
 
         private void ModulusTextBox_TextChanged(object sender, EventArgs e)
@@ -363,7 +341,7 @@ namespace PNGAnalyzerUI
         private void KeyTextBoxTextChanged()
         {
             if (IsAnyKeyTextBoxEmpty()) return;
-            if (rsaMethod.HasValue && blockCipherMethod.HasValue)
+            if (blockCipherMethod.HasValue)
             {
                 EncryptButton.Enabled = !string.IsNullOrWhiteSpace(FilepathTextBox.Text);
                 DecryptButton.Enabled = !string.IsNullOrWhiteSpace(FilepathTextBox.Text);
@@ -396,6 +374,11 @@ namespace PNGAnalyzerUI
         {
             if (OpenFileDialog.ShowDialog() != DialogResult.OK) return;
             FilepathTextBox.Text = OpenFileDialog.FileName;
+            if (blockCipherMethod.HasValue && rsaParameters.HasValue)
+            {
+                EncryptButton.Enabled = true;
+                DecryptButton.Enabled = true;
+            }
         }
     }
 }

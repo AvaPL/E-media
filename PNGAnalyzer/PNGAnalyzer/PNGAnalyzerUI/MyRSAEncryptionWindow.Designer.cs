@@ -121,7 +121,6 @@ namespace PNGAnalyzerUI
             // BlockCipherComboBox
             // 
             this.BlockCipherComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.BlockCipherComboBox.Enabled = false;
             this.BlockCipherComboBox.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.BlockCipherComboBox.FormattingEnabled = true;
             this.BlockCipherComboBox.Location = new System.Drawing.Point(463, 42);
@@ -145,7 +144,6 @@ namespace PNGAnalyzerUI
             // 
             this.PrivateKeyExponentTextBox.Location = new System.Drawing.Point(195, 177);
             this.PrivateKeyExponentTextBox.Name = "PrivateKeyExponentTextBox";
-            this.PrivateKeyExponentTextBox.ReadOnly = true;
             this.PrivateKeyExponentTextBox.Size = new System.Drawing.Size(404, 23);
             this.PrivateKeyExponentTextBox.TabIndex = 7;
             this.PrivateKeyExponentTextBox.TextChanged +=
@@ -157,7 +155,6 @@ namespace PNGAnalyzerUI
             // 
             this.PublicKeyExponentTextBox.Location = new System.Drawing.Point(195, 141);
             this.PublicKeyExponentTextBox.Name = "PublicKeyExponentTextBox";
-            this.PublicKeyExponentTextBox.ReadOnly = true;
             this.PublicKeyExponentTextBox.Size = new System.Drawing.Size(404, 23);
             this.PublicKeyExponentTextBox.TabIndex = 6;
             this.PublicKeyExponentTextBox.TextChanged +=
@@ -169,7 +166,6 @@ namespace PNGAnalyzerUI
             // 
             this.ModulusTextBox.Location = new System.Drawing.Point(195, 108);
             this.ModulusTextBox.Name = "ModulusTextBox";
-            this.ModulusTextBox.ReadOnly = true;
             this.ModulusTextBox.Size = new System.Drawing.Size(404, 23);
             this.ModulusTextBox.TabIndex = 5;
             this.ModulusTextBox.TextChanged += new System.EventHandler(this.ModulusTextBox_TextChanged);
