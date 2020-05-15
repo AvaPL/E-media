@@ -213,7 +213,7 @@ namespace PNGAnalyzerUI
 
         private void SetRSAParameters(RSAParameters parameters)
         {
-            this.rsaParameters = parameters;
+            rsaParameters = parameters;
             ModulusTextBox.Text = BytesToBigIntegerString(parameters.Modulus);
             PublicKeyExponentTextBox.Text = BytesToBigIntegerString(parameters.Exponent);
             PrivateKeyExponentTextBox.Text = BytesToBigIntegerString(parameters.D);
