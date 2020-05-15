@@ -10,19 +10,20 @@ namespace PNGAnalyzer.BlockCiphers
     {
         private const int BlockSize = 32;
         private readonly IRSA rsa;
-        private readonly BigInteger initializationVector;
 
         public CipherFeedback(IRSA rsa)
         {
             this.rsa = rsa;
-            initializationVector = BigIntegerExtensions.Random(BlockSize);
+            InitializationVector = BigIntegerExtensions.Random(BlockSize);
         }
 
         public CipherFeedback(IRSA rsa, BigInteger initializationVector)
         {
             this.rsa = rsa;
-            this.initializationVector = initializationVector;
+            this.InitializationVector = initializationVector;
         }
+
+        public BigInteger InitializationVector { get; }
 
         public byte[] Cipher(byte[] data)
         {
@@ -30,6 +31,15 @@ namespace PNGAnalyzer.BlockCiphers
             List<byte[]> blocks = BlockCipherSupport.DivideIntoBlocks(dataToDivide, BlockSize);
             List<byte[]> cipheredBlocks = CipherBlocks(blocks);
             return BlockCipherSupport.ConcatenateBlocks(cipheredBlocks);
+        }
+
+        public byte[] Decipher(byte[] data)
+        {
+            RSAParameters parameters = rsa.ExportParameters();
+            int keySize = parameters.Modulus.Length;
+            List<byte[]> blocks = BlockCipherSupport.DivideIntoBlocks(data, keySize);
+            List<byte[]> decipheredBlocks = DecipherBlocks(blocks);
+            return BlockCipherSupport.RemovePadding(BlockCipherSupport.ConcatenateBlocks(decipheredBlocks));
         }
 
         private List<byte[]> CipherBlocks(List<byte[]> blocks)
@@ -58,16 +68,7 @@ namespace PNGAnalyzer.BlockCiphers
         {
             return index > 0
                 ? cipheredBlocks[index - 1].Take(BlockSize).ToArray()
-                : BigIntegerExtensions.UnsignedToBytes(initializationVector);
-        }
-
-        public byte[] Decipher(byte[] data)
-        {
-            RSAParameters parameters = rsa.ExportParameters();
-            int keySize = parameters.Modulus.Length;
-            List<byte[]> blocks = BlockCipherSupport.DivideIntoBlocks(data, keySize);
-            List<byte[]> decipheredBlocks = DecipherBlocks(blocks);
-            return BlockCipherSupport.RemovePadding(BlockCipherSupport.ConcatenateBlocks(decipheredBlocks));
+                : BigIntegerExtensions.UnsignedToBytes(InitializationVector);
         }
 
         private List<byte[]> DecipherBlocks(List<byte[]> blocks)

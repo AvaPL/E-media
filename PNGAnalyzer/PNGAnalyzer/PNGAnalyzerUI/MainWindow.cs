@@ -22,7 +22,6 @@ namespace PNGAnalyzerUI
             ChunksButton.Enabled = true;
             AnonymizeButton.Enabled = true;
             FourierTransformButton.Enabled = true;
-            RSAButton.Enabled = true;
         }
 
         private void ChunksButton_Click(object sender, EventArgs e)
@@ -56,9 +55,15 @@ namespace PNGAnalyzerUI
             process.Start();
         }
 
-        private void RSAButton_Click(object sender, EventArgs e)
+        private void MicrosoftRSAButton_Click(object sender, EventArgs e)
         {
-            Form encryptionWindow = new EncryptionWindow(FilepathTextBox.Text);
+            Form encryptionWindow = new MicrosoftRSAEncryptionWindow();
+            encryptionWindow.Show();
+        }
+
+        private void MyRSAButton_Click(object sender, EventArgs e)
+        {
+            Form encryptionWindow = new MyRSAEncryptionWindow();
             encryptionWindow.Show();
         }
     }

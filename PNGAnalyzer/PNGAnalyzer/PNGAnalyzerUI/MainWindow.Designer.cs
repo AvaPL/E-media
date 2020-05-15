@@ -38,7 +38,8 @@ namespace PNGAnalyzerUI
             this.FourierTransformButton = new System.Windows.Forms.Button();
             this.OpenFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.SaveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.RSAButton = new System.Windows.Forms.Button();
+            this.MicrosoftRSAButton = new System.Windows.Forms.Button();
+            this.MyRSAButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // FilepathTextBox
@@ -46,12 +47,12 @@ namespace PNGAnalyzerUI
             this.FilepathTextBox.Location = new System.Drawing.Point(12, 12);
             this.FilepathTextBox.Name = "FilepathTextBox";
             this.FilepathTextBox.ReadOnly = true;
-            this.FilepathTextBox.Size = new System.Drawing.Size(193, 23);
+            this.FilepathTextBox.Size = new System.Drawing.Size(331, 23);
             this.FilepathTextBox.TabIndex = 0;
             // 
             // BrowseButton
             // 
-            this.BrowseButton.Location = new System.Drawing.Point(211, 12);
+            this.BrowseButton.Location = new System.Drawing.Point(349, 12);
             this.BrowseButton.Name = "BrowseButton";
             this.BrowseButton.Size = new System.Drawing.Size(71, 23);
             this.BrowseButton.TabIndex = 1;
@@ -84,7 +85,7 @@ namespace PNGAnalyzerUI
             // FourierTransformButton
             // 
             this.FourierTransformButton.Enabled = false;
-            this.FourierTransformButton.Location = new System.Drawing.Point(12, 68);
+            this.FourierTransformButton.Location = new System.Drawing.Point(288, 42);
             this.FourierTransformButton.Name = "FourierTransformButton";
             this.FourierTransformButton.Size = new System.Drawing.Size(132, 23);
             this.FourierTransformButton.TabIndex = 4;
@@ -102,23 +103,33 @@ namespace PNGAnalyzerUI
             this.SaveFileDialog.DefaultExt = "png";
             this.SaveFileDialog.Filter = "PNG files (*.png)|*.png|All files (*.*)|*.*";
             // 
-            // RSAButton
+            // MicrosoftRSAButton
             // 
-            this.RSAButton.Enabled = false;
-            this.RSAButton.Location = new System.Drawing.Point(150, 68);
-            this.RSAButton.Name = "RSAButton";
-            this.RSAButton.Size = new System.Drawing.Size(132, 23);
-            this.RSAButton.TabIndex = 5;
-            this.RSAButton.Text = "RSA Encryption";
-            this.RSAButton.UseVisualStyleBackColor = true;
-            this.RSAButton.Click += new System.EventHandler(this.RSAButton_Click);
+            this.MicrosoftRSAButton.Location = new System.Drawing.Point(12, 71);
+            this.MicrosoftRSAButton.Name = "MicrosoftRSAButton";
+            this.MicrosoftRSAButton.Size = new System.Drawing.Size(202, 23);
+            this.MicrosoftRSAButton.TabIndex = 5;
+            this.MicrosoftRSAButton.Text = "MicrosoftRSA Encryption";
+            this.MicrosoftRSAButton.UseVisualStyleBackColor = true;
+            this.MicrosoftRSAButton.Click += new System.EventHandler(this.MicrosoftRSAButton_Click);
+            // 
+            // MyRSAButton
+            // 
+            this.MyRSAButton.Location = new System.Drawing.Point(218, 71);
+            this.MyRSAButton.Name = "MyRSAButton";
+            this.MyRSAButton.Size = new System.Drawing.Size(202, 23);
+            this.MyRSAButton.TabIndex = 6;
+            this.MyRSAButton.Text = "MyRSA Encryption";
+            this.MyRSAButton.UseVisualStyleBackColor = true;
+            this.MyRSAButton.Click += new System.EventHandler(this.MyRSAButton_Click);
             // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(295, 102);
-            this.Controls.Add(this.RSAButton);
+            this.ClientSize = new System.Drawing.Size(432, 106);
+            this.Controls.Add(this.MyRSAButton);
+            this.Controls.Add(this.MicrosoftRSAButton);
             this.Controls.Add(this.FourierTransformButton);
             this.Controls.Add(this.AnonymizeButton);
             this.Controls.Add(this.ChunksButton);
@@ -139,6 +150,7 @@ namespace PNGAnalyzerUI
         private System.Windows.Forms.Button BrowseButton;
         private System.Windows.Forms.OpenFileDialog OpenFileDialog;
         private System.Windows.Forms.SaveFileDialog SaveFileDialog;
-        private System.Windows.Forms.Button RSAButton;
+        private System.Windows.Forms.Button MyRSAButton;
+        private System.Windows.Forms.Button MicrosoftRSAButton;
     }
 }
