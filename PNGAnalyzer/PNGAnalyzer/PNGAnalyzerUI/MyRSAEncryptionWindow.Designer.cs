@@ -50,6 +50,8 @@ namespace PNGAnalyzerUI
             this.FilepathTextBox = new System.Windows.Forms.TextBox();
             this.BrowseButton = new System.Windows.Forms.Button();
             this.OpenFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.label1 = new System.Windows.Forms.Label();
+            this.FilteringCheckBox = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // EncryptButton
@@ -214,7 +216,7 @@ namespace PNGAnalyzerUI
             this.InitializationVectorTextBox.Location = new System.Drawing.Point(133, 78);
             this.InitializationVectorTextBox.Name = "InitializationVectorTextBox";
             this.InitializationVectorTextBox.ReadOnly = true;
-            this.InitializationVectorTextBox.Size = new System.Drawing.Size(579, 23);
+            this.InitializationVectorTextBox.Size = new System.Drawing.Size(466, 23);
             this.InitializationVectorTextBox.TabIndex = 4;
             this.InitializationVectorTextBox.KeyPress +=
                 new System.Windows.Forms.KeyPressEventHandler(this.OnlyDigitsTextBox_KeyPress);
@@ -243,11 +245,31 @@ namespace PNGAnalyzerUI
             this.OpenFileDialog.DefaultExt = "png";
             this.OpenFileDialog.Filter = "PNG files (*.png)|*.png|All files (*.*)|*.*";
             // 
+            // label1
+            // 
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.label1.Location = new System.Drawing.Point(604, 78);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(83, 24);
+            this.label1.TabIndex = 111;
+            this.label1.Text = "Filtering:";
+            // 
+            // FilteringCheckBox
+            // 
+            this.FilteringCheckBox.Location = new System.Drawing.Point(692, 83);
+            this.FilteringCheckBox.Name = "FilteringCheckBox";
+            this.FilteringCheckBox.Size = new System.Drawing.Size(20, 20);
+            this.FilteringCheckBox.TabIndex = 112;
+            this.FilteringCheckBox.UseVisualStyleBackColor = true;
+            // 
             // MyRSAEncryptionWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(726, 215);
+            this.Controls.Add(this.FilteringCheckBox);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.BrowseButton);
             this.Controls.Add(this.FilepathTextBox);
             this.Controls.Add(this.InitializationVectorTextBox);
@@ -293,5 +315,7 @@ namespace PNGAnalyzerUI
         private System.Windows.Forms.Button BrowseButton;
         private System.Windows.Forms.OpenFileDialog OpenFileDialog;
         private System.Windows.Forms.TextBox FilepathTextBox;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.CheckBox FilteringCheckBox;
     }
 }

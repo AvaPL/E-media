@@ -153,9 +153,10 @@ namespace PNGAnalyzerUI
         {
             EncryptButton.Enabled = false;
             Task.Run(AnimateEncryptingText);
-            List<Chunk> parsedChunks = ReadAndParseChunks();
-            List<Chunk> cipheredChunks = imageBlockCipher.CipherWithoutFiltering(parsedChunks);
-            PNGFile.Write(SaveFileDialog.FileName, cipheredChunks);
+            if (FilteringCheckBox.Checked)
+                imageBlockCipher.CipherWithFiltering(FilepathTextBox.Text, SaveFileDialog.FileName);
+            else
+                EncryptWithoutFiltering(imageBlockCipher);
             EncryptButton.Enabled = true;
         }
 
@@ -176,6 +177,13 @@ namespace PNGAnalyzerUI
             string dots = string.Concat(Enumerable.Repeat(".", numberOfDots % 4));
             string spaces = string.Concat(Enumerable.Repeat(" ", 4 - dots.Length));
             return text + dots + spaces;
+        }
+
+        private void EncryptWithoutFiltering(ImageBlockCipher imageBlockCipher)
+        {
+            List<Chunk> parsedChunks = ReadAndParseChunks();
+            List<Chunk> cipheredChunks = imageBlockCipher.CipherWithoutFiltering(parsedChunks);
+            PNGFile.Write(SaveFileDialog.FileName, cipheredChunks);
         }
 
         private List<Chunk> ReadAndParseChunks()
@@ -203,9 +211,10 @@ namespace PNGAnalyzerUI
         {
             DecryptButton.Enabled = false;
             Task.Run(AnimateDecryptingText);
-            List<Chunk> parsedChunks = ReadAndParseChunks();
-            List<Chunk> decipheredChunks = imageBlockCipher.DecipherWithoutFiltering(parsedChunks);
-            PNGFile.Write(SaveFileDialog.FileName, decipheredChunks);
+            if (FilteringCheckBox.Checked)
+                imageBlockCipher.DecipherWithFiltering(FilepathTextBox.Text, SaveFileDialog.FileName);
+            else
+                DecipherWithoutFiltering(imageBlockCipher);
             DecryptButton.Enabled = true;
         }
 
@@ -219,6 +228,13 @@ namespace PNGAnalyzerUI
             }
 
             DecryptButton.Text = decryptButtonText;
+        }
+
+        private void DecipherWithoutFiltering(ImageBlockCipher imageBlockCipher)
+        {
+            List<Chunk> parsedChunks = ReadAndParseChunks();
+            List<Chunk> decipheredChunks = imageBlockCipher.DecipherWithoutFiltering(parsedChunks);
+            PNGFile.Write(SaveFileDialog.FileName, decipheredChunks);
         }
 
         private void GenerateKeysButton_Click(object sender, EventArgs e)
@@ -275,7 +291,7 @@ namespace PNGAnalyzerUI
 
         private void SetRSAParameters(RSAParameters parameters)
         {
-            this.rsaParameters = parameters;
+            rsaParameters = parameters;
             ModulusTextBox.Text = BytesToBigIntegerString(parameters.Modulus);
             PublicKeyExponentTextBox.Text = BytesToBigIntegerString(parameters.Exponent);
             PrivateKeyExponentTextBox.Text = BytesToBigIntegerString(parameters.D);
