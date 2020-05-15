@@ -85,5 +85,10 @@ namespace PNGAnalyzer.BlockCiphers
             byte[] xorResult = BigIntegerExtensions.UnsignedToBytes(beforeXorBlock ^ block);
             return BlockCipherSupport.PadWithZeroes(xorResult, BlockSize);
         }
+        
+        public int GetResizeRatio()
+        {
+            return rsa.ExportParameters().Modulus.Length / BlockSize;
+        }
     }
 }

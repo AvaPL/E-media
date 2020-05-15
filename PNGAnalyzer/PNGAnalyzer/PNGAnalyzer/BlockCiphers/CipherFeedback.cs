@@ -84,5 +84,10 @@ namespace PNGAnalyzer.BlockCiphers
         
             return decipheredBlocks;
         }
+        
+        public int GetResizeRatio()
+        {
+            return rsa.ExportParameters().Modulus.Length / BlockSize;
+        }
     }
 }

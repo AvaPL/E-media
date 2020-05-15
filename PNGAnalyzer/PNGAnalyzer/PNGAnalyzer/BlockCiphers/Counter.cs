@@ -68,5 +68,10 @@ namespace PNGAnalyzer.BlockCiphers
                 blocks[i] = BlockCipherSupport.PadWithZeroes(BigIntegerExtensions.UnsignedToBytes(block), BlockSize);
             }
         }
+        
+        public int GetResizeRatio()
+        {
+            return rsa.ExportParameters().Modulus.Length / BlockSize;
+        }
     }
 }
