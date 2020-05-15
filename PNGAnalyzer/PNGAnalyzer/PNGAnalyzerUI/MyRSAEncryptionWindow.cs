@@ -154,7 +154,7 @@ namespace PNGAnalyzerUI
             EncryptButton.Enabled = false;
             Task.Run(AnimateEncryptingText);
             List<Chunk> parsedChunks = ReadAndParseChunks();
-            List<Chunk> cipheredChunks = imageBlockCipher.Cipher(parsedChunks);
+            List<Chunk> cipheredChunks = imageBlockCipher.CipherWithoutFiltering(parsedChunks);
             PNGFile.Write(SaveFileDialog.FileName, cipheredChunks);
             EncryptButton.Enabled = true;
         }
@@ -204,7 +204,7 @@ namespace PNGAnalyzerUI
             DecryptButton.Enabled = false;
             Task.Run(AnimateDecryptingText);
             List<Chunk> parsedChunks = ReadAndParseChunks();
-            List<Chunk> decipheredChunks = imageBlockCipher.Decipher(parsedChunks);
+            List<Chunk> decipheredChunks = imageBlockCipher.DecipherWithoutFiltering(parsedChunks);
             PNGFile.Write(SaveFileDialog.FileName, decipheredChunks);
             DecryptButton.Enabled = true;
         }

@@ -57,6 +57,12 @@ namespace PNGAnalyzer.BlockCiphers
                 blocks[i] = rsa.Encrypt(blocks[i]);
             }
         }
+        
+
+        public int GetResizeRatio()
+        {
+            return rsa.ExportParameters().Modulus.Length / BlockSize;
+        }
 
         private List<byte[]> DecipherBlocks(List<byte[]> blocks)
         {

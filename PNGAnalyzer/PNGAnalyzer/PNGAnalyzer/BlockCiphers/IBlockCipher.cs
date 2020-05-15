@@ -6,5 +6,6 @@ namespace PNGAnalyzer.BlockCiphers
     {
         byte[] Cipher(byte[] data);
         byte[] Decipher(byte[] data);
+        int GetResizeRatio();
     }
 }
