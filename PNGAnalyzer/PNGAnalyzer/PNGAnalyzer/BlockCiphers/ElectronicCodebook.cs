@@ -39,5 +39,10 @@ namespace PNGAnalyzer.BlockCiphers
 
             return BlockCipherSupport.RemovePadding(BlockCipherSupport.ConcatenateBlocks(blocks));
         }
+        
+        public int GetResizeRatio()
+        {
+            return rsa.ExportParameters().Modulus.Length / BlockSize;
+        }
     }
 }
