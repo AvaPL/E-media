@@ -75,27 +75,27 @@ namespace PNGAnalyzerTests.BlockCiphersTest
             imageBlockCipher = new ImageBlockCipher(new CipherBlockChaining(rsa));
         }
 
-        // [Test]
-        // public void ShouldCipherImage()
-        // {
-        //     string filePathToRead = @"../../../Data/square_wave.png";
-        //     string filePathToWrite = @"../../../Data/square_wave_encrypted.png";
-        //     List<Chunk> chunks = PNGFile.Read(filePathToRead);
-        //     List<Chunk> parsedChunks = ChunkParser.Parse(chunks);
-        //     List<Chunk> cipheredChunks = imageBlockCipher.CipherWithoutFiltering(parsedChunks);
-        //     PNGFile.Write(filePathToWrite, cipheredChunks);
-        // }
-        //
-        // [Test]
-        // public void ShouldDecipherImage()
-        // {
-        //     string filePathToRead = @"../../../Data/square_wave_encrypted.png";
-        //     string filePathToWrite = @"../../../Data/square_wave_decrypted.png";
-        //     List<Chunk> chunks = PNGFile.Read(filePathToRead);
-        //     List<Chunk> parsedChunks = ChunkParser.Parse(chunks);
-        //     List<Chunk> decipheredChunks = imageBlockCipher.DecipherWithoutFiltering(parsedChunks);
-        //     PNGFile.Write(filePathToWrite, decipheredChunks);
-        // }
+        [Test]
+        public void ShouldCipherImageWithoutFiltering()
+        {
+            string filePathToRead = @"../../../Data/square_wave.png";
+            string filePathToWrite = @"../../../Data/square_wave_encrypted.png";
+            List<Chunk> chunks = PNGFile.Read(filePathToRead);
+            List<Chunk> parsedChunks = ChunkParser.Parse(chunks);
+            List<Chunk> cipheredChunks = imageBlockCipher.CipherWithoutFiltering(parsedChunks);
+            PNGFile.Write(filePathToWrite, cipheredChunks);
+        }
+        
+        [Test]
+        public void ShouldDecipherImageWithoutFiltering()
+        {
+            string filePathToRead = @"../../../Data/square_wave_encrypted.png";
+            string filePathToWrite = @"../../../Data/square_wave_decrypted.png";
+            List<Chunk> chunks = PNGFile.Read(filePathToRead);
+            List<Chunk> parsedChunks = ChunkParser.Parse(chunks);
+            List<Chunk> decipheredChunks = imageBlockCipher.DecipherWithoutFiltering(parsedChunks);
+            PNGFile.Write(filePathToWrite, decipheredChunks);
+        }
         
         [Test]
         public void ShouldCipherImageWithFiltering()
