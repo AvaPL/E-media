@@ -55,15 +55,15 @@ namespace PNGAnalyzerUI
             process.Start();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void MicrosoftRSAButton_Click(object sender, EventArgs e)
         {
-            Form encryptionWindow = new EncryptionWindow(FilepathTextBox.Text, EncryptionType.MicrosoftEncryption);
+            Form encryptionWindow = new MicrosoftRSAEncryptionWindow();
             encryptionWindow.Show();
         }
 
-        private void OurEncryption_Click(object sender, EventArgs e)
+        private void MyRSAButton_Click(object sender, EventArgs e)
         {
-            Form encryptionWindow = new EncryptionWindow(FilepathTextBox.Text, EncryptionType.PajaceTeamEncryption);
+            Form encryptionWindow = new MyRSAEncryptionWindow();
             encryptionWindow.Show();
         }
     }
