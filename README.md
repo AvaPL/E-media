@@ -1,11 +1,14 @@
 # E-media
 E-media course project. The project is focused around PNG images, their structure and
-information contained within them.
+information contained within them. It also provides various forms of RSA encryption
+using diverse block cipher modes of operation using Microsoft's RSA implementation
+and our own implementation called MyRSA.
 
 Main features:
 * Displaying information about PNG chunks including EXIF data.
 * Anonymizing images by deleting all but critial chunks.
 * Displaying Fourier transform of images.
+* RSA encryption of image data using common block cipher modes
 
 ## Authors
 
@@ -59,5 +62,7 @@ Done, your program will be now able to display Fourier transforms of your images
 
 | <img src="Screenshots/MainWindow.png"> |
 |:-------------------------------------------------:|
+| <img src="Screenshots/MyRSA.png"> |
+| <img src="Screenshots/MicrosoftRSA.png"> |
 | <img src="Screenshots/ChunkInfo.png"> |
 | <img src="Screenshots/FourierTransform.png"> |
