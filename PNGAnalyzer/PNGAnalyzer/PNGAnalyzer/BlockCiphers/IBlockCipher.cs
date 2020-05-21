@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace PNGAnalyzer.BlockCiphers
+﻿namespace PNGAnalyzer.BlockCiphers
 {
     public interface IBlockCipher
     {
