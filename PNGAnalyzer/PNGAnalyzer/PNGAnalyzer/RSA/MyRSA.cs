@@ -79,10 +79,6 @@ namespace PNGAnalyzer.RSA
             BigInteger lcm = (p - 1).LeastCommonMultiple(q - 1);
             BigInteger e = RandomCoprimeBelow(lcm, numberOfBits / 2); // Exponent
             BigInteger d = e.ModularInverse(lcm);
-            // TODO: Not used.
-            // BigInteger inverseQ = q.ModularInverse(p);
-            // BigInteger dp = d % (p - 1);
-            // BigInteger dq = d % (q - 1);
 
             return new RSAParameters
             {
@@ -91,11 +87,6 @@ namespace PNGAnalyzer.RSA
                 Modulus = ToByteArrayWithoutSign(n, numberOfBits),
                 P = ToByteArrayWithoutSign(p, numberOfBits),
                 Q = ToByteArrayWithoutSign(q, numberOfBits)
-                // TODO: Not used.
-                // ,
-                // DP = ToByteArrayWithoutSign(dp, numberOfBits),
-                // DQ = ToByteArrayWithoutSign(dq, numberOfBits),
-                // InverseQ = ToByteArrayWithoutSign(inverseQ, numberOfBits) // May cause exception for non-coprimes
             };
         }
 

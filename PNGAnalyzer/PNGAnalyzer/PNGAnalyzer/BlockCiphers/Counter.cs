@@ -53,7 +53,7 @@ namespace PNGAnalyzer.BlockCiphers
                 block ^= nonceCounterXor;
                 RSAParameters parameters = rsa.ExportParameters();
                 int keySize = parameters.Modulus.Length;
-                blocks[i] = BlockCipherSupport.PadWithZeroes(BigIntegerExtensions.UnsignedToBytes(block), keySize);
+                blocks[i] = BlockCipherSupport.PadWithZeros(BigIntegerExtensions.UnsignedToBytes(block), keySize);
             }
         }
 
@@ -66,7 +66,7 @@ namespace PNGAnalyzer.BlockCiphers
                 nonceCounterXor = BigIntegerExtensions.UnsignedFromBytes(nonceCounterXorBytes);
                 BigInteger block = BigIntegerExtensions.UnsignedFromBytes(blocks[i]);
                 block ^= nonceCounterXor;
-                blocks[i] = BlockCipherSupport.PadWithZeroes(BigIntegerExtensions.UnsignedToBytes(block), BlockSize);
+                blocks[i] = BlockCipherSupport.PadWithZeros(BigIntegerExtensions.UnsignedToBytes(block), BlockSize);
             }
         }
         

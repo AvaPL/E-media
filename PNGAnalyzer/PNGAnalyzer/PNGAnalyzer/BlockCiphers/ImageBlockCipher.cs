@@ -30,7 +30,8 @@ namespace PNGAnalyzer.BlockCiphers
             byte[] rgbValues = new byte[bytes];
             Marshal.Copy(ptr, rgbValues, 0, bytes);
             byte[] cipheredBytes = blockCipher.Cipher(rgbValues);
-            Bitmap bitmapToSave = new Bitmap(blockCipher.GetResizeRatio() * bmp.Width, bmp.Height, blockCipher.GetResizeRatio() * bmpData.Stride, bmp.PixelFormat,
+            Bitmap bitmapToSave = new Bitmap(blockCipher.GetResizeRatio() * bmp.Width, bmp.Height,
+                blockCipher.GetResizeRatio() * bmpData.Stride, bmp.PixelFormat,
                 Marshal.UnsafeAddrOfPinnedArrayElement(cipheredBytes, 0));
             bitmapToSave.Save(pathToSave, ImageFormat.Png);
         }
@@ -49,7 +50,8 @@ namespace PNGAnalyzer.BlockCiphers
             byte[] rgbValues = new byte[bytes];
             Marshal.Copy(ptr, rgbValues, 0, bytes);
             byte[] decipheredBytes = blockCipher.Decipher(rgbValues);
-            Bitmap bitmapToSave = new Bitmap(bmp.Width/blockCipher.GetResizeRatio(), bmp.Height, bmpData.Stride/blockCipher.GetResizeRatio(), bmp.PixelFormat,
+            Bitmap bitmapToSave = new Bitmap(bmp.Width / blockCipher.GetResizeRatio(), bmp.Height,
+                bmpData.Stride / blockCipher.GetResizeRatio(), bmp.PixelFormat,
                 Marshal.UnsafeAddrOfPinnedArrayElement(decipheredBytes, 0));
             bitmapToSave.Save(pathToSave, ImageFormat.Png);
         }

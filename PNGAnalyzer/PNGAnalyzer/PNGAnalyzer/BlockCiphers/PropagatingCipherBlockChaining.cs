@@ -78,7 +78,7 @@ namespace PNGAnalyzer.BlockCiphers
                 var decipheredBlock = BigIntegerExtensions.UnsignedFromBytes(decipheredBlocks[i]);
                 decipheredBlock ^= previousXor;
                 decipheredBlocks[i] = BigIntegerExtensions.UnsignedToBytes(decipheredBlock).Take(BlockSize).ToArray();
-                decipheredBlocks[i] = BlockCipherSupport.PadWithZeroes(decipheredBlocks[i], BlockSize);
+                decipheredBlocks[i] = BlockCipherSupport.PadWithZeros(decipheredBlocks[i], BlockSize);
             }
 
             return decipheredBlocks;
