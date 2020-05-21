@@ -62,7 +62,7 @@ namespace PNGAnalyzer.BlockCiphers
         {
             byte[] xorResult = BigIntegerExtensions.UnsignedToBytes(beforeXorBlock ^ block);
             int keySize = rsa.ExportParameters().Modulus.Length;
-            return BlockCipherSupport.PadWithZeroes(xorResult, keySize);
+            return BlockCipherSupport.PadWithZeros(xorResult, keySize);
         }
 
         private List<byte[]> DecipherBlocks(List<byte[]> blocks)
@@ -84,7 +84,7 @@ namespace PNGAnalyzer.BlockCiphers
         private byte[] XorWithBlockSizePadding(BigInteger beforeXorBlock, BigInteger block)
         {
             byte[] xorResult = BigIntegerExtensions.UnsignedToBytes(beforeXorBlock ^ block);
-            return BlockCipherSupport.PadWithZeroes(xorResult, BlockSize);
+            return BlockCipherSupport.PadWithZeros(xorResult, BlockSize);
         }
         
         public int GetResizeRatio()

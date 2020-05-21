@@ -1,7 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Security.Cryptography;
-using System.Xml.Serialization;
+﻿using System.Security.Cryptography;
 
 namespace PNGAnalyzer.RSA
 {

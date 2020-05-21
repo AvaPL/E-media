@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Security.Cryptography;
 using PNGAnalyzer.RSA;
 
@@ -34,7 +32,7 @@ namespace PNGAnalyzer.BlockCiphers
             for (int i = 0; i < blocks.Count; i++)
             {
                 blocks[i] = rsa.Decrypt(blocks[i]);
-                blocks[i] = BlockCipherSupport.PadWithZeroes(blocks[i], BlockSize);
+                blocks[i] = BlockCipherSupport.PadWithZeros(blocks[i], BlockSize);
             }
 
             return BlockCipherSupport.RemovePadding(BlockCipherSupport.ConcatenateBlocks(blocks));

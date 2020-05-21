@@ -75,8 +75,7 @@ namespace PNGAnalyzer.BlockCiphers
             return resultChunks;
         }
 
-        // TODO: Change this method name to "PadWithZeros"
-        public static byte[] PadWithZeroes(byte[] bytes, int blockSize)
+        public static byte[] PadWithZeros(byte[] bytes, int blockSize)
         {
             if (bytes.Length == blockSize) return bytes;
             byte[] result = new byte[blockSize];

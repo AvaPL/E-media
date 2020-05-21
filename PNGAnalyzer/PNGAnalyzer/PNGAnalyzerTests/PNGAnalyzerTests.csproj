@@ -75,8 +75,6 @@
         <Compile Include="Chunks\tEXtTests.cs" />
         <Compile Include="Chunks\tIMETests.cs" />
         <Compile Include="Chunks\zTXtTests.cs" />
-        <Compile Include="PNGFilteringTests.cs" />
-        <Compile Include="RSAKeySerializerTests.cs" />
         <Compile Include="RSATests\MicrosoftRSATests.cs" />
         <Compile Include="RSATests\MyRSATests.cs" />
         <Compile Include="ZlibCompressionTests.cs" />
